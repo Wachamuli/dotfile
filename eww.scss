@@ -1,0 +1,38 @@
+// * { all: unset; }
+
+$primary: #ffffff;
+$secondary: #000000;
+$font-color: #000000;
+
+$radius-sm: 30px;
+$radius-lg: 40px;
+
+$transition-time: 0.2s;
+
+
+.bar-widget {
+    background-color: $primary;
+    color: $font-color;
+}
+
+.controls-window {
+    background-color: #000000;
+    border-radius: $radius-lg;
+}
+
+
+.wifi-button {
+    background-color: #000000;
+}
+
+.indicators:hover {
+    padding: 0.5rem;
+    transition: $transition-time;
+    background-color: #afd;
+    border-radius: $radius-lg;
+}
+
+tooltip {
+    background-color: $secondary;
+    border-radius: $radius-sm; 
+}

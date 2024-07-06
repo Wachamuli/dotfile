@@ -1,0 +1,196 @@
+
+; I shouldn't update this value each second
+(defpoll today :interval "1s" `date +"%b %I:%M %p"`)
+
+
+(defvar images_folder "/home/wachamuli/.config/eww/images/")
+
+(defpoll time
+  :initial `{"day":"1", "month":"1", "year": "1"}`
+:interval  "1h" `date +'{"day":"%d", "month":"%M", "year": "%Y"}'`)
+(defpoll battery
+  :initial `{"state": "", "": 0, "percentage_base10": 0, "time_to_full": 0}`
+:interval "1s" "./scripts/bar/battery.sh")
+(defpoll wifi
+  :initial `{"state": "", "name": "", "signal": 0}`
+:interval "1s" "./scripts/bar/wifi.sh")
+(defpoll sound
+  :initial `{"volume": 0, "is_mute:": ""}`
+:interval "1s" "./scripts/bar/sound.sh ")
+
+(defwindow bar
+  :monitor 0
+  :exclusive true
+  :stacking   "bg"
+  :windowtype "dock"
+  :reserve    (struts :distance "50px" :side "top")
+  :geometry (
+    geometry
+    :x      "0%"
+    :y      "0%"
+    :width  "100%"
+    :height  "40px"
+    :anchor "top center"
+  )
+  (bar_widget))
+
+
+
+(
+  defwidget bar_widget []
+  (box :class "bar-widget" :orientation "h" :space-evenly true
+    
+    (box :orientation "h" :space-evenly false :halign "start"
+      ; (smalldate)
+    )
+    
+    (box :orientation "h" :space-evenly false :halign "center"
+      ; (smalldate)
+    )
+    
+    (box :orientation "h" :space-evenly false :halign "end" :class "inidicators"
+      (
+        eventbox
+        :class "indicators"
+        :onclick "${EWW_EXECUTABLE} open --toggle controls_window"
+        (box
+          (wifi_icon)
+          (sound_icon)
+          (battery_icon)
+        )
+      )
+    )
+  )
+)
+
+(defwindow controls_window
+  :monitor 0
+  :stacking "overlay"
+  :geometry (
+    geometry
+    :y "5px"
+    :width "270px"
+    :height "60px"
+    :anchor "top right"
+  )
+  (controls_widget)
+)
+
+(
+  defwidget controls_widget []
+  (
+    box
+    (
+      wifi
+    )
+  )
+)
+
+(defwidget wifi []
+  (button
+    :class "wifi-button"
+    :onclick "if [ \"$(nmcli radio wifi)\" = \"enabled\" ]; then nmcli radio wifi off; else nmcli radio wifi on; fi"
+    (image
+      :width 25
+      :height 25
+    :path {"${wifi.state}" == "yes" ? images_folder + "wififull.svg" : images_folder + "wifidisconnected.svg"})))
+
+(
+  defwidget calendar_widget []
+  (
+    calendar
+    :halign "center"
+    :valign "center"
+    :day   {time.day}
+    :month {time.month}
+    :year  {time.year}
+  )
+)
+
+(
+  defwindow calendar_window []
+  :monitor 0
+  :stacking "overlay"
+  :geometry (
+    geometry
+    :y "5px"
+    :width "270px"
+    :height "60px"
+    :anchor "top center"
+  )
+  (calendar_widget)
+)
+
+(
+  defwidget smalldate []
+  (
+    box
+    (
+      button
+      :onclick "${EWW_EXECUTABLE} open --toggle calendar_window"
+      today
+    )
+  )
+)
+
+
+(defwidget battery_icon []
+  (
+    box
+    :visible {EWW_BATTERY == "" ? false : true}
+    (
+      image
+      :image-width 25
+      :image-height 25
+      :tooltip "Battery ${battery.percentage}%"
+      :path {
+      "${battery.state}" == "discharging"
+      ? images_folder + "battery-${battery.percentage_base10}.svg"
+      : images_folder + "battery-charging-${battery.percentage_base10}.svg"
+      }
+    )
+  )
+)
+
+; You get errors when the wifi is disabled
+(defwidget wifi_icon []
+  (
+    box
+    (
+      image
+      :image-width 25
+      :image-height 25
+      :tooltip "Connected to ${wifi.name}"
+      :path {
+      
+      "${wifi.state}" == "yes" ?
+      wifi.signal > 77
+      ? images_folder + "wififull.svg"
+      : wifi.signal > 44 ? images_folder + "wifihalf.svg"
+      : images_folder + "wifimin.svg"
+      : images_folder + "wifidisconnected.svg"
+      
+      }
+    )
+  )
+)
+
+(defwidget sound_icon []
+  (
+    box
+    (
+      image
+      :image-width 25
+      :image-height 25
+      :tooltip "Volume ${sound.volume}%"
+      :path {
+      "${sound.mute}" == "on"
+      ? sound.volume > 65 ? images_folder + "volume-up.svg"
+      : sound.volume > 30 ? images_folder + "volume-middle.svg"
+      : images_folder + "volume-down.svg"
+      : images_folder + "volume-mute.svg"
+      }
+    )
+  )
+)
+
