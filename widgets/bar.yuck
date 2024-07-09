@@ -4,38 +4,62 @@
     :orientation "h"
     :space-evenly true
     (box
+      :class "bar-containers"
       :halign "start"
       :orientation "h"
       :space-evenly false
-      (box
-        :halign "center"
-        :orientation "h"
-        :space-evenly false
-        (workspaces_widget)
+      (workspaces_widget)
+    )
+    (box
+      :class "bar-containers"
+      :halign "center"
+      :orientation "h"
+      :space-evenly false
+      (pressable
+        :onclick "${EWW_EXECUTABLE} open --toggle calendar_window && ${EWW_EXECUTABLE} update is_calendar_open=${!is_calendar_open}"
+        (smalldate_widget)
       )
     )
     (box
-      (smalldate_widget)
-    )
-    (box
+      :class "bar-containers"
       :halign "end"
       :orientation "h"
       :space-evenly false
-      :spacing 40
-      (eventbox
-        :class "indicators"
-        :onclick "${EWW_EXECUTABLE} open --toggle controls_window"
-        (box
-          :width 100
-          (location_icon)
-          (bluetooth_icon )
-          (wifi_icon)
-          (sound_icon)
-          (battery_icon)
-          (power_icon)
+      :spacing 5
+      (revealer
+        :reveal is_systrays_open
+        :transition "slideleft"
+        (systray
+          :icon-size 20
         )
       )
-      
+      (pressable
+        :onclick "${EWW_EXECUTABLE} update is_systrays_open=${!is_systrays_open}"
+        (icon
+          :path {is_systrays_open ? images_folder + "chevron-left.svg" :  images_folder + "chevron-down.svg" }
+        )
+      )
+      (pressable
+        :width 80
+        :onclick "${EWW_EXECUTABLE} open --toggle controls_window"
+        (location_icon)
+        (bluetooth_icon )
+        (wifi_icon)
+        (sound_icon)
+        (battery_icon)
+      )
+    )
+  )
+)
+
+(defwidget pressable [?onclick ?onhover ?onhoverlost ?width]
+  (eventbox
+    :class "pressable"
+    :onclick onclick
+    :onhover onhover
+    :onhoverlost onhoverlost
+    (box :width {width ?: 0}
+      (children)
     )
   )
 )
@@ -43,14 +67,14 @@
 
 (defwidget workspaces_widget []
   (box
-    :spacing 5
+    :spacing 1
     :class "workspaces-container"
     (for workspace in {workspaces.actives}
-      (label
-        :vexpand false
-        :width 30
-        :class {workspace == workspaces.focused ? "active-workspace" : "workspace"}
-        :text workspace
+      (icon
+        :path {workspace == workspaces.focused
+        ? images_folder + "workspace-active.svg"
+        : images_folder + "workspace-inactive.svg"
+        }
       )
     )
   )

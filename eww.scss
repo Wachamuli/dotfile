@@ -13,6 +13,25 @@ $transition-time: 0.2s;
 //   all: unset;
 // }
 
+.calendar-container {
+  border-radius: $radius-lg;
+}
+
+calendar.label.year {
+  color: #bfc9db;
+}
+
+calendar {
+  padding: 5px;
+  font-weight: bold;
+
+  &:selected {
+    color: $primary;
+    background-color: $secondary;
+    border-radius: $radius-sm;
+  }
+}
+
 tooltip {
   label {
     margin: 6px;
@@ -34,6 +53,10 @@ tooltip {
   border-bottom: 2px solid $secondary;
 }
 
+.bar-containers {
+  padding: 3px 0px 3px 0px;
+}
+
 .workspaces-container {
   font-weight: bold;
   padding: 3px;
@@ -51,7 +74,7 @@ tooltip {
   }
 }
 
-.indicators {
+.pressable {
   &:hover {
     transition: $transition-time;
     border-radius: $radius-lg;
