@@ -1,8 +1,8 @@
-(defpoll today :interval "1s" `date +"%b %I:%M %p"`)
-
-
 (defvar images_folder "/home/wachamuli/.config/eww/images/")
 
+(defpoll today
+  :interval "1s"
+`date +"%b %I:%M %p"`)
 (defpoll active_workspace
   :initial 1
   :interval "0.2s" "./scripts/bar/workspaces.sh"
@@ -27,6 +27,7 @@
   :initial `{"state": "yes"}`
   :interval  "0.5s" "./scripts/bar/bluetooth.sh"
 )
+
 (deflisten sound
   :initial `{ "volume": 100, "muted": "no"}`
   "./scripts/bar/sound.sh "
@@ -78,7 +79,7 @@
       )
       (eventbox
         :class "indicators"
-        :onclick "${EWW_EXECUTABLE} open --toggle controls_window"
+        :onclick "${EWW_EXECUTABLE} open --toggle controls_window && ${EWW_EXECUTABLE} update control=true"
         (box
           :width 100
           (location_icon)
@@ -96,6 +97,8 @@
   )
 )
 
+; (defwidget icon [])
+
 (defwidget workspaces []
   (box
     (for workspace in "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
@@ -110,17 +113,24 @@
 )
 
 (defwidget bluetooth_icon []
-  (literal
+  (image :
     :visible {bluetooth.state == "no"}
     :valign "center"
-    :content "(image :image-width 25 :image-height 25 :path {images_folder + \"bluetooth-on.svg\"})")
+    :image-width 25
+    :image-height 25
+    :path {images_folder + "bluetooth-on.svg"}
+  )
+  
 )
 
 (defwidget location_icon []
-  (literal
+  (image
     :visible {location.state == "active"}
     :valign "center"
-    :content "(image :image-width 25 :image-height 25 :path {images_folder + \"location-on.svg\"})")
+    :image-width 25
+    :image-height 25
+    :path {images_folder + "location-on.svg"}
+  )
 )
 
 (defwindow controls_window
