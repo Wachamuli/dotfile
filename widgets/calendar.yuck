@@ -1,0 +1,9 @@
+(defwidget calendar_widget []
+  (calendar
+    :halign "center"
+    :valign "center"
+    :day   {time.day}
+    :month {time.month}
+    :year  {time.year}
+  )
+)

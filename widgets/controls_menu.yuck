@@ -1,0 +1,64 @@
+(defwidget controls_widget []
+  (box
+    :class "controls-menu"
+    :orientation "v"
+    (box
+      (wifi)
+      (bluetooth)
+      (location)
+    )
+    (box
+      :orientation "v"
+      (slider
+        :max 100
+        :min 0
+        :value {sound.volume}
+        :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%"
+        (sound_icon)
+      )
+      (slider
+        :max 100
+        :min 1
+        :value brightness
+        :onchange "brightnessctl --quiet set {}%"
+        (brightness_icon)
+      )
+    )
+  )
+)
+
+(defwidget bluetooth []
+  (button
+    :onclick "if [ \"$(rfkill list bluetooth | grep -i 'soft blocked: yes')\" ]; then rfkill unblock bluetooth; else rfkill block bluetooth; fi"
+    (image
+      :image-width 25
+      :image-height 25
+      :path {bluetooth.state == "no" ? images_folder + "bluetooth-on.svg" : images_folder + "bluetooth-off.svg"}
+    )
+  )
+)
+
+
+(defwidget location []
+  (button
+    ; FIXME: the need of sudo permissions
+    :onclick "sudo systemctl is-active --quiet geoclue && sudo systemctl stop geoclue || sudo systemctl start geoclue"
+    (image
+      :image-width 25
+      :image-height 25
+      :path {location.state == "active" ? images_folder + "location-on.svg" : images_folder + "location-off.svg"}
+    )
+  )
+)
+
+
+(defwidget wifi []
+  (button
+    :onclick "if [ \"$(nmcli radio wifi)\" = \"enabled\" ]; then nmcli radio wifi off; else nmcli radio wifi on; fi"
+    (image
+      :image-width 25
+      :image-height 25
+      :path {wifi.state == "yes" ? images_folder + "wififull.svg" : images_folder + "wifidisconnected.svg"}
+    )
+  )
+)

@@ -1,0 +1,38 @@
+(defvar images_folder "/home/wachamuli/.config/eww/images/")
+
+(defpoll today
+  :interval "1s"
+`date +"%b %I:%M %p"`)
+(defpoll workspaces
+  :initial `{ "focused": 1, "actives": "[1]"}`
+  :interval "0.2s" "./scripts/bar/workspaces.sh"
+)
+(defpoll time
+  :initial `{"day":"1", "month":"1", "year": "1"}`
+  :interval  "1h" `date +'{"day":"%d", "month":"%M", "year": "%Y"}'`
+)
+(defpoll battery
+  :initial `{"state": "", "": 0, "percentage_base10": 0, "time_to_full": 0}`
+  :interval "1s" "./scripts/bar/battery.sh"
+)
+(defpoll wifi
+  :initial `{"state": "no", "name": "", "signal": 0}`
+  :interval "1s" "./scripts/bar/wifi.sh"
+)
+(defpoll location
+  :initial `{"state": "inactive"}`
+  :interval  "0.5s" "./scripts/bar/location.sh"
+)
+(defpoll bluetooth
+  :initial `{"state": "yes"}`
+  :interval  "0.5s" "./scripts/bar/bluetooth.sh"
+)
+
+(deflisten sound
+  :initial `{ "volume": 100, "muted": "no"}`
+  "./scripts/bar/sound.sh "
+)
+(deflisten brightness
+  :initial 100
+  "./scripts/bar/brightness.sh "
+)

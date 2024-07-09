@@ -1,44 +1,3 @@
-(defvar images_folder "/home/wachamuli/.config/eww/images/")
-
-(defpoll today
-  :interval "1s"
-`date +"%b %I:%M %p"`)
-(defpoll workspaces
-  :initial `{ "focused": 1, "actives": "[1]"}`
-  :interval "0.2s" "./scripts/bar/workspaces.sh"
-)
-(defpoll time
-  :initial `{"day":"1", "month":"1", "year": "1"}`
-  :interval  "1h" `date +'{"day":"%d", "month":"%M", "year": "%Y"}'`
-)
-(defpoll battery
-  :initial `{"state": "", "": 0, "percentage_base10": 0, "time_to_full": 0}`
-  :interval "1s" "./scripts/bar/battery.sh"
-)
-(defpoll wifi
-  :initial `{"state": "", "name": "", "signal": 0}`
-  :interval "1s" "./scripts/bar/wifi.sh"
-)
-(defpoll location
-  :initial `{"state": "inactive"}`
-  :interval  "0.5s" "./scripts/bar/location.sh"
-)
-(defpoll bluetooth
-  :initial `{"state": "yes"}`
-  :interval  "0.5s" "./scripts/bar/bluetooth.sh"
-)
-
-(deflisten sound
-  :initial `{ "volume": 100, "muted": "no"}`
-  "./scripts/bar/sound.sh "
-)
-(deflisten brightness
-  :initial 100
-  "./scripts/bar/brightness.sh "
-)
-
-
-
 (defwidget bar_widget []
   (box
     :class "bar-widget"
@@ -52,17 +11,17 @@
         :halign "center"
         :orientation "h"
         :space-evenly false
-        (workspaces)
+        (workspaces_widget)
       )
     )
     (box
-      (smalldate)
+      (smalldate_widget)
     )
     (box
       :halign "end"
       :orientation "h"
       :space-evenly false
-      :spacing 20
+      :spacing 40
       (eventbox
         :class "indicators"
         :onclick "${EWW_EXECUTABLE} open --toggle controls_window"
@@ -73,18 +32,16 @@
           (wifi_icon)
           (sound_icon)
           (battery_icon)
+          (power_icon)
         )
       )
-      (box
-        (power_icon)
-        
-      )
+      
     )
   )
 )
 
 
-(defwidget workspaces []
+(defwidget workspaces_widget []
   (box
     :spacing 5
     :class "workspaces-container"
@@ -99,12 +56,23 @@
   )
 )
 
+(defwidget smalldate_widget []
+  (box
+    :width 100
+    (label :class "date" :text today)
+  )
+  ; (box
+    ;   (
+      ;     button
+      ;     :onclick "${EWW_EXECUTABLE} open --toggle calendar_window"
+      ;     today
+    ;   )
+  ; )
+)
+
 (defwidget bluetooth_icon []
-  (image
+  (icon
     :visible {bluetooth.state == "no"}
-    :valign "center"
-    :image-width 25
-    :image-height 25
     :path {images_folder + "bluetooth-on.svg"}
   )
   
@@ -120,114 +88,6 @@
   )
 )
 
-
-(defwidget controls_widget []
-  (box
-    :class "controls-menu"
-    :orientation "v"
-    (box
-      (wifi)
-      (bluetooth)
-      (location)
-    )
-    (box
-      :orientation "v"
-      (slider
-        :max 100
-        :min 0
-        :value {sound.volume}
-        :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%"
-        (sound_icon)
-      )
-      (slider
-        :max 100
-        :min 1
-        :value brightness
-        :onchange "brightnessctl --quiet set {}%"
-        (brightness_icon)
-      )
-    )
-  )
-)
-
-
-(defwidget bluetooth []
-  (button
-    :onclick "if [ \"$(rfkill list bluetooth | grep -i 'soft blocked: yes')\" ]; then rfkill unblock bluetooth; else rfkill block bluetooth; fi"
-    (image
-      :image-width 25
-      :image-height 25
-      :path {bluetooth.state == "no" ? images_folder + "bluetooth-on.svg" : images_folder + "bluetooth-off.svg"}
-    )
-  )
-)
-
-
-(defwidget location []
-  (button
-    ; FIXME: the need of sudo permissions
-    :onclick "sudo systemctl is-active --quiet geoclue && sudo systemctl stop geoclue || sudo systemctl start geoclue"
-    (image
-      :image-width 25
-      :image-height 25
-      :path {location.state == "active" ? images_folder + "location-on.svg" : images_folder + "location-off.svg"}
-    )
-  )
-)
-
-
-(defwidget wifi []
-  (button
-    :onclick "if [ \"$(nmcli radio wifi)\" = \"enabled\" ]; then nmcli radio wifi off; else nmcli radio wifi on; fi"
-    (image
-      :image-width 25
-      :image-height 25
-      :path {wifi.state == "yes" ? images_folder + "wififull.svg" : images_folder + "wifidisconnected.svg"}
-    )
-  )
-)
-
-(
-  defwidget calendar_widget []
-  (
-    calendar
-    :halign "center"
-    :valign "center"
-    :day   {time.day}
-    :month {time.month}
-    :year  {time.year}
-  )
-)
-
-(
-  defwindow calendar_window []
-  :monitor 0
-  :stacking "overlay"
-  :geometry (
-    geometry
-    :y "5px"
-    :width "270px"
-    :height "60px"
-    :anchor "top center"
-  )
-  (calendar_widget)
-)
-
-(defwidget smalldate []
-  (box
-    :width 100
-    (label :class "date" :text today)
-  )
-  ; (box
-    ;   (
-      ;     button
-      ;     :onclick "${EWW_EXECUTABLE} open --toggle calendar_window"
-      ;     today
-    ;   )
-  ; )
-)
-
-
 (defwidget battery_icon []
   (
     icon
@@ -238,12 +98,6 @@
     ? images_folder + "battery-${battery.percentage_base10}.svg"
     : images_folder + "battery-charging-${battery.percentage_base10}.svg"
     }
-  )
-)
-
-(defwidget brightness_icon []
-  (icon
-    :path {images_folder + "brightness.svg"}
   )
 )
 
@@ -279,5 +133,11 @@
 (defwidget power_icon []
   (icon
     :path {images_folder + "power.svg"}
+  )
+)
+
+(defwidget brightness_icon []
+  (icon
+    :path {images_folder + "brightness.svg"}
   )
 )

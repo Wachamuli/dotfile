@@ -26,3 +26,17 @@
   )
   (controls_widget)
 )
+
+
+(defwindow calendar_window []
+  :monitor 0
+  :stacking "overlay"
+  :geometry (
+    geometry
+    :y "5px"
+    :width "270px"
+    :height "60px"
+    :anchor "top center"
+  )
+  (calendar_widget)
+)
