@@ -4,19 +4,36 @@
 
 
 (defvar images_folder "/home/wachamuli/.config/eww/images/")
+(defvar is_bluetooth_on true)
 
 (defpoll time
   :initial `{"day":"1", "month":"1", "year": "1"}`
-:interval  "1h" `date +'{"day":"%d", "month":"%M", "year": "%Y"}'`)
+  :interval  "1h" `date +'{"day":"%d", "month":"%M", "year": "%Y"}'`
+)
 (defpoll battery
   :initial `{"state": "", "": 0, "percentage_base10": 0, "time_to_full": 0}`
-:interval "1s" "./scripts/bar/battery.sh")
+  :interval "1s" "./scripts/bar/battery.sh"
+)
 (defpoll wifi
   :initial `{"state": "", "name": "", "signal": 0}`
-:interval "1s" "./scripts/bar/wifi.sh")
-(defpoll sound
-  :initial `{"volume": 0, "is_mute:": ""}`
-:interval "1s" "./scripts/bar/sound.sh ")
+  :interval "1s" "./scripts/bar/wifi.sh"
+)
+(defpoll location
+  :initial `{"state": "inactive"}`
+  :interval  "0.5s" "./scripts/bar/location.sh"
+)
+(defpoll bluetooth
+  :initial `{"state": "yes"}`
+  :interval  "0.5s" "./scripts/bar/bluetooth.sh"
+)
+(deflisten sound
+  :initial `{ "volume": 100, "muted": "no"}`
+  "./scripts/bar/sound.sh "
+)
+(deflisten brightness
+  :initial 100
+  "./scripts/bar/brightness.sh "
+)
 
 (defwindow bar
   :monitor 0
@@ -24,43 +41,71 @@
   :stacking   "bg"
   :windowtype "dock"
   :reserve    (struts :distance "50px" :side "top")
-  :geometry (
-    geometry
+  :geometry (geometry
     :x      "0%"
     :y      "0%"
     :width  "100%"
     :height  "40px"
-    :anchor "top center"
-  )
+  :anchor "top center")
   (bar_widget))
 
 
 
-(
-  defwidget bar_widget []
-  (box :class "bar-widget" :orientation "h" :space-evenly true
-    
-    (box :orientation "h" :space-evenly false :halign "start"
-      ; (smalldate)
+(defwidget bar_widget []
+  (box
+    :class "bar-widget"
+    :orientation "h"
+    :space-evenly true
+    (box
+      :halign "start"
+      :orientation "h"
+      :space-evenly false
     )
-    
-    (box :orientation "h" :space-evenly false :halign "center"
-      ; (smalldate)
+    (box
+      :halign "center"
+      :orientation "h"
+      :space-evenly false
     )
-    
-    (box :orientation "h" :space-evenly false :halign "end" :class "inidicators"
-      (
-        eventbox
+    (box
+      :halign "end"
+      :orientation "h"
+      :space-evenly false
+      :spacing 20
+      (box
+        (smalldate)
+      )
+      (eventbox
         :class "indicators"
         :onclick "${EWW_EXECUTABLE} open --toggle controls_window"
         (box
+          :width 100
+          (location_icon)
+          (bluetooth_icon )
           (wifi_icon)
           (sound_icon)
           (battery_icon)
         )
       )
+      (box
+        (power_icon)
+
+      )
     )
   )
+)
+
+(defwidget bluetooth_icon []
+  (literal
+    :visible {bluetooth.state == "no"}
+    :valign "center"
+    :content "(image :image-width 25 :image-height 25 :path {images_folder + \"bluetooth-on.svg\"})")
+)
+
+(defwidget location_icon []
+  (literal
+    :visible {location.state == "active"}
+    :valign "center"
+    :content "(image :image-width 25 :image-height 25 :path {images_folder + \"location-on.svg\"})")
 )
 
 (defwindow controls_window
@@ -76,24 +121,84 @@
   (controls_widget)
 )
 
-(
-  defwidget controls_widget []
-  (
-    box
-    (
-      wifi
+(defwidget controls_widget []
+  (box
+    :orientation "v"
+    (box
+      (wifi)
+      (bluetooth)
+      (location)
+    )
+    (box
+      :orientation "v"
+      (slider
+        :max 100
+        :min 0
+        :value {sound.volume}
+        :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%"
+        (sound_icon)
+      )
+      (slider
+        :max 100
+        :min 1
+        :value brightness
+        :onchange "brightnessctl --quiet set {}%"
+        (brightness_icon)
+      )
     )
   )
 )
 
+(defwidget slider [max min value onchange]
+  (box
+    :space-evenly false
+    (children)
+    (scale
+      :width 50
+      :hexpand true
+      :max max
+      :min min
+      :value value
+      :onchange onchange
+    )
+  )
+)
+
+(defwidget bluetooth []
+  (button
+    :onclick "if [ \"$(rfkill list bluetooth | grep -i 'soft blocked: yes')\" ]; then rfkill unblock bluetooth; else rfkill block bluetooth; fi"
+    (image
+      :image-width 25
+      :image-height 25
+      :path {"${bluetooth.state}" == "no" ? images_folder + "bluetooth-on.svg" : images_folder + "bluetooth-off.svg"}
+    )
+  )
+)
+
+
+(defwidget location []
+  (button
+    ; FIXME: the need of sudo permissions
+    :onclick "sudo systemctl is-active --quiet geoclue && sudo systemctl stop geoclue || sudo systemctl start geoclue"
+    (image
+      :image-width 25
+      :image-height 25
+      :path {"${location.state}" == "active" ? images_folder + "location-on.svg" : images_folder + "location-off.svg"}
+    )
+  )
+)
+
+
 (defwidget wifi []
   (button
-    :class "wifi-button"
     :onclick "if [ \"$(nmcli radio wifi)\" = \"enabled\" ]; then nmcli radio wifi off; else nmcli radio wifi on; fi"
     (image
-      :width 25
-      :height 25
-    :path {"${wifi.state}" == "yes" ? images_folder + "wififull.svg" : images_folder + "wifidisconnected.svg"})))
+      :image-width 25
+      :image-height 25
+      :path {"${wifi.state}" == "yes" ? images_folder + "wififull.svg" : images_folder + "wifidisconnected.svg"}
+    )
+  )
+)
 
 (
   defwidget calendar_widget []
@@ -121,16 +226,18 @@
   (calendar_widget)
 )
 
-(
-  defwidget smalldate []
-  (
-    box
-    (
-      button
-      :onclick "${EWW_EXECUTABLE} open --toggle calendar_window"
-      today
-    )
+(defwidget smalldate []
+  (box
+    :width 100
+    (label :class "date" :text today)
   )
+  ; (box
+    ;   (
+      ;     button
+      ;     :onclick "${EWW_EXECUTABLE} open --toggle calendar_window"
+      ;     today
+    ;   )
+  ; )
 )
 
 
@@ -152,12 +259,20 @@
   )
 )
 
-; You get errors when the wifi is disabled
+(defwidget brightness_icon []
+  (box
+    (image
+      :image-width 25
+      :image-height 25
+      :path {images_folder + "brightness.svg"}
+    )
+  )
+)
+
+; FIXME: You get errors when the wifi is disabled
 (defwidget wifi_icon []
-  (
-    box
-    (
-      image
+  (box
+    (image
       :image-width 25
       :image-height 25
       :tooltip "Connected to ${wifi.name}"
@@ -176,15 +291,13 @@
 )
 
 (defwidget sound_icon []
-  (
-    box
-    (
-      image
+  (box
+    (image
       :image-width 25
       :image-height 25
-      :tooltip "Volume ${sound.volume}%"
+      :tooltip {sound.muted == "no" ? "Volume " + sound.volume + "%" : "Muted"}
       :path {
-      "${sound.mute}" == "on"
+      "${sound.muted}" == "no"
       ? sound.volume > 65 ? images_folder + "volume-up.svg"
       : sound.volume > 30 ? images_folder + "volume-middle.svg"
       : images_folder + "volume-down.svg"
@@ -194,3 +307,13 @@
   )
 )
 
+
+(defwidget power_icon []
+  (box
+    (image
+      :image-width 25
+      :image-height 25
+      :path {images_folder + "power.svg"}
+    )
+  )
+)

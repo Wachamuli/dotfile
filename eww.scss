@@ -3,36 +3,42 @@
 $primary: #ffffff;
 $secondary: #000000;
 $font-color: #000000;
+$sa: #ff0000;
 
-$radius-sm: 30px;
-$radius-lg: 40px;
+$radius-sm: 10px;
+$radius-lg: 30px;
 
 $transition-time: 0.2s;
 
+tooltip {
+    label {
+        margin: 6px;
+    }
+
+    &.background {
+        font-size: 18px;
+        background-color: $secondary;
+        border-radius: $radius-sm;
+        color: #bfc9db;
+    }
+}
 
 .bar-widget {
-    background-color: $primary;
     color: $font-color;
+    background-color: $primary;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    border-bottom: 2px solid $secondary;
 }
 
-.controls-window {
-    background-color: #000000;
-    border-radius: $radius-lg;
+.indicators {
+    &:hover {
+        transition: $transition-time;
+        border-radius: $radius-lg;
+        background-color: #afd;
+    }
 }
 
-
-.wifi-button {
-    background-color: #000000;
-}
-
-.indicators:hover {
-    padding: 0.5rem;
-    transition: $transition-time;
-    background-color: #afd;
-    border-radius: $radius-lg;
-}
-
-tooltip {
-    background-color: $secondary;
-    border-radius: $radius-sm; 
+.date {
+    font-weight: bold;
 }
