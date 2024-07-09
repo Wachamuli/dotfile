@@ -1,0 +1,28 @@
+(defwindow bar
+  :monitor 0
+  :exclusive true
+  :stacking   "bg"
+  :windowtype "dock"
+  :reserve    (struts :distance "50px" :side "top")
+  :geometry (geometry
+    :x      "0%"
+    :y      "0%"
+    :width  "100%"
+    :height  "40px"
+    :anchor "top center"
+  )
+  (bar_widget)
+)
+
+(defwindow controls_window
+  :monitor 0
+  :stacking "overlay"
+  :geometry (
+    geometry
+    :y "5px"
+    :width "270px"
+    :height "60px"
+    :anchor "top right"
+  )
+  (controls_widget)
+)

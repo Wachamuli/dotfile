@@ -1,0 +1,24 @@
+(defwidget icon [path ?tooltip ?visible]
+  (image
+    :tooltip tooltip 
+    :image-width 20
+    :image-height 20
+    :visible {visible ?: true}
+    :path path
+  )
+)
+
+(defwidget slider [max min value onchange]
+  (box
+    :space-evenly false
+    (children)
+    (scale
+      :width 50
+      :hexpand true
+      :max max
+      :min min
+      :value value
+      :onchange onchange
+    )
+  )
+)

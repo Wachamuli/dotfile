@@ -1,1 +1,3 @@
+(include "./components.yuck")
 (include "./widgets/bar.yuck")
+(include "./windows.yuck")

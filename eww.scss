@@ -1,8 +1,7 @@
-// * { all: unset; }
-
 $primary: #ffffff;
 $secondary: #000000;
 $font-color: #000000;
+$light-accent: #e7e7e7;
 $sa: #ff0000;
 
 $radius-sm: 10px;
@@ -10,46 +9,60 @@ $radius-lg: 30px;
 
 $transition-time: 0.2s;
 
-tooltip {
-    label {
-        margin: 6px;
-    }
+// * {
+//   all: unset;
+// }
 
-    &.background {
-        font-size: 18px;
-        background-color: $secondary;
-        border-radius: $radius-sm;
-        color: #bfc9db;
-    }
+tooltip {
+  label {
+    margin: 6px;
+  }
+
+  &.background {
+    font-size: 18px;
+    background-color: $secondary;
+    border-radius: $radius-sm;
+    color: #bfc9db;
+  }
 }
 
 .bar-widget {
-    color: $font-color;
-    background-color: $primary;
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
-    border-bottom: 2px solid $secondary;
+  color: $font-color;
+  background-color: $primary;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  border-bottom: 2px solid $secondary;
 }
 
-.active-workspace {
+.workspaces-container {
+  font-weight: bold;
+  padding: 3px;
+
+  .active-workspace {
     color: $primary;
     background-color: $secondary;
-    border-radius: $radius-lg;
-}
+    border-radius: $radius-sm;
+  }
 
-.workspace {
+  .workspace {
     color: $secondary;
+    border: 2px solid $secondary;
+    border-radius: $radius-sm;
+  }
 }
-
 
 .indicators {
-    &:hover {
-        transition: $transition-time;
-        border-radius: $radius-lg;
-        background-color: #afd;
-    }
+  &:hover {
+    transition: $transition-time;
+    border-radius: $radius-lg;
+    background-color: $light-accent;
+  }
 }
 
 .date {
-    font-weight: bold;
+  font-weight: bold;
+}
+
+.controls-menu {
+  background: $primary;
 }

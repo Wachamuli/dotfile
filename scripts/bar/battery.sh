@@ -1,3 +1,5 @@
+#!/bin/bash
+
 battery_info=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0)
 
 state=$(echo "$battery_info" | grep -E "state" | awk '{print $2}')
