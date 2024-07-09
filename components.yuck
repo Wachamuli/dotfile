@@ -1,6 +1,6 @@
 (defwidget icon [path ?tooltip ?visible]
   (image
-    :tooltip tooltip 
+    :tooltip tooltip
     :image-width 20
     :image-height 20
     :visible {visible ?: true}
@@ -19,6 +19,28 @@
       :min min
       :value value
       :onchange onchange
+    )
+  )
+)
+
+(defwidget pressable [?onclick ?onhover ?onhoverlost]
+  (eventbox
+    :class "pressable"
+    :onclick onclick
+    :onhover onhover
+    :onhoverlost onhoverlost
+    (box
+      :class "inner-pressable"
+      (children)
+    )
+  )
+)
+
+(defwidget separator []
+  (box
+    :style "padding-bottom: 10px; padding-top: 10px; margin-right: 5px; margin-left: 5px;"
+    (box
+      :style "border-left: 2px solid #000000;"
     )
   )
 )

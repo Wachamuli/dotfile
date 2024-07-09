@@ -6,7 +6,7 @@
 ; %b %I:%M %p
 (defpoll today
   :interval "1s"
-`date +"%I:%M %p"`)
+`date +"%b %I:%M %p"`)
 (defpoll workspaces
   :initial `{ "focused": 1, "actives": "[1]"}`
   :interval "0.2s" "./scripts/bar/workspaces.sh"

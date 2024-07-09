@@ -6,7 +6,6 @@
     (box
       :class "bar-containers"
       :halign "start"
-      :orientation "h"
       :space-evenly false
       (workspaces_widget)
     )
@@ -15,6 +14,10 @@
       :halign "center"
       :orientation "h"
       :space-evenly false
+      (pressable
+        :onclick "${EWW_EXECUTABLE} open --toggle calendar_window && ${EWW_EXECUTABLE} update is_calendar_open=${!is_calendar_open}"
+        (smalldate_widget)
+      )
     )
     (box
       :class "bar-containers"
@@ -38,24 +41,23 @@
         )
       )
       
-      ; (label :text "US" :style "font-weight: bold; font-size: 14px; margin-right: 5px; margin-left: 5px;")
+      (keyboard_layout)
       
-      ; (box
-        ;   :style "padding-bottom: 10px; padding-top: 10px;"
-        ;   (box
-          ;     :style "border-left: 2px solid #000000;"
-        ;   )
-      ; )
+      (separator)
       
       (indicators)
       
-      (pressable
-        :onclick "${EWW_EXECUTABLE} open --toggle calendar_window && ${EWW_EXECUTABLE} update is_calendar_open=${!is_calendar_open}"
-        (smalldate_widget)
-      )
+      ; (pressable
+        ;   :onclick "${EWW_EXECUTABLE} open --toggle calendar_window && ${EWW_EXECUTABLE} update is_calendar_open=${!is_calendar_open}"
+        ;   (smalldate_widget)
+      ; )
+      
+      (separator)
       
       ; (power_opts)
-      (power_icon)
+      (pressable
+        (power_icon)
+      )
     )
   )
 )
@@ -78,12 +80,22 @@
   )
 )
 
+(defwidget keyboard_layout []
+  (label
+    :style "font-weight: bold; font-size: 14px; margin-right: 5px; margin-left: 5px;"
+    :text "US"
+  )
+)
+
 (defwidget indicators []
   (pressable
     :onclick "${EWW_EXECUTABLE} open --toggle controls_window"
-    (wifi_icon)
-    (sound_icon)
-    (battery_icon)
+    (box
+      :spacing 5
+      (wifi_icon)
+      (sound_icon)
+      (battery_icon)
+    )
   )
 )
 
@@ -124,19 +136,6 @@
   
 )
 
-(defwidget pressable [?onclick ?onhover ?onhoverlost ?width]
-  (eventbox
-    :class "pressable"
-    :onclick onclick
-    :onhover onhover
-    :onhoverlost onhoverlost
-    (box :width {width ?: 0}
-      (children)
-    )
-  )
-)
-
-
 (defwidget workspaces_widget []
   (box
     :spacing 1
@@ -156,11 +155,7 @@
 )
 
 (defwidget smalldate_widget []
-  (box
-    ; :width 100
-    :style "padding-left: 1rem;"
-    (label :class "date" :text today)
-  )
+  (label :class "date" :text today)
   ; (box
     ;   (
       ;     button
