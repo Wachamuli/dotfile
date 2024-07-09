@@ -15,20 +15,18 @@
       :halign "center"
       :orientation "h"
       :space-evenly false
-      (pressable
-        :onclick "${EWW_EXECUTABLE} open --toggle calendar_window && ${EWW_EXECUTABLE} update is_calendar_open=${!is_calendar_open}"
-        (smalldate_widget)
-      )
     )
     (box
       :class "bar-containers"
       :halign "end"
       :orientation "h"
       :space-evenly false
-      :spacing 5
+      ; :spacing 5
+      ; More opts
       (revealer
         :reveal is_systrays_open
         :transition "slideleft"
+        :duration "200ms"
         (systray
           :icon-size 20
         )
@@ -36,20 +34,94 @@
       (pressable
         :onclick "${EWW_EXECUTABLE} update is_systrays_open=${!is_systrays_open}"
         (icon
-          :path {is_systrays_open ? images_folder + "chevron-left.svg" :  images_folder + "chevron-down.svg" }
+          :path {is_systrays_open ? "chevron-left.svg" :  "chevron-down.svg" }
         )
       )
+      
+      ; (label :text "US" :style "font-weight: bold; font-size: 14px; margin-right: 5px; margin-left: 5px;")
+      
+      ; (box
+        ;   :style "padding-bottom: 10px; padding-top: 10px;"
+        ;   (box
+          ;     :style "border-left: 2px solid #000000;"
+        ;   )
+      ; )
+      
+      (indicators)
+      
       (pressable
-        :width 80
-        :onclick "${EWW_EXECUTABLE} open --toggle controls_window"
-        (location_icon)
-        (bluetooth_icon )
-        (wifi_icon)
-        (sound_icon)
-        (battery_icon)
+        :onclick "${EWW_EXECUTABLE} open --toggle calendar_window && ${EWW_EXECUTABLE} update is_calendar_open=${!is_calendar_open}"
+        (smalldate_widget)
+      )
+      
+      ; (power_opts)
+      (power_icon)
+    )
+  )
+)
+
+(defwidget more_opts []
+  (box
+    (revealer
+      :reveal is_systrays_open
+      :transition "slideleft"
+      (systray
+        :icon-size 20
+      )
+    )
+    (pressable
+      :onclick "${EWW_EXECUTABLE} update is_systrays_open=${!is_systrays_open}"
+      (icon
+        :path {is_systrays_open ? "chevron-left.svg" :  "chevron-down.svg" }
       )
     )
   )
+)
+
+(defwidget indicators []
+  (pressable
+    :onclick "${EWW_EXECUTABLE} open --toggle controls_window"
+    (wifi_icon)
+    (sound_icon)
+    (battery_icon)
+  )
+)
+
+(defwidget power_opts []
+  (box
+    (eventbox
+      :onhover "${EWW_EXECUTABLE} update is_power_open=true"
+      :onhoverlost "${EWW_EXECUTABLE} update is_power_open=false"
+      (box
+        (revealer
+          :duration "200ms"
+          :reveal is_power_open
+          :transition "slideleft"
+          (box
+            :spacing 5
+            (pressable
+              (icon :tooltip "Restart" :path "restart.svg")
+            )
+            (pressable
+              :onclick "hyprctl dispatch exit"
+              (icon :tooltip "Logout"  :path "logout.svg")
+            )
+            (pressable
+              (icon :tooltip "Lockscreen" :path "lock.svg")
+            )
+            (pressable
+              :onclick "shutdown now"
+              (power_icon)
+            )
+          )
+        )
+        (icon
+          :path {is_power_open ? "triple_dots.svg" : "power.svg"}
+        )
+      )
+    )
+  )
+  
 )
 
 (defwidget pressable [?onclick ?onhover ?onhoverlost ?width]
@@ -71,9 +143,12 @@
     :class "workspaces-container"
     (for workspace in {workspaces.actives}
       (icon
-        :path {workspace == workspaces.focused
-        ? images_folder + "workspace-active.svg"
-        : images_folder + "workspace-inactive.svg"
+        :path {
+        workspace == workspaces.focused
+        ? "workspace-active.svg" :
+        workspace > arraylength(workspaces.actives) - 1
+        ? "workspace-create.svg"
+        : "workspace-inactive.svg"
         }
       )
     )
@@ -82,7 +157,8 @@
 
 (defwidget smalldate_widget []
   (box
-    :width 100
+    ; :width 100
+    :style "padding-left: 1rem;"
     (label :class "date" :text today)
   )
   ; (box
@@ -97,18 +173,15 @@
 (defwidget bluetooth_icon []
   (icon
     :visible {bluetooth.state == "no"}
-    :path {images_folder + "bluetooth-on.svg"}
+    :path "bluetooth-on.svg"
   )
   
 )
 
 (defwidget location_icon []
-  (image
+  (icon
     :visible {location.state == "active"}
-    :valign "center"
-    :image-width 25
-    :image-height 25
-    :path {images_folder + "location-on.svg"}
+    :path "location-on.svg"
   )
 )
 
@@ -118,9 +191,9 @@
     :visible {EWW_BATTERY == "" ? false : true}
     :tooltip "Battery ${battery.percentage}%"
     :path {
-    "${battery.state}" == "discharging"
-    ? images_folder + "battery-${battery.percentage_base10}.svg"
-    : images_folder + "battery-charging-${battery.percentage_base10}.svg"
+    battery.state == "discharging"
+    ? "battery-${battery.percentage_base10}.svg"
+    : "battery-charging-${battery.percentage_base10}.svg"
     }
   )
 )
@@ -130,12 +203,12 @@
   (icon
     :tooltip "Connected to ${wifi.name}"
     :path {
-    "${wifi.state}" == "yes" ?
+    wifi.state == "yes" ?
     wifi.signal > 77
-    ? images_folder + "wififull.svg"
-    : wifi.signal > 44 ? images_folder + "wifihalf.svg"
-    : images_folder + "wifimin.svg"
-    : images_folder + "wifidisconnected.svg"
+    ? "wififull.svg"
+    : wifi.signal > 44 ? "wifihalf.svg"
+    : "wifimin.svg"
+    : "wifidisconnected.svg"
     }
   )
 )
@@ -145,10 +218,10 @@
     :tooltip {sound.muted == "no" ? "Volume " + sound.volume + "%" : "Muted"}
     :path {
     "${sound.muted}" == "no"
-    ? sound.volume > 65 ? images_folder + "volume-up.svg"
-    : sound.volume > 30 ? images_folder + "volume-middle.svg"
-    : images_folder + "volume-down.svg"
-    : images_folder + "volume-mute.svg"
+    ? sound.volume > 65 ? "volume-up.svg"
+    : sound.volume > 30 ? "volume-middle.svg"
+    : "volume-down.svg"
+    : "volume-mute.svg"
     }
   )
 )
@@ -156,12 +229,13 @@
 
 (defwidget power_icon []
   (icon
-    :path {images_folder + "power.svg"}
+    :tooltip "Shutdown"
+    :path "power.svg"
   )
 )
 
 (defwidget brightness_icon []
   (icon
-    :path {images_folder + "brightness.svg"}
+    :path "brightness.svg"
   )
 )

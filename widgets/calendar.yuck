@@ -1,8 +1,8 @@
 (defwidget calendar_widget []
-  ; (revealer
-  ;   :reveal is_calendar_open
-  ;   :transition "slidedown"
-  ;   :duration "50ms"
+  (revealer
+    :reveal is_calendar_open
+    :transition "slidedown"
+    :duration "50ms"
     (box
       :class "calendar-container"
       (calendar
@@ -13,5 +13,5 @@
         :year  {time.year}
       )
     )
-  ; )
+  )
 )

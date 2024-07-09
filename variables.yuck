@@ -1,11 +1,12 @@
 (defvar is_systrays_open false)
-(defvar is_calendar_open true)
+(defvar is_calendar_open false)
+(defvar is_power_open false)
 (defvar images_folder "/home/wachamuli/.config/eww/images/")
 
 ; %b %I:%M %p
 (defpoll today
   :interval "1s"
-`date +"%b %I:%M %p"`)
+`date +"%I:%M %p"`)
 (defpoll workspaces
   :initial `{ "focused": 1, "actives": "[1]"}`
   :interval "0.2s" "./scripts/bar/workspaces.sh"
