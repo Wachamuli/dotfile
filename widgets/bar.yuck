@@ -1,11 +1,12 @@
-
-; I shouldn't update this value each second
 (defpoll today :interval "1s" `date +"%b %I:%M %p"`)
 
 
 (defvar images_folder "/home/wachamuli/.config/eww/images/")
-(defvar is_bluetooth_on true)
 
+(defpoll active_workspace
+  :initial 1
+  :interval "0.2s" "./scripts/bar/workspaces.sh"
+)
 (defpoll time
   :initial `{"day":"1", "month":"1", "year": "1"}`
   :interval  "1h" `date +'{"day":"%d", "month":"%M", "year": "%Y"}'`
@@ -65,6 +66,7 @@
       :halign "center"
       :orientation "h"
       :space-evenly false
+      (workspaces)
     )
     (box
       :halign "end"
@@ -88,7 +90,20 @@
       )
       (box
         (power_icon)
+        
+      )
+    )
+  )
+)
 
+(defwidget workspaces []
+  (box
+    (for workspace in "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+      (label
+        :width 40
+        :height 30
+        :class {workspace == active_workspace ? "active-workspace" : "workspace"}
+        :text workspace
       )
     )
   )

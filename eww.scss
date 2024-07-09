@@ -31,6 +31,17 @@ tooltip {
     border-bottom: 2px solid $secondary;
 }
 
+.active-workspace {
+    color: $primary;
+    background-color: $secondary;
+    border-radius: $radius-lg;
+}
+
+.workspace {
+    color: $secondary;
+}
+
+
 .indicators {
     &:hover {
         transition: $transition-time;

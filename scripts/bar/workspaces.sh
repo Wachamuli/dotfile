@@ -1,1 +1,1 @@
-focused_workspace=$(hyprctl activeworkspace | grep -m 1 "ID" | awk '{print $3}')
+hyprctl activeworkspace | grep -m 1 "ID" | awk '{print $3}'
