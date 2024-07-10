@@ -1,17 +1,23 @@
 $secondary: #ffffff;
 $primary: #000000;
 $font-color: #ffffff;
-$light-accent: #dad8d8;
+$light-accent: #3f3f3f;
+
+$radius-sm: 10px;
+$radius-lg: 30px;
+$border-width: 0px;
+
+$transition-time: 0.2s;
 
 // $primary: #ffffff;
 // $secondary: #000000;
 // $font-color: #000000;
 // $light-accent: #dad8d8;
 
-$radius-sm: 10px;
-$radius-lg: 30px;
+// $radius-sm: 10px;
+// $radius-lg: 30px;
+// $border-width: 2px;
 
-$transition-time: 0.2s;
 
 // * {
 //   all: unset;
@@ -37,13 +43,14 @@ calendar {
 }
 
 tooltip {
+  border: $border-width solid #ffffff;
   label {
     margin: 6px;
   }
 
   &.background {
     font-size: 18px;
-    background-color: $secondary;
+    background-color: $primary;
     border-radius: $radius-sm;
     color: #bfc9db;
   }
@@ -54,7 +61,7 @@ tooltip {
   background-color: $primary;
   padding-right: 0.5rem;
   padding-left: 0.5rem;
-  border-bottom: 2px solid $secondary;
+  border-bottom: $border-width solid $secondary;
 }
 
 .bar-containers {
@@ -73,7 +80,7 @@ tooltip {
 
   .workspace {
     color: $secondary;
-    border: 2px solid $secondary;
+    border: $border-width solid $secondary;
     border-radius: $radius-sm;
   }
 }
@@ -106,5 +113,5 @@ tooltip {
 }
 
 .inner-separator {
-  border-left: 2px solid $secondary;
+  border-left: $border-width solid $secondary;
 }

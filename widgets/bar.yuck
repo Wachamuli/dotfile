@@ -93,6 +93,7 @@
     :onclick "${EWW_EXECUTABLE} open --toggle controls_window"
     (box
       :spacing 5
+      (bluetooth_icon)
       (wifi_icon)
       (sound_icon)
       (battery_icon)
