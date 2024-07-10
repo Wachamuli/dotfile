@@ -41,7 +41,7 @@
         )
       )
       
-      (keyboard_layout)
+      (keyboard_layout_widget)
       
       (separator)
       
@@ -81,10 +81,10 @@
   )
 )
 
-(defwidget keyboard_layout []
+(defwidget keyboard_layout_widget []
   (label
     :style "font-weight: bold; font-size: 14px; margin-right: 5px; margin-left: 5px;"
-    :text "US"
+    :text {keyboard_layout.abbreviated_active_keymap}
   )
 )
 
