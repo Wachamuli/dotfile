@@ -19,8 +19,9 @@
   :stacking "overlay"
   :geometry (
     geometry
+    :x "45px"
     :y "5px"
-    :width "270px"
+    :width "370px"
     :height "60px"
     :anchor "top right"
   )

@@ -1,8 +1,8 @@
-(defwidget icon [path ?tooltip ?visible]
+(defwidget icon [path ?tooltip ?visible ?width ?height]
   (image
     :tooltip tooltip
-    :image-width 20
-    :image-height 20
+    :image-width {width ?: 20}
+    :image-height {height ?: 20}
     :visible {visible ?: true}
     :path { images_folder + path}
   )
@@ -10,9 +10,12 @@
 
 (defwidget slider [max min value onchange]
   (box
+    :class "slider-container"
     :space-evenly false
+    :spacing 5
     (children)
     (scale
+      :class "slider"
       :width 50
       :hexpand true
       :max max
@@ -41,6 +44,18 @@
     :class "separator"
     (box
       :class "inner-separator"
+    )
+  )
+)
+
+(defwidget circle_button [?onclick ?path]
+  (button
+    :class "inactive-button"
+    :onclick onclick
+    (icon
+      :width 25
+      :height 25
+      :path path
     )
   )
 )

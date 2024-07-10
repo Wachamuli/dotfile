@@ -23,7 +23,7 @@
   "./scripts/bar/keyboard_layout.sh"
 )
 (defpoll battery
-  :initial `{"state": "", "": 0, "percentage_base10": 0, "time_to_full": 0}`
+  :initial `{"state": "", "percentage": 0, "percentage_base10": 0, "time_to_full": 0, "time_to_empty": 0}`
   :interval "1s" 
   "./scripts/bar/battery.sh"
 )

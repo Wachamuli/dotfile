@@ -18,10 +18,9 @@ $transition-time: 0.2s;
 // $radius-lg: 30px;
 // $border-width: 2px;
 
-
-// * {
-//   all: unset;
-// }
+* {
+  all: unset;
+}
 
 .calendar-container {
   border-radius: $radius-lg;
@@ -103,6 +102,9 @@ tooltip {
 
 .controls-menu {
   background: $primary;
+  border: 2px solid $secondary;
+  border-radius: $radius-lg;
+  padding: 2rem;
 }
 
 .separator {
@@ -114,4 +116,25 @@ tooltip {
 
 .inner-separator {
   border-left: $border-width solid $secondary;
+}
+
+.inactive-button {
+  background-color: $primary;
+  padding: 15px;
+  border-radius: 30px;
+  border: 2px solid $secondary;
+}
+
+scale slider {
+  background-size: 100px 100px;
+  min-height: 20px;
+}
+
+.slider-container {
+  margin-bottom: 15px;
+}
+
+.slider trough highlight {
+  background-color: $secondary;
+  border-radius: $radius-lg;
 }

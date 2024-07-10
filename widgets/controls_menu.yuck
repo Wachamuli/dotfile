@@ -3,47 +3,108 @@
     :class "controls-menu"
     :orientation "v"
     (box
-      (wifi)
-      (bluetooth)
+      :style "margin-bottom: 25px;"
+      (battery_info)
+      (box
+        :space-evenly false
+        :spacing 5
+        :halign "end"
+        (wifi)
+        (bluetooth)
+        (plane_mode)
+      )
     )
     (box
       :orientation "v"
       (slider
-        :max 100
+        :max 101
         :min 0
         :value {sound.volume}
         :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%"
-        (sound_icon)
+        (sound_icon :width 25 :height 25)
       )
       (slider
         :max 100
         :min 1
         :value brightness
         :onchange "brightnessctl --quiet set {}%"
-        (brightness_icon)
+        (brightness_icon :width 25 :height 25)
+      )
+    )
+    ; (box
+    ;   (foo 
+    ;     :path ""
+    ;     :value {EWW_CPU.avg} )
+    ;   ; Converto from kb to gb and the percentage
+    ;   ; EWW_RAM.used_mem / (1000*1000*1000)
+    ;   ; Converted into a percentage
+    ;   ; (EWW_RAM.used_mem / (1000*1000*1000)) * 100 / 12
+    ;   (foo 
+    ;     :path ""
+    ;     :value {(EWW_RAM.used_mem / (1000*1000*1000)) * 100 / (EWW_RAM.total_mem / (1000*1000*1000))})
+    ;   (foo 
+    ;     :path ""
+    ;     :value {EWW_TEMPS.CORETEMP_PACKAGE_ID_0})
+    ; )
+  )
+)
+
+(defwidget foo [value path]
+  (circular-progress
+    :start-at 75
+    :value value
+    :thickness 20
+    (label
+      :text path
+    )
+  )
+)
+
+(defwidget battery_info []
+  (box
+    :space-evenly false
+    :valign "center"
+    :spacing 10
+    (battery_icon
+      :width 25
+      :height 25
+    )
+    (box
+      :orientation "v"
+      :space-evenly false
+      :valign "center"
+      (label
+        :halign "start"
+        :style "font-size: 16px; font-weight: bold;"
+        :text {battery.percentage + "%"}
+      )
+      (label
+        :halign "start"
+        :style "font-size: 16px"
+        :text {battery.state == "charging" ? battery.time_to_full : battery.time_to_empty}
       )
     )
   )
 )
 
 (defwidget bluetooth []
-  (button
+  (circle_button
     :onclick "if [ \"$(rfkill list bluetooth | grep -i 'soft blocked: yes')\" ]; then rfkill unblock bluetooth; else rfkill block bluetooth; fi"
-    (image
-      :image-width 25
-      :image-height 25
-      :path {bluetooth.state == "no" ? images_folder + "bluetooth-on.svg" : images_folder + "bluetooth-off.svg"}
-    )
+    :path {bluetooth.state == "no" ? "bluetooth-on.svg" : "bluetooth-off.svg"}
   )
 )
 
 (defwidget wifi []
-  (button
+  (circle_button
     :onclick "if [ \"$(nmcli radio wifi)\" = \"enabled\" ]; then nmcli radio wifi off; else nmcli radio wifi on; fi"
-    (image
-      :image-width 25
-      :image-height 25
-      :path {wifi.state == "yes" ? images_folder + "wififull.svg" : images_folder + "wifidisconnected.svg"}
-    )
+    :path {wifi.state == "yes" ? "wififull.svg" : "wifidisconnected.svg"}
+  )
+)
+
+; TODO: Airplane script
+(defwidget plane_mode []
+  (circle_button
+    :onclick ""
+    :path "airplane-on.svg"
   )
 )

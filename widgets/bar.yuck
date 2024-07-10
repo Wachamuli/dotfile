@@ -182,9 +182,11 @@
   )
 )
 
-(defwidget battery_icon []
+(defwidget battery_icon [?width ?height]
   (
     icon
+    :width width
+    :height height
     :visible {EWW_BATTERY == "" ? false : true}
     :tooltip "Battery ${battery.percentage}%"
     :path {
@@ -210,8 +212,10 @@
   )
 )
 
-(defwidget sound_icon []
+(defwidget sound_icon [?width ?height]
   (icon
+    :width width
+    :height height
     :tooltip {sound.muted == "no" ? "Volume " + sound.volume + "%" : "Muted"}
     :path {
     "${sound.muted}" == "no"
@@ -231,8 +235,10 @@
   )
 )
 
-(defwidget brightness_icon []
+(defwidget brightness_icon [?width ?height]
   (icon
+    :width width
+    :height height
     :path "brightness.svg"
   )
 )
