@@ -68,6 +68,7 @@
       :reveal is_systrays_open
       :transition "slideleft"
       (systray
+        :space-evenly true
         :icon-size 20
       )
     )

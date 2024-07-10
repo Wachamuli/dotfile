@@ -1,8 +1,12 @@
-$primary: #ffffff;
-$secondary: #000000;
-$font-color: #000000;
+$secondary: #ffffff;
+$primary: #000000;
+$font-color: #ffffff;
 $light-accent: #dad8d8;
-$sa: #ff0000;
+
+// $primary: #ffffff;
+// $secondary: #000000;
+// $font-color: #000000;
+// $light-accent: #dad8d8;
 
 $radius-sm: 10px;
 $radius-lg: 30px;
@@ -92,4 +96,15 @@ tooltip {
 
 .controls-menu {
   background: $primary;
+}
+
+.separator {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.inner-separator {
+  border-left: 2px solid $secondary;
 }

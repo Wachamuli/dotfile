@@ -38,9 +38,9 @@
 
 (defwidget separator []
   (box
-    :style "padding-bottom: 10px; padding-top: 10px; margin-right: 5px; margin-left: 5px;"
+    :class "separator"
     (box
-      :style "border-left: 2px solid #000000;"
+      :class "inner-separator"
     )
   )
 )
