@@ -89,7 +89,7 @@
 
 (defwidget indicators []
   (pressable
-    :onclick "${EWW_EXECUTABLE} open --toggle controls_window"
+    :onclick "${EWW_EXECUTABLE} open --toggle control_panel_window"
     (box
       :spacing 5
       (bluetooth_icon)

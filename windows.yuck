@@ -26,7 +26,7 @@
 )
 
 
-(defwindow controls_window
+(defwindow control_panel_window
   :monitor 0
   :stacking "overlay"
   :geometry (
@@ -37,7 +37,7 @@
     :height "60px"
     :anchor "top right"
   )
-  (controls_widget)
+  (control_panel_widget)
 )
 
 

@@ -1,4 +1,4 @@
-(defwidget controls_widget []
+(defwidget control_panel_widget []
   (box
     :class "controls-menu"
     :orientation "v"
@@ -33,7 +33,7 @@
     )
     (box
       :style "margin-top: 10px"
-      (foo
+      (circular_indicator
         :tooltip "CPU"
         :path "cpu.svg"
         :value {round(EWW_CPU.avg, 2)}
@@ -42,12 +42,12 @@
       ; EWW_RAM.used_mem / (1000*1000*1000)
       ; Converted into a percentage
       ; (EWW_RAM.used_mem / (1000*1000*1000)) * 100 / 12
-      (foo
+      (circular_indicator
         :tooltip "RAM"
         :path "ram.svg"
         :value {round((EWW_RAM.used_mem / (1000*1000*1000)) * 100 / (EWW_RAM.total_mem / (1000*1000*1000)), 2)}
       )
-      (foo
+      (circular_indicator
         :tooltip "Temperature"
         :path "temperature.svg"
         :value {EWW_TEMPS.CORETEMP_PACKAGE_ID_0}
@@ -56,7 +56,7 @@
   )
 )
 
-(defwidget foo [value path tooltip]
+(defwidget circular_indicator [value path tooltip]
   (circular-progress
     :start-at 75
     :value value
@@ -98,14 +98,14 @@
 )
 
 (defwidget bluetooth []
-  (circle_button
+  (circular_button
     :onclick "if [ \"$(rfkill list bluetooth | grep -i 'soft blocked: yes')\" ]; then rfkill unblock bluetooth; else rfkill block bluetooth; fi"
     :path {bluetooth.state == "no" ? "bluetooth-on.svg" : "bluetooth-off.svg"}
   )
 )
 
 (defwidget wifi []
-  (circle_button
+  (circular_button
     :onclick "if [ \"$(nmcli radio wifi)\" = \"enabled\" ]; then nmcli radio wifi off; else nmcli radio wifi on; fi"
     :path {wifi.state == "yes" ? "wififull.svg" : "wifidisconnected.svg"}
   )
@@ -113,7 +113,7 @@
 
 ; TODO: Airplane script
 (defwidget plane_mode []
-  (circle_button
+  (circular_button
     :onclick ""
     :path "airplane-on.svg"
   )

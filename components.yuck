@@ -48,7 +48,7 @@
   )
 )
 
-(defwidget circle_button [?onclick ?path]
+(defwidget circular_button [?onclick ?path]
   (button
     :class "inactive-button"
     :onclick onclick

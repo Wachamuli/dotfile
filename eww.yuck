@@ -1,6 +1,6 @@
 (include "./variables.yuck")
 (include "./components.yuck")
 (include "./widgets/bar.yuck")
-(include "./widgets/controls_menu.yuck")
+(include "./widgets/control_panel.yuck")
 (include "./widgets/calendar.yuck")
 (include "./windows.yuck")
