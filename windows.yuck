@@ -16,9 +16,11 @@
 
 (defwindow notifications_window
   :monitor 0
-  :geometry (geometry :x "20px"
+  :geometry (geometry
+    :x "20px"
     :y "20px"
-  :anchor "top right")
+    :anchor "top right"
+  )
   :stacking "overlay"
   (literal :content notifications)
 )

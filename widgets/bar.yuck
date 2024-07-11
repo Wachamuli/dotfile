@@ -3,33 +3,20 @@
     :class "bar-container"
     :orientation "h"
     :space-evenly true
-    (box
-      :class "bar-section-container"
-      :halign "start"
-      :space-evenly false
+    (bar_section :position "start"
       (pressable
         ; FIXME: Implement Hyprexpo
         :onclick ""
         (workspaces_widget)
       )
     )
-    (box
-      :class "bar-section-container"
-      :halign "center"
-      :orientation "h"
-      :space-evenly false
+    (bar_section :position "center"
       (pressable
         :onclick "${EWW_EXECUTABLE} open --toggle calendar_window && ${EWW_EXECUTABLE} update is_calendar_open=${!is_calendar_open}"
         (smalldate_widget)
       )
     )
-    (box
-      :class "bar-section-container"
-      :halign "end"
-      :orientation "h"
-      :space-evenly false
-      ; :spacing 5
-      ; More opts
+    (bar_section :position "end"
       (revealer
         :reveal is_systrays_open
         :transition "slideleft"
@@ -58,11 +45,19 @@
       
       (separator)
       
-      ; (power_opts)
       (pressable
         (power_icon)
       )
     )
+  )
+)
+
+(defwidget bar_section [position]
+  (box
+    :class "bar-section-container"
+    :halign position
+    :space-evenly false
+    (children)
   )
 )
 
