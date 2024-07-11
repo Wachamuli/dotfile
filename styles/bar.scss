@@ -1,0 +1,27 @@
+@import "theme";
+
+.bar-container {
+  color: $font-color;
+  background-color: $primary;
+  padding: 0px 0.5rem 0px 0.5rem;
+  border-bottom: $border-width solid $secondary;
+}
+
+.bar-section-container {
+  padding: 3px 0px 3px 0px;
+}
+
+.date {
+  font-weight: bold;
+}
+
+.separator {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
+
+  .inner-separator {
+    border-left: $border-width solid $secondary;
+  }
+}

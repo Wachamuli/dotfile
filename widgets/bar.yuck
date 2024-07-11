@@ -1,16 +1,20 @@
 (defwidget bar_widget []
   (box
-    :class "bar-widget"
+    :class "bar-container"
     :orientation "h"
     :space-evenly true
     (box
-      :class "bar-containers"
+      :class "bar-section-container"
       :halign "start"
       :space-evenly false
-      (workspaces_widget)
+      (pressable
+        ; FIXME: Implement Hyprexpo
+        :onclick ""
+        (workspaces_widget)
+      )
     )
     (box
-      :class "bar-containers"
+      :class "bar-section-container"
       :halign "center"
       :orientation "h"
       :space-evenly false
@@ -20,7 +24,7 @@
       )
     )
     (box
-      :class "bar-containers"
+      :class "bar-section-container"
       :halign "end"
       :orientation "h"
       :space-evenly false
@@ -141,7 +145,6 @@
 (defwidget workspaces_widget []
   (box
     :spacing 1
-    :class "workspaces-container"
     (for workspace in {workspaces.actives}
       (icon
         :path {

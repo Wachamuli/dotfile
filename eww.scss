@@ -1,88 +1,9 @@
-$secondary: #ffffff;
-$primary: #000000;
-$font-color: #ffffff;
-$light-accent: #3f3f3f;
+@import "./styles/theme.scss";
 
-$radius-sm: 10px;
-$radius-lg: 30px;
-$border-width: 0px;
-
-$transition-time: 0.2s;
-
-// $primary: #ffffff;
-// $secondary: #000000;
-// $font-color: #000000;
-// $light-accent: #dad8d8;
-
-// $radius-sm: 10px;
-// $radius-lg: 30px;
-// $border-width: 2px;
-
-* {
-  all: unset;
-}
-
-.calendar-container {
-  border-radius: $radius-lg;
-}
-
-calendar.label.year {
-  color: #bfc9db;
-}
-
-calendar {
-  padding: 5px;
-  font-weight: bold;
-
-  &:selected {
-    color: $primary;
-    background-color: $secondary;
-    border-radius: $radius-sm;
-  }
-}
-
-tooltip {
-  border: $border-width solid #ffffff;
-  label {
-    margin: 6px;
-  }
-
-  &.background {
-    font-size: 18px;
-    background-color: $primary;
-    border-radius: $radius-sm;
-    color: #bfc9db;
-  }
-}
-
-.bar-widget {
-  color: $font-color;
-  background-color: $primary;
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
-  border-bottom: $border-width solid $secondary;
-}
-
-.bar-containers {
-  padding: 3px 0px 3px 0px;
-}
-
-.workspaces-container {
-  font-weight: bold;
-  padding: 3px;
-
-  .active-workspace {
-    color: $primary;
-    background-color: $secondary;
-    border-radius: $radius-sm;
-  }
-
-  .workspace {
-    color: $secondary;
-    border: $border-width solid $secondary;
-    border-radius: $radius-sm;
-  }
-}
+@import "./styles/gtk";
+@import "./styles/bar";
+@import "./styles/calendar";
+@import "./styles/control_panel";
 
 .pressable {
   &:hover {
@@ -90,51 +11,15 @@ tooltip {
     border-radius: $radius-lg;
     background-color: $light-accent;
   }
+  .inner-pressable {
+    padding: 0px 10px 0px 10px;
+  }
 }
 
-.inner-pressable {
-  padding: 0px 10px 0px 10px;
-}
-
-.date {
-  font-weight: bold;
-}
-
-.controls-menu {
-  background: $primary;
-  border: 2px solid $secondary;
-  border-radius: $radius-lg;
-  padding: 2rem;
-}
-
-.separator {
-  padding-bottom: 10px;
-  padding-top: 10px;
-  margin-right: 5px;
-  margin-left: 5px;
-}
-
-.inner-separator {
-  border-left: $border-width solid $secondary;
-}
 
 .inactive-button {
   background-color: $primary;
   padding: 15px;
   border-radius: 30px;
   border: 2px solid $secondary;
-}
-
-scale slider {
-  background-size: 100px 100px;
-  min-height: 20px;
-}
-
-.slider-container {
-  margin-bottom: 15px;
-}
-
-.slider trough highlight {
-  background-color: $secondary;
-  border-radius: $radius-lg;
 }
