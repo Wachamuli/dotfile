@@ -1,0 +1,80 @@
+(defwidget power_menu_widget []
+  (box
+    :class "power-menu-container"
+    :orientation "v"
+    :space-evenly false
+    (box
+      :style "padding-bottom: 25px;"
+      :space-evenly true
+      (box
+        :halign "start"
+        (image
+          :image-width 80
+          :image-height 80
+          :path { images_folder + "avatar.png" }
+        )
+        (box
+          :halign "start"
+          :valign "center"
+          :orientation "v"
+          (label :style "font-weight: bold" :text "Wachamuli")
+          (label :text "José Richiez")
+        )
+      )
+      (box
+        :halign "end"
+        (pressable
+          :onclick ""
+          (icon
+            :width 25
+            :height 25
+            :tooltip "Settings"
+            :path "gear.svg"
+          )
+        )
+      )
+    )
+    (box
+      :style "padding-top: 25px; border-top: 2px solid #ffffff"
+      (power_opts)
+    )
+  )
+)
+
+(defwidget power_opts []
+  (box
+    :space-evenly false
+    (box
+      :spacing 10
+      (circular_button
+        :onclick ""
+        :tooltip "Suspend"
+        :path "moon.svg"
+      )
+      (circular_button
+        :onclick ""
+        :tooltip "Restart"
+        :path "restart.svg"
+      )
+      (circular_button
+        :onclick "hyprctl dispatch exit"
+        :tooltip "Logout"
+        :path "logout.svg"
+      )
+      (circular_button
+        :onclick ""
+        :tooltip "Lockscreen"
+        :path "lock.svg"
+      )
+    )
+    (box
+      :halign "end"
+      :hexpand true
+      (circular_button
+        :onclick "shutdown now"
+        :tooltip "Shutdown"
+        :path "power.svg"
+      )
+    )
+  )
+)

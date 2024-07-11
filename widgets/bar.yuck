@@ -38,14 +38,10 @@
       
       (indicators)
       
-      ; (pressable
-        ;   :onclick "${EWW_EXECUTABLE} open --toggle calendar_window && ${EWW_EXECUTABLE} update is_calendar_open=${!is_calendar_open}"
-        ;   (smalldate_widget)
-      ; )
-      
       (separator)
       
       (pressable
+        :onclick "${EWW_EXECUTABLE} open --toggle power_menu_window"
         (power_icon)
       )
     )
@@ -98,43 +94,6 @@
       (battery_icon)
     )
   )
-)
-
-(defwidget power_opts []
-  (box
-    (eventbox
-      :onhover "${EWW_EXECUTABLE} update is_power_open=true"
-      :onhoverlost "${EWW_EXECUTABLE} update is_power_open=false"
-      (box
-        (revealer
-          :duration "200ms"
-          :reveal is_power_open
-          :transition "slideleft"
-          (box
-            :spacing 5
-            (pressable
-              (icon :tooltip "Restart" :path "restart.svg")
-            )
-            (pressable
-              :onclick "hyprctl dispatch exit"
-              (icon :tooltip "Logout"  :path "logout.svg")
-            )
-            (pressable
-              (icon :tooltip "Lockscreen" :path "lock.svg")
-            )
-            (pressable
-              :onclick "shutdown now"
-              (power_icon)
-            )
-          )
-        )
-        (icon
-          :path {is_power_open ? "triple_dots.svg" : "power.svg"}
-        )
-      )
-    )
-  )
-  
 )
 
 (defwidget workspaces_widget []

@@ -2,8 +2,9 @@
 
 @import "./styles/gtk";
 @import "./styles/bar";
-@import "./styles/calendar";
 @import "./styles/control_panel";
+@import "./styles/power_menu";
+@import "./styles/calendar";
 
 .pressable {
   &:hover {
@@ -19,7 +20,10 @@
 
 .inactive-button {
   background-color: $primary;
-  padding: 15px;
   border-radius: 30px;
   border: 2px solid $secondary;
+
+  // &:hover {
+  //   background-color: $secondary;
+  // }
 }

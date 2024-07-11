@@ -7,7 +7,7 @@
       (battery_info)
       (box
         :space-evenly false
-        :spacing 5
+        :spacing 10
         :halign "end"
         (wifi)
         (bluetooth)

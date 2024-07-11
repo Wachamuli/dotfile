@@ -2,5 +2,6 @@
 (include "./components.yuck")
 (include "./widgets/bar.yuck")
 (include "./widgets/control_panel.yuck")
+(include "./widgets/power_menu.yuck")
 (include "./widgets/calendar.yuck")
 (include "./windows.yuck")

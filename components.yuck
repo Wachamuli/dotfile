@@ -48,11 +48,14 @@
   )
 )
 
-(defwidget circular_button [?onclick ?path]
+(defwidget circular_button [?onclick ?path ?tooltip]
   (button
     :class "inactive-button"
+    :width 60
+    :height 60
     :onclick onclick
     (icon
+      :tooltip tooltip
       :width 25
       :height 25
       :path path

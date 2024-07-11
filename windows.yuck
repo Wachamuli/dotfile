@@ -40,6 +40,20 @@
   (control_panel_widget)
 )
 
+(defwindow power_menu_window
+  :monitor 0
+  :stacking "overlay"
+  :geometry (
+    geometry
+    :x "45px"
+    :y "5px"
+    :width "470px"
+    :height "60px"
+    :anchor "top right"
+  )
+  (power_menu_widget)
+)
+
 
 (defwindow calendar_window []
   :monitor 0
