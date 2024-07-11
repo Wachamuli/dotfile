@@ -22,6 +22,7 @@
         :transition "slideleft"
         :duration "200ms"
         (systray
+          :spacing 10
           :icon-size 20
         )
       )

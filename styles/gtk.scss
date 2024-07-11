@@ -4,6 +4,49 @@
   all: unset;
 }
 
+menu {
+  border-radius: $radius-sm;
+  background-color: $primary;
+  border: 2px solid $secondary;
+  padding: 1rem;
+}
+
+menuitem {
+  margin-bottom: 5px;
+
+  &:hover {
+    transition: $transition-time;
+    border-radius: $radius-lg;
+    background-color: $light-accent;
+  }
+}
+
+// FIXME: You cannot see the checkboxes
+// checkbutton {
+//   padding: 5px;
+//   border: 1px solid #333;
+//   border-radius: 5px;
+//   background: #eee;
+//   color: #333;
+// }
+
+// checkbutton:checked {
+//   background: #ff4500;
+//   color: #ff4500;
+// }
+
+// checkbutton:hover {
+//   background: #ccc;
+// }
+
+// checkbutton:checked:hover {
+//   background: #ff6347;
+// }
+
+// checkbutton:focus {
+//   border: 2px solid #000;
+// }
+
 tooltip {
   border: 1px solid $secondary;
 

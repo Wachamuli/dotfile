@@ -23,7 +23,8 @@
   border-radius: 30px;
   border: 2px solid $secondary;
 
-  // &:hover {
-  //   background-color: $secondary;
-  // }
+  &:hover {
+    background-color: $secondary;
+    transition: $transition-time;
+  }
 }
