@@ -14,6 +14,16 @@
   (bar_widget)
 )
 
+(defwindow notifications_window
+  :monitor 0
+  :geometry (geometry :x "20px"
+    :y "20px"
+  :anchor "top right")
+  :stacking "overlay"
+  (literal :content notifications)
+)
+
+
 (defwindow controls_window
   :monitor 0
   :stacking "overlay"

@@ -43,6 +43,10 @@
   "./scripts/bar/bluetooth.sh"
 )
 
+(deflisten notifications
+  :initial `(label :text "foo" )`
+  "./scripts/bar/notifications.py"
+)
 (deflisten sound
   :initial `{ "volume": 100, "muted": "no"}`
   "./scripts/bar/sound.sh "
