@@ -15,4 +15,14 @@ case "$active_keymap" in
         ;;
 esac
 
-echo "{ \"keymaps\": \"[${availables}]\", \"active_keymap\": \"${active_keymap}\", \"abbreviated_active_keymap\": \"${abbreviated_keymap}\" }"
+output=$(cat << EOM 
+{ 
+    "keymaps": "[${availables}]",
+    "active_keymap": "${active_keymap}",
+    "abbreviated_active_keymap": "${abbreviated_keymap}" 
+}
+EOM
+)
+
+
+echo $output
