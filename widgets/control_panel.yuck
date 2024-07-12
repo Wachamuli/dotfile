@@ -38,14 +38,10 @@
         :path "cpu.svg"
         :value {round(EWW_CPU.avg, 2)}
       )
-      ; Converto from kb to gb and the percentage
-      ; EWW_RAM.used_mem / (1000*1000*1000)
-      ; Converted into a percentage
-      ; (EWW_RAM.used_mem / (1000*1000*1000)) * 100 / 12
       (circular_indicator
         :tooltip "RAM"
         :path "ram.svg"
-        :value {round((EWW_RAM.used_mem / (1000*1000*1000)) * 100 / (EWW_RAM.total_mem / (1000*1000*1000)), 2)}
+        :value {round((EWW_RAM.used_mem * 100) / EWW_RAM.total_mem, 2)}
       )
       (circular_indicator
         :tooltip "Temperature"
