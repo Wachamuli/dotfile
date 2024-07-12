@@ -49,13 +49,13 @@ class NotificationManager:
                 :width 500
                 :spacing 20
                 :space-evenly false
-                (image :image-width 80 :image-height 80 :path "{data.app_icon}")
+                (image :image-width 80 :image-height 80 :path "{data.app_icon or '${images_folder + "bell.svg"}'}")
                 (box
                     :orientation "v"
                     :space-evenly false
                     :valign "center"
                     :hexpand true
-                    (label :halign "start"  :limit-width 100 :style "font-weight: bold; font-size: 16px; margin-bottom: 10px" :text "{data.app_name}")
+                    (label :halign "start"  :limit-width 100 :style "font-weight: bold; font-size: 16px; margin-bottom: 10px" :text "{data.app_name or "Incoming notification"}")
                     (label :halign "start"  :limit-width 100 :style "font-weight: bold" :text "{data.summary}")
                     (label :halign "start"  :limit-width 100 :text "{data.body}")
                 )
@@ -63,7 +63,7 @@ class NotificationManager:
             """
 
         notification = notification.replace("\n", " ")
-        print(fr'''(box :orientation "v" :spacing 20 {notification or ''})''', flush=True)
+        print(fr'''(box :orientation "v" :spacing 20 {notification})''', flush=True)
 
 
 class NotificationServer(dbus.service.Object):
