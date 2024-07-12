@@ -9,12 +9,12 @@
 `date +"%b %I:%M %p"`)
 (defpoll workspaces
   :initial `{ "focused": 1, "actives": "[1]"}`
-  :interval "0.2s" 
+  :interval "0.2s"
   "./scripts/bar/workspaces.sh"
 )
 (defpoll time
   :initial `{"day":"1", "month":"1", "year": "1"}`
-  :interval  "1h" 
+  :interval  "1h"
   `date +'{"day":"%d", "month":"%M", "year": "%Y"}'`
 )
 (defpoll keyboard_layout
@@ -24,17 +24,17 @@
 )
 (defpoll battery
   :initial `{"state": "", "percentage": 0, "percentage_base10": 0, "time_to_full": 0, "time_to_empty": 0}`
-  :interval "1s" 
+  :interval "1s"
   "./scripts/bar/battery.sh"
 )
 (defpoll wifi
   :initial `{"state": "no", "name": "", "signal": 0}`
-  :interval "1s" 
+  :interval "1s"
   "./scripts/bar/wifi.sh"
 )
 (defpoll location
   :initial `{"state": "inactive"}`
-  :interval  "0.5s" 
+  :interval  "0.5s"
   "./scripts/bar/location.sh"
 )
 (defpoll bluetooth
@@ -44,8 +44,8 @@
 )
 
 (deflisten notifications
-  :initial `(label :text "foo" )`
-  "./scripts/bar/notifications.py"
+  :initial `(label :text 'a')`
+  "python3 ./scripts/bar/notifications.py"
 )
 (deflisten sound
   :initial `{ "volume": 100, "muted": "no"}`

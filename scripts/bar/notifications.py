@@ -13,32 +13,40 @@ class Notification:
 
 notifications = []
 
-def remove_object(notif):
+def remove_notification(notif):
     time.sleep(10)
     notifications.remove(notif)
     print_state()
 
-def add_object(notif):
+def add_notification(notif):
     notifications.insert(0, notif)
     print_state()
-    timer_thread = threading.Thread(target=remove_object, args=(notif,))
+    timer_thread = threading.Thread(target=remove_notification, args=(notif,))
     timer_thread.start()
 
 def print_state():
     string = ""
-    # for item in notifications:
-    #     string = string + f"""
-    #               (button :class 'notif'
-    #                (box :orientation 'horizontal' :space-evenly false
-    #                   (image :image-width 80 :image-height 80 :path '{item.icon or ''}')
-    #                   (box :orientation 'vertical'
-    #                     (label :width 100 :wrap true :text '{item.summary or ''}')
-    #                     (label :width 100 :wrap true :text '{item.body or ''}')
-    #               )))
-    #               """
-    # string = string.replace('\n', ' ')
-    # print(fr"""(box :orientation 'vertical' {string or ''})""", flush=True)
-    print(fr'(label :text "foo" )', flush=True)
+    for item in notifications:
+        string = string + r"""
+        (box
+            :class "notification-container"
+            :width 500
+            :spacing 20
+            :space-evenly false
+            (image :image-width 80 :image-height 80 :path {images_folder + "avatar.png"})
+            (box
+                :orientation "v"
+                :space-evenly false
+                :valign "center"
+                :hexpand true
+                (label :halign "start"  :limit-width 100 :style "font-weight: bold" :text "Notification")
+                (label :halign "start"  :limit-width 100 :text "This is a notification more text added in order to test this box.")
+            )
+        )
+        """
+
+    string = string.replace('\n', ' ')
+    print(fr'''(box :orientation "v" :spacing 20 {string or ''})''', flush=True)
 
 class NotificationServer(dbus.service.Object):
     def __init__(self):
@@ -56,7 +64,7 @@ class NotificationServer(dbus.service.Object):
         # print("  Actions:", actions)
         # print("  Hints:", hints)
         # print("  Timeout:", timeout)
-        add_object(Notification(summary, body, app_icon))
+        add_notification(Notification(summary, body, app_icon))
         return 0
 
     @dbus.service.method('org.freedesktop.Notifications', out_signature='ssss')

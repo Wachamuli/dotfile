@@ -5,7 +5,8 @@
     :space-evenly true
     (bar_section :position "start"
       (pressable
-        ; FIXME: Implement Hyprexpo
+        ; TODO: Implement Hyprexpo
+        ; TODO: Handle special workspace (scratch pad)
         :onclick ""
         (workspaces_widget)
       )
