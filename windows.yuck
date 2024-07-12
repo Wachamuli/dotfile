@@ -22,7 +22,27 @@
     :anchor "top right"
   )
   :stacking "overlay"
-  (literal :content notifications)
+  (box
+    :orientation "v" :spacing 20
+    (for notification in "${notifications}"
+      (box
+        :class "notification-container"
+        :width 500
+        :spacing 20
+        :space-evenly false
+        (image :image-width 80 :image-height 80 :path {images_folder + "bell.svg"})
+        (box
+          :orientation "v"
+          :space-evenly false
+          :valign "center"
+          :hexpand true
+          (label :halign "start" :class "app-name" :limit-width 100 :text {notification.app_name ?: "System"})
+          (label :halign "start" :class "summary" :limit-width 100 :text {notification.summary ?: "Incoming Message"})
+          (label :halign "start" :limit-width 100 :text {notification.body ?: ""})
+        )
+      )
+    )
+  )
 )
 
 
