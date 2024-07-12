@@ -55,9 +55,9 @@ class NotificationManager:
                     :space-evenly false
                     :valign "center"
                     :hexpand true
-                    (label :halign "start"  :limit-width 100 :style "font-weight: bold; font-size: 16px; margin-bottom: 10px" :text "{data.app_name or "Incoming notification"}")
-                    (label :halign "start"  :limit-width 100 :style "font-weight: bold" :text "{data.summary}")
-                    (label :halign "start"  :limit-width 100 :text "{data.body}")
+                    (label :halign "start" :class "app-name" :limit-width 100 :text "{data.app_name or "Incoming notification"}")
+                    (label :halign "start" :class "summary" :limit-width 100 :text "{data.summary}")
+                    (label :halign "start" :limit-width 100 :text "{data.body}")
                 )
             )
             """

@@ -8,6 +8,11 @@ percentage_base10=$(( (percentage + 5) / 10 * 10 ))
 time_to_full=$(echo "$battery_info" | grep -E "time to full" | awk '{print int($4 + 0.5),$5}')  # Captures time and unit
 time_to_empty=$(echo "$battery_info" | grep -E "time to empty" | awk '{print int($4 + 0.5),$5}')  # Captures time and unit
 
+if [ $percentage -lt 5 ]; then
+    notify-send -u critical --icon=$HOME/.config/eww/images/bell.svg --app-name=System "Low Battery" "Plug in the device."
+fi
+
+
 output=$(cat << EOM
 {
     "state": "${state}", 

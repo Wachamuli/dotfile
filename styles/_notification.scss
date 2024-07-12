@@ -5,4 +5,14 @@
     border-radius: $radius-sm;
     border: 2px solid $secondary;
     padding: 2rem;
+
+    .app-name {
+        font-weight: bold; 
+        font-size: 16px; 
+        margin-bottom: 10px
+    }
+
+    .summary {
+        font-weight: bold
+    }
 }
