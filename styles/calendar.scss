@@ -1,20 +1,26 @@
 @import "theme";
 
-.calendar-container {
-  border-radius: $radius-lg;
-}
-
-calendar.label.year {
-  color: #bfc9db;
-}
-
 calendar {
-  padding: 5px;
-  font-weight: bold;
+  background-color: $primary;
+  border: 2px solid #ccc;
+  border-radius: $radius-sm;
+  padding: 10px;
+
+  &.header {
+    border: none;
+  }
 
   &:selected {
     color: $primary;
     background-color: $secondary;
     border-radius: $radius-sm;
+  }
+
+  &.button {
+    // color: #b91f1f;
+  }
+
+  &.highlight {
+    // color: #b91f1f;
   }
 }

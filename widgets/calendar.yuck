@@ -1,17 +1,9 @@
 (defwidget calendar_widget []
-  (revealer
-    :reveal is_calendar_open
-    :transition "slidedown"
-    :duration "50ms"
-    (box
-      :class "calendar-container"
-      (calendar
-        :halign "center"
-        :valign "center"
-        :day   {time.day}
-        :month {time.month}
-        :year  {time.year}
-      )
-    )
+  (calendar
+    :halign "center"
+    :valign "center"
+    :day   {time.day}
+    :month {time.month}
+    :year  {time.year}
   )
 )
