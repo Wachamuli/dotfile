@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import dbus
 import dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
@@ -5,75 +6,87 @@ from gi.repository import GLib
 import threading
 import time
 
+
+def main():
+    DBusGMainLoop(set_as_default=True)
+    _ = NotificationServer()
+    mainloop = GLib.MainLoop()
+    mainloop.run()
+
+
+@dataclass()
 class Notification:
-    def __init__(self, summary, body, icon):
-        self.summary = summary
-        self.body = body
-        self.icon = icon
+    app_name: str
+    summary: str
+    body: str
+    app_icon: str
+    
 
-notifications = []
+class NotificationManager:
+    notifications: list[Notification] = []
 
-def remove_notification(notif):
-    time.sleep(10)
-    notifications.remove(notif)
-    print_state()
+    @staticmethod
+    def remove_notification(notification: Notification):
+        time.sleep(10)
+        NotificationManager.notifications.remove(notification)
+        NotificationManager.show_notifications()
 
-def add_notification(notif):
-    notifications.insert(0, notif)
-    print_state()
-    timer_thread = threading.Thread(target=remove_notification, args=(notif,))
-    timer_thread.start()
+    @staticmethod
+    def add_notification(notification: Notification):
+        NotificationManager.notifications.insert(0, notification)
+        NotificationManager.show_notifications()
+        timer_thread = threading.Thread(target=NotificationManager.remove_notification, args=(notification,))
+        timer_thread.start()
 
-def print_state():
-    string = ""
-    for item in notifications:
-        string = string + r"""
-        (box
-            :class "notification-container"
-            :width 500
-            :spacing 20
-            :space-evenly false
-            (image :image-width 80 :image-height 80 :path {images_folder + "avatar.png"})
+    @staticmethod
+    def show_notifications():
+        notification = ""
+        
+        for data in NotificationManager.notifications:
+            notification += fr"""
             (box
-                :orientation "v"
+                :class "notification-container"
+                :width 500
+                :spacing 20
                 :space-evenly false
-                :valign "center"
-                :hexpand true
-                (label :halign "start"  :limit-width 100 :style "font-weight: bold" :text "Notification")
-                (label :halign "start"  :limit-width 100 :text "This is a notification more text added in order to test this box.")
+                (image :image-width 80 :image-height 80 :path "{data.app_icon}")
+                (box
+                    :orientation "v"
+                    :space-evenly false
+                    :valign "center"
+                    :hexpand true
+                    (label :halign "start"  :limit-width 100 :style "font-weight: bold; font-size: 16px; margin-bottom: 10px" :text "{data.app_name}")
+                    (label :halign "start"  :limit-width 100 :style "font-weight: bold" :text "{data.summary}")
+                    (label :halign "start"  :limit-width 100 :text "{data.body}")
+                )
             )
-        )
-        """
+            """
 
-    string = string.replace('\n', ' ')
-    print(fr'''(box :orientation "v" :spacing 20 {string or ''})''', flush=True)
+        notification = notification.replace("\n", " ")
+        print(fr'''(box :orientation "v" :spacing 20 {notification or ''})''', flush=True)
+
 
 class NotificationServer(dbus.service.Object):
     def __init__(self):
         bus_name = dbus.service.BusName('org.freedesktop.Notifications', bus=dbus.SessionBus())
         dbus.service.Object.__init__(self, bus_name, '/org/freedesktop/Notifications')
 
-    @dbus.service.method('org.freedesktop.Notifications', in_signature='susssasa{ss}i', out_signature='u')
-    def Notify(self, app_name, replaces_id, app_icon, summary, body, actions, hints, timeout):
-        # print("Received Notification:")
-        # print("  App Name:", app_name)
-        # print("  Replaces ID:", replaces_id)
-        # print("  App Icon:", app_icon)
-        # print("  Summary:", summary)
-        # print("  Body:", body)
-        # print("  Actions:", actions)
-        # print("  Hints:", hints)
-        # print("  Timeout:", timeout)
-        add_notification(Notification(summary, body, app_icon))
-        return 0
-
     @dbus.service.method('org.freedesktop.Notifications', out_signature='ssss')
     def GetServerInformation(self):
         return ("Custom Notification Server", "ExampleNS", "1.0", "1.2")
 
-DBusGMainLoop(set_as_default=True)
+    @dbus.service.method('org.freedesktop.Notifications', in_signature='susssasa{ss}i', out_signature='u')
+    def Notify(self, app_name, replaces_id, app_icon, summary, body, actions, hints, timeout):
+        notification = Notification(
+            app_name,
+            summary,
+            body,
+            app_icon
+        )
+        NotificationManager.add_notification(notification)
+        return 0
+
+
 
 if __name__ == '__main__':
-    server = NotificationServer()
-    mainloop = GLib.MainLoop()
-    mainloop.run()
+    main()
