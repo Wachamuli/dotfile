@@ -24,13 +24,13 @@
   :stacking "overlay"
   (box
     :orientation "v" :spacing 20
-    (for notification in "${notifications}"
+    (for notification in notifications
       (box
         :class "notification-container"
         :width 500
         :spacing 20
         :space-evenly false
-        (image :image-width 80 :image-height 80 :path {images_folder + "bell.svg"})
+        (image :image-width 80 :image-height 80 :path {notification.app_icon ?: images_folder + "bell.svg"})
         (box
           :orientation "v"
           :space-evenly false

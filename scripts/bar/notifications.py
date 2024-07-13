@@ -27,25 +27,32 @@ class Notification:
         return json.dumps(asdict(self))
 
 
-class NotificationManager:
-    notifications: collections.deque[Notification] = collections.deque([], maxlen=5)
+class NotificationsManager:
+    def __init__(self, max_notifications: int, dimiss_time: float = 0.0):
+        self.notifications: collections.deque[Notification] = collections.deque([], maxlen=max_notifications)
+        self.dismiss_time = dimiss_time
 
-    @staticmethod
-    def show_notifications():
-        print(list(NotificationManager.notifications), flush=True)
+    def show_notifications(self):
+        print(list(self.notifications), flush=True)
 
-    @staticmethod
-    def add_notification(notification: Notification):
-        NotificationManager.notifications.appendleft(notification)
-        NotificationManager.show_notifications()
-        timer_thread = threading.Thread(target=NotificationManager.remove_notification)
-        timer_thread.start()
+    def add_notification(self, notification: Notification):
+        self.notifications.appendleft(notification)
+        self.show_notifications()
 
-    @staticmethod
-    def remove_notification():
-        time.sleep(10)
-        NotificationManager.notifications.pop()
-        NotificationManager.show_notifications()
+        if self.dismiss_time:
+            timer_thread = threading.Thread(target=self.remove_notification)
+            timer_thread.start()
+
+    def remove_notification(self):
+        if self.dismiss_time:
+            time.sleep(self.dismiss_time)
+
+        self.notifications.pop()
+        self.show_notifications()
+
+
+# notification_control = NotificationsManager(10)
+notification_queue = NotificationsManager(5, 10)
 
 
 class NotificationServer(dbus.service.Object):
@@ -60,7 +67,8 @@ class NotificationServer(dbus.service.Object):
     @dbus.service.method("org.freedesktop.Notifications", in_signature="susssasa{ss}i", out_signature="u")
     def Notify(self, app_name, replaces_id, app_icon, summary, body, actions, hints, timeout):
         notification = Notification(app_name, summary, body, app_icon)
-        NotificationManager.add_notification(notification)
+        # notification_control.add_notification(notification)
+        notification_queue.add_notification(notification)
         return 0
 
 
