@@ -19,13 +19,24 @@
 }
 
 
-.inactive-button {
+.circular-button {
   background-color: $primary;
   border-radius: 30px;
   border: 2px solid $secondary;
 
   &:hover {
-    background-color: $secondary;
+    background-color: $light-accent;
+    transition: $transition-time;
+  }
+}
+
+.squared-button {
+  background-color: $primary;
+  border-radius: $radius-sm;
+  border: 2px solid $secondary;
+
+  &:hover {
+    background-color: $light-accent;
     transition: $transition-time;
   }
 }

@@ -2,8 +2,8 @@
   (box
     :class "controls-menu"
     :orientation "v"
+    :space-evenly false
     (box
-      :style "margin-bottom: 25px;"
       (battery_info)
       (box
         :space-evenly false
@@ -14,6 +14,7 @@
         (plane_mode)
       )
     )
+    (v_separator)
     (box
       :orientation "v"
       (slider
@@ -23,32 +24,56 @@
         :onchange "pactl set-sink-volume @DEFAULT_SINK@ {}%"
         (sound_icon :width 25 :height 25)
       )
-      (slider
-        :max 100
-        :min 1
-        :value brightness
-        :onchange "brightnessctl --quiet set {}%"
-        (brightness_icon :width 25 :height 25)
+      (box
+        :style "margin-top: 10px;"
+        (slider
+          :max 100
+          :min 1
+          :value brightness
+          :onchange "brightnessctl --quiet set {}%"
+          (brightness_icon :width 25 :height 25)
+        )
       )
     )
+    (v_separator)
     (box
-      :style "margin-top: 10px"
-      (circular_indicator
-        :tooltip "CPU"
-        :path "cpu.svg"
-        :value {round(EWW_CPU.avg, 2)}
+      :spacing 10
+      (squared_button
+        :tooltip "System Monitor"
+        :path "system_monitor.svg"
       )
-      (circular_indicator
-        :tooltip "RAM"
-        :path "ram.svg"
-        :value {round((EWW_RAM.used_mem * 100) / EWW_RAM.total_mem, 2)}
+      (squared_button
+        :tooltip "Power Mode"
+        :path "power_mode.svg"
       )
-      (circular_indicator
-        :tooltip "Temperature"
-        :path "temperature.svg"
-        :value {EWW_TEMPS.CORETEMP_PACKAGE_ID_0}
+      (squared_button
+        :tooltip "Mixer"
+        :path "mixer.svg"
+      )
+      (squared_button
+        :tooltip "Screenshot"
+        :path "screenshot.svg"
       )
     )
+    ; (v_separator)
+    ; (label :text "No more information")
+    ; (box
+    ;     (circular_indicator
+    ;         :tooltip "CPU"
+    ;         :path "cpu.svg"
+    ;         :value {round(EWW_CPU.avg, 2)}
+    ;     )
+    ;     (circular_indicator
+    ;         :tooltip "RAM"
+    ;         :path "ram.svg"
+    ;         :value {round((EWW_RAM.used_mem * 100) / EWW_RAM.total_mem, 2)}
+    ;     )
+    ;     (circular_indicator
+    ;         :tooltip "Temperature"
+    ;         :path "temperature.svg"
+    ;         :value {EWW_TEMPS.CORETEMP_PACKAGE_ID_0}
+    ;     )
+    ; )
   )
 )
 

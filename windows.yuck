@@ -51,8 +51,8 @@
   :stacking "overlay"
   :geometry (
     geometry
-    :x "45px"
-    :y "5px"
+    :x "5px"
+    :y "15px"
     :width "370px"
     :height "60px"
     :anchor "top right"
@@ -65,8 +65,8 @@
   :stacking "overlay"
   :geometry (
     geometry
-    :x "45px"
-    :y "5px"
+    :x "5px"
+    :y "15px"
     :width "470px"
     :height "60px"
     :anchor "top right"
