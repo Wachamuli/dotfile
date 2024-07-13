@@ -3,6 +3,7 @@
   :exclusive true
   :stacking   "bg"
   :windowtype "dock"
+  :focusable true
   :reserve    (struts :distance "50px" :side "top")
   :geometry (geometry
     :x      "0%"
