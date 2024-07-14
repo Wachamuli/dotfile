@@ -6,7 +6,6 @@
     (bar_section :position "start"
       (pressable
         ; TODO: Implement Hyprexpo
-        ; TODO: Handle special workspace (scratch pad)
         :onclick ""
         (workspaces_widget)
       )
@@ -117,13 +116,6 @@
 
 (defwidget smalldate_widget []
   (label :class "date" :text today)
-  ; (box
-    ;   (
-      ;     button
-      ;     :onclick "${EWW_EXECUTABLE} open --toggle calendar_window"
-      ;     today
-    ;   )
-  ; )
 )
 
 (defwidget bluetooth_icon []
