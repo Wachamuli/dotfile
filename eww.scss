@@ -30,6 +30,18 @@
   }
 }
 
+.circular-button-alt {
+  background-color: $secondary;
+  border-radius: 30px;
+  border: 2px solid $secondary;
+
+  &:hover {
+    background-color: $dark-accent;
+    border-color: $dark-accent;
+    transition: $transition-time;
+  }
+}
+
 .squared-button {
   background-color: $primary;
   border-radius: $radius-sm;
@@ -37,6 +49,17 @@
 
   &:hover {
     background-color: $light-accent;
+    transition: $transition-time;
+  }
+}
+
+.squared-button-alt {
+  background-color: $secondary;
+  border-radius: $radius-sm;
+  border: 2px solid $secondary;
+
+  &:hover {
+    background-color: $dark-accent;
     transition: $transition-time;
   }
 }

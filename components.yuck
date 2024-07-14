@@ -58,33 +58,62 @@
   (label :style "opacity: 0" :text "This is not visible" )
 )
 
-(defwidget squared_button [?onclick ?path ?tooltip]
+(defwidget custom_button [class width height variable ?onclick ?tooltip ?path ?alt_path ?alt_class]
   (button
-    :class "squared-button"
-    :width 60
-    :height 60
+    :class { variable ? alt_class : class}
+    :width width
+    :height height
     :onclick onclick
     (icon
       :tooltip tooltip
       :width 25
       :height 25
-      :path path
+      :path { variable ? alt_path : path }
     )
   )
 )
 
-(defwidget circular_button [?onclick ?path ?tooltip]
-  (button
-    :class "circular-button"
+; TODO: I should replace the every squared_button with new_squared_button
+(defwidget new_squared_button [?variable ?onclick ?path ?alt_path ?tooltip]
+  (custom_button
+    :class "squared-button"
+    :alt_class "squared-button-alt"
     :width 60
     :height 60
+    :variable variable
     :onclick onclick
-    (icon
-      :tooltip tooltip
-      :width 25
-      :height 25
-      :path path
-    )
+    :tooltip tooltip
+    :path path
+    :alt_path alt_path
+  )
+)
+
+(defwidget circular_button [?variable ?onclick ?path ?alt_path ?tooltip]
+  (custom_button
+    :class "circular-button"
+    :alt_class "circular-button-alt"
+    :width 60
+    :height 60
+    :variable variable
+    :onclick onclick
+    :tooltip tooltip
+    :path path
+    :alt_path alt_path
+  )
+)
+
+(defwidget squared_button [?onclick ?path ?tooltip]
+  (button
+      :class "squared-button"
+      :width 60
+      :height 60
+      :onclick onclick
+      (icon
+          :tooltip tooltip
+          :width 25
+          :height 25
+          :path path
+      )
   )
 )
 

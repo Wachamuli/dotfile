@@ -61,9 +61,12 @@
         :halign "end"
         (box
           :spacing 10
-          (squared_button
+          (new_squared_button
+            :variable is_system_monitor_open
+            :onclick "${EWW_EXECUTABLE} update is_system_monitor_open=${!is_system_monitor_open}"
             :tooltip "System Monitor"
             :path "system_monitor.svg"
+            :alt_path "system_monitor_alt.svg"
           )
           (squared_button
             :tooltip "Power Mode"
@@ -83,42 +86,40 @@
         )
       )
     )
-    (v_separator)
-    (label :text "No notifications yet")
     
-    ; (v_separator)
-    ; (label :text "No more information")
-    ; (box
-      ;     (circular_indicator
-        ;         :tooltip "CPU"
-        ;         :path "cpu.svg"
-        ;         :value {round(EWW_CPU.avg, 2)}
-      ;     )
-      ;     (circular_indicator
-        ;         :tooltip "RAM"
-        ;         :path "ram.svg"
-        ;         :value {round((EWW_RAM.used_mem * 100) / EWW_RAM.total_mem, 2)}
-      ;     )
-      ;     (circular_indicator
-        ;         :tooltip "Temperature"
-        ;         :path "temperature.svg"
-        ;         :value {EWW_TEMPS.CORETEMP_PACKAGE_ID_0}
-      ;     )
-    ; )
-  )
-)
-
-(defwidget circular_indicator [value path tooltip]
-  (circular-progress
-    :start-at 75
-    :value value
-    :thickness 20
-    (icon
-      :tooltip {tooltip + " " + value + "%"}
-      :width 25
-      :height 25
-      :path path
+    
+    (revealer
+      :reveal is_system_monitor_open
+      :transition "slidedown"
+      :duration transition_speed
+      (box
+        :orientation "v"
+        :space-evenly false
+        (v_separator :visible true)
+        (box
+          (circular_indicator
+            :label "CPU"
+            :tooltip "CPU"
+            :path "cpu.svg"
+            :value {round(EWW_CPU.avg, 2)}
+          )
+          (circular_indicator
+            :label "RAM"
+            :tooltip "RAM"
+            :path "ram.svg"
+            :value {round((EWW_RAM.used_mem * 100) / EWW_RAM.total_mem, 2)}
+          )
+          (circular_indicator
+            :label "TMP"
+            :tooltip "Temperature"
+            :path "temperature.svg"
+            :value {EWW_TEMPS.CORETEMP_PACKAGE_ID_0}
+          )
+        )
+      )
+      
     )
+    
   )
 )
 
@@ -151,15 +152,19 @@
 
 (defwidget bluetooth []
   (circular_button
+    :variable {bluetooth.state == "no"}
     :onclick "if [ \"$(rfkill list bluetooth | grep -i 'soft blocked: yes')\" ]; then rfkill unblock bluetooth; else rfkill block bluetooth; fi"
-    :path {bluetooth.state == "no" ? "bluetooth-on.svg" : "bluetooth-off.svg"}
+    :path "bluetooth-off.svg"
+    :alt_path "bluetooth-on-alt.svg" 
   )
 )
 
 (defwidget wifi []
   (circular_button
+    :variable {wifi.state == "yes"}
     :onclick "if [ \"$(nmcli radio wifi)\" = \"enabled\" ]; then nmcli radio wifi off; else nmcli radio wifi on; fi"
-    :path {wifi.state == "yes" ? "wififull.svg" : "wifidisconnected.svg"}
+    :path "wifidisconnected.svg"
+    :alt_path "wififull-alt.svg" 
   )
 )
 
@@ -167,6 +172,8 @@
 (defwidget plane_mode []
   (circular_button
     :onclick ""
-    :path "airplane-on.svg"
+    :variable false
+    :alt_path "airplane-on.svg"
+    :path "airplane-off.svg"
   )
 )
