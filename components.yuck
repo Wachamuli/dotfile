@@ -83,3 +83,25 @@
     )
   )
 )
+
+(defwidget rectangular_button [path header subheader ?onclick]
+  (box
+    :style "border: 2px solid #ffffff; border-radius: 10px"
+    :space-evenly false
+    (box
+      :width 60
+      (icon
+        :width 25
+        :height 25
+        :path path
+      )
+    )
+    (box
+      :orientation "v"
+      :space-evenly false
+      :valign "center"
+      (label :style "font-weight: bold;" :halign "start"  :text header)
+      (label :halign "start" :text subheader)
+    )
+  )
+)

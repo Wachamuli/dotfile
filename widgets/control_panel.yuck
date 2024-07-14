@@ -37,42 +37,73 @@
     )
     (v_separator)
     (box
+      :space-evenly false
       :spacing 10
-      (squared_button
-        :tooltip "System Monitor"
-        :path "system_monitor.svg"
+      (box
+        :orientation "v"
+        :hexpand true
+        :spacing 10
+        (rectangular_button
+          :header "Power Mode"
+          :subheader "Balanced"
+          :path "power_mode.svg"
+        )
+        (rectangular_button
+          :header "Fan Profile"
+          :subheader "Silent"
+          :path "fan.svg"
+        )
       )
-      (squared_button
-        :tooltip "Power Mode"
-        :path "power_mode.svg"
-      )
-      (squared_button
-        :tooltip "Mixer"
-        :path "mixer.svg"
-      )
-      (squared_button
-        :tooltip "Screenshot"
-        :path "screenshot.svg"
+      
+      (box
+        :spacing 10
+        :orientation "v"
+        :halign "end"
+        (box
+          :spacing 10
+          (squared_button
+            :tooltip "System Monitor"
+            :path "system_monitor.svg"
+          )
+          (squared_button
+            :tooltip "Power Mode"
+            :path "mic-off.svg"
+          )
+        )
+        (box
+          :spacing 10
+          (squared_button
+            :tooltip "Mixer"
+            :path "mixer.svg"
+          )
+          (squared_button
+            :tooltip "Screenshot"
+            :path "screenshot.svg"
+          )
+        )
       )
     )
+    (v_separator)
+    (label :text "No notifications yet")
+    
     ; (v_separator)
     ; (label :text "No more information")
     ; (box
-    ;     (circular_indicator
-    ;         :tooltip "CPU"
-    ;         :path "cpu.svg"
-    ;         :value {round(EWW_CPU.avg, 2)}
-    ;     )
-    ;     (circular_indicator
-    ;         :tooltip "RAM"
-    ;         :path "ram.svg"
-    ;         :value {round((EWW_RAM.used_mem * 100) / EWW_RAM.total_mem, 2)}
-    ;     )
-    ;     (circular_indicator
-    ;         :tooltip "Temperature"
-    ;         :path "temperature.svg"
-    ;         :value {EWW_TEMPS.CORETEMP_PACKAGE_ID_0}
-    ;     )
+      ;     (circular_indicator
+        ;         :tooltip "CPU"
+        ;         :path "cpu.svg"
+        ;         :value {round(EWW_CPU.avg, 2)}
+      ;     )
+      ;     (circular_indicator
+        ;         :tooltip "RAM"
+        ;         :path "ram.svg"
+        ;         :value {round((EWW_RAM.used_mem * 100) / EWW_RAM.total_mem, 2)}
+      ;     )
+      ;     (circular_indicator
+        ;         :tooltip "Temperature"
+        ;         :path "temperature.svg"
+        ;         :value {EWW_TEMPS.CORETEMP_PACKAGE_ID_0}
+      ;     )
     ; )
   )
 )
