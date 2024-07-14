@@ -48,10 +48,14 @@
   )
 )
 
-(defwidget v_separator []
+(defwidget v_separator [?visible]
   (box
-    :style "margin-top: 25px;"
+    :class {(visible ?: false) ? "v-separator-visible": "v-separator"}
   )
+)
+
+(defwidget empty_widget []
+  (label :style "opacity: 0" :text "This is not visible" )
 )
 
 (defwidget squared_button [?onclick ?path ?tooltip]
@@ -103,5 +107,27 @@
       (label :style "font-weight: bold;" :halign "start"  :text header)
       (label :halign "start" :text subheader)
     )
+  )
+)
+
+(defwidget circular_indicator [?label value path tooltip]
+  (box
+    :orientation "v"
+    :space-evenly false
+    :spacing 10
+    (circular-progress
+      :value value
+      :start-at 75
+      :thickness 20
+      :width 100
+      :height 100
+      (icon
+        :tooltip {tooltip + " " + value + "%"}
+        :width 25
+        :height 25
+        :path path
+      )
+    )
+    (label :style "font-weight: bold;" :text label)
   )
 )

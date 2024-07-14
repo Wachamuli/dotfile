@@ -25,3 +25,12 @@
     border-left: $border-width solid $secondary;
   }
 }
+
+.v-separator {
+  margin-top: 25px;
+}
+
+.v-separator-visible {
+  border-bottom: 2px solid $secondary;
+  margin: 25px 0px 25px 0px;
+}
