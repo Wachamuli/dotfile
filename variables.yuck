@@ -1,6 +1,9 @@
+(defvar is_system_monitor_open false)
 (defvar is_systrays_open false)
 (defvar is_calendar_open false)
 (defvar is_power_open false)
+(defvar transition_speed "200ms")
+(defvar empty_array "[{}]")
 (defvar images_folder "/home/wachamuli/.config/eww/images/")
 
 ; %b %I:%M %p
