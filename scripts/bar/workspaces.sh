@@ -21,7 +21,7 @@ active_workspace_ids_array="[$sorted_ids,$next_id]"
 
 output=$(cat << EOM
 { 
-    "focused": ${focused_workspace},
+    "focused": "${focused_workspace}",
     "actives": ${active_workspace_ids_array},
     "special_workspace": "${special_workspace}"
 }
