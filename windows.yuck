@@ -1,6 +1,6 @@
 (defwindow bar
   :monitor 0
-  :stacking "overlay"
+  :stacking "fg"
   :exclusive true
   :geometry (geometry
     :width  "100%"
@@ -23,7 +23,7 @@
 
 (defwindow control_panel_window
   :monitor 0
-  :stacking "overlay"
+  :stacking "fg"
   :geometry (
     geometry
     :x "5px"
@@ -37,7 +37,7 @@
 
 (defwindow power_menu_window
   :monitor 0
-  :stacking "overlay"
+  :stacking "fg"
   :geometry (
     geometry
     :x "5px"
@@ -52,7 +52,7 @@
 
 (defwindow calendar_window []
   :monitor 0
-  :stacking "overlay"
+  :stacking "fg"
   :geometry (
     geometry
     :y "15px"
