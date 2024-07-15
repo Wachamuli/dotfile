@@ -47,7 +47,7 @@
           :variable is_power_mode_open
           :onclick "${EWW_EXECUTABLE} update is_power_mode_open=${!is_power_mode_open}"
           :header "Power Mode"
-          :subheader "Balanced"
+          :subheader power_mode
           :path "power_mode.svg"
           :alt_path "power_mode_alt.svg"
         )
@@ -148,16 +148,19 @@
     (v_separator)
     
     (option
-      :onclick ""
+      :onclick "./scripts/bar/power_mode.sh set saver"
+      :selected {power_mode == "Power Saver"}
       :text "Power saver"
     )
     (option
-      :onclick ""
-      :selected true
+      :onclick "./scripts/bar/power_mode.sh set balanced"
+      :selected {power_mode == "Balanced"}
       :text "Balanced"
     )
     (option
-      :onclick ""
+      :onclick "./scripts/bar/power_mode.sh set performance"
+      :selected {power_mode == "Performance"}
+      :text "Balanced"
       :text "Performance"
     )
   )

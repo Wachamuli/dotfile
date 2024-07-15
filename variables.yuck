@@ -61,3 +61,8 @@
   :initial 100
   "./scripts/bar/brightness.sh "
 )
+(defpoll power_mode
+  :interval "0.2s"
+  :initial "Balanced"
+  "./scripts/bar/power_mode.sh get"
+)

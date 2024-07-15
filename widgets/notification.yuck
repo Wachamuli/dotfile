@@ -1,7 +1,7 @@
 (defwidget notifications_widget []
   (box
-    :visible true
-    :orientation "v" :spacing 20
+    :orientation "v" 
+    :spacing 20
     (for notification in notifications
       (box
         :class "notification-container"
