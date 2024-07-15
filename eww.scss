@@ -7,6 +7,25 @@
 @import "./styles/calendar";
 @import "./styles/notification";
 
+.option {
+  padding: 10px 10px 10px 10px;
+  font-weight: 500;
+
+  &:hover {
+    transition: $transition-time;
+    border-radius: $radius-lg;
+    background-color: $light-accent;
+  }
+}
+
+.option-selected {
+  padding: 10px 10px 10px 10px;
+  font-weight: 500;
+  transition: $transition-time;
+  border-radius: $radius-lg;
+  background-color: $light-accent;
+}
+
 .pressable {
   &:hover {
     transition: $transition-time;
@@ -18,10 +37,10 @@
   }
 }
 
-
-.circular-button {
+.circular-button,
+.squared-button,
+.rectangular-button {
   background-color: $primary;
-  border-radius: 30px;
   border: 2px solid $secondary;
 
   &:hover {
@@ -30,9 +49,20 @@
   }
 }
 
-.circular-button-alt {
-  background-color: $secondary;
+.circular-button {
   border-radius: 30px;
+}
+
+.squared-button,
+.rectangular-button {
+  border-radius: $radius-sm;
+}
+
+.circular-button-alt,
+.squared-button-alt,
+.rectangular-button-alt {
+  background-color: $secondary;
+  // border-radius: 30px;
   border: 2px solid $secondary;
 
   &:hover {
@@ -42,24 +72,16 @@
   }
 }
 
-.squared-button {
-  background-color: $primary;
+.circular-button-alt {
+  border-radius: 30px;
+}
+.squared-button-alt,
+.rectangular-button-alt {
   border-radius: $radius-sm;
-  border: 2px solid $secondary;
-
-  &:hover {
-    background-color: $light-accent;
-    transition: $transition-time;
-  }
 }
 
-.squared-button-alt {
-  background-color: $secondary;
-  border-radius: $radius-sm;
-  border: 2px solid $secondary;
-
-  &:hover {
-    background-color: $dark-accent;
-    transition: $transition-time;
+.rectangular-button-alt {
+  label {
+    color: $primary;
   }
 }
