@@ -60,7 +60,7 @@
 
 (defwidget custom_button [class width height variable ?onclick ?tooltip ?path ?alt_path ?alt_class]
   (button
-    :class { variable ? alt_class : class}
+    :class { (variable ?: false) ? alt_class : class}
     :width width
     :height height
     :onclick onclick
@@ -68,7 +68,7 @@
       :tooltip tooltip
       :width 25
       :height 25
-      :path { variable ? alt_path : path }
+      :path { (variable ?: false) ? alt_path : path }
     )
   )
 )
