@@ -104,37 +104,40 @@
 
 (defwidget squared_button [?onclick ?path ?tooltip]
   (button
-      :class "squared-button"
-      :width 60
-      :height 60
-      :onclick onclick
-      (icon
-          :tooltip tooltip
-          :width 25
-          :height 25
-          :path path
-      )
+    :class "squared-button"
+    :width 60
+    :height 60
+    :onclick onclick
+    (icon
+      :tooltip tooltip
+      :width 25
+      :height 25
+      :path path
+    )
   )
 )
 
-(defwidget rectangular_button [path header subheader ?onclick]
-  (box
-    :style "border: 2px solid #ffffff; border-radius: 10px"
-    :space-evenly false
+(defwidget rectangular_button [?variable ?alt_path ?path ?header ?subheader ?onclick]
+  (button
+    :class { variable ? "rectangular-button-alt" : "rectangular-button"}
+    :onclick onclick
     (box
-      :width 60
-      (icon
-        :width 25
-        :height 25
-        :path path
-      )
-    )
-    (box
-      :orientation "v"
       :space-evenly false
-      :valign "center"
-      (label :style "font-weight: bold;" :halign "start"  :text header)
-      (label :halign "start" :text subheader)
+      (box
+        :width 60
+        (icon
+          :width 25
+          :height 25
+          :path { variable ? alt_path : path }
+        )
+      )
+      (box
+        :orientation "v"
+        :space-evenly false
+        :valign "center"
+        (label :style "font-weight: bold;" :halign "start" :text header)
+        (label :halign "start" :text subheader)
+      )
     )
   )
 )

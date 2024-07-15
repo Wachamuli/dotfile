@@ -44,14 +44,20 @@
         :hexpand true
         :spacing 10
         (rectangular_button
+          :variable is_power_mode_open
+          :onclick "${EWW_EXECUTABLE} update is_power_mode_open=${!is_power_mode_open}"
           :header "Power Mode"
           :subheader "Balanced"
           :path "power_mode.svg"
+          :alt_path "power_mode_alt.svg"
         )
         (rectangular_button
+          :variable false
+          :onclick ""
           :header "Fan Profile"
           :subheader "Silent"
           :path "fan.svg"
+          :alt_path "fan-alt.svg"
         )
       )
       
@@ -87,39 +93,68 @@
       )
     )
     
-    
     (revealer
       :reveal is_system_monitor_open
       :transition "slidedown"
       :duration transition_speed
-      (box
-        :orientation "v"
-        :space-evenly false
-        (v_separator :visible true)
-        (box
-          (circular_indicator
-            :label "CPU"
-            :tooltip "CPU"
-            :path "cpu.svg"
-            :value {round(EWW_CPU.avg, 2)}
-          )
-          (circular_indicator
-            :label "RAM"
-            :tooltip "RAM"
-            :path "ram.svg"
-            :value {round((EWW_RAM.used_mem * 100) / EWW_RAM.total_mem, 2)}
-          )
-          (circular_indicator
-            :label "TMP"
-            :tooltip "Temperature"
-            :path "temperature.svg"
-            :value {EWW_TEMPS.CORETEMP_PACKAGE_ID_0}
-          )
-        )
-      )
-      
+      (system_monitor)
     )
     
+    (revealer
+      :reveal is_power_mode_open
+      :transition "slidedown"
+      :duration transition_speed
+      (power_mode_options)
+    )
+    
+  )
+)
+
+(defwidget option [text onclick ?selected]
+  (button
+    :class {(selected ?: false) ? "option-selected" : "option"}
+    :hexpand true
+    :onclick onclick
+    (label :halign "start" :text text)
+  )
+)
+
+(defwidget header [title path]
+  (box
+    :space-evenly false
+    (box
+      :style "margin-right: 15px"
+      (icon
+        :width 30
+        :height 30
+        :path path
+      )
+    )
+    (label :halign "start" :style "font-weight: bold; font-size: 20px" :text title)
+  )
+)
+
+(defwidget power_mode_options []
+  (box
+    :orientation "v"
+    :space-evenly false
+    (v_separator :visible true)
+    (header :title "Power Mode" :path "power_mode.svg")
+    (v_separator)
+    
+    (option
+      :onclick ""
+      :text "Power saver"
+    )
+    (option
+      :onclick ""
+      :selected true
+      :text "Balanced"
+    )
+    (option
+      :onclick ""
+      :text "Performance"
+    )
   )
 )
 
@@ -155,7 +190,7 @@
     :variable {bluetooth.state == "no"}
     :onclick "if [ \"$(rfkill list bluetooth | grep -i 'soft blocked: yes')\" ]; then rfkill unblock bluetooth; else rfkill block bluetooth; fi"
     :path "bluetooth-off.svg"
-    :alt_path "bluetooth-on-alt.svg" 
+    :alt_path "bluetooth-on-alt.svg"
   )
 )
 
@@ -164,7 +199,7 @@
     :variable {wifi.state == "yes"}
     :onclick "if [ \"$(nmcli radio wifi)\" = \"enabled\" ]; then nmcli radio wifi off; else nmcli radio wifi on; fi"
     :path "wifidisconnected.svg"
-    :alt_path "wififull-alt.svg" 
+    :alt_path "wififull-alt.svg"
   )
 )
 
@@ -175,5 +210,35 @@
     :variable false
     :alt_path "airplane-on.svg"
     :path "airplane-off.svg"
+  )
+)
+
+(defwidget system_monitor []
+  (box
+    :orientation "v"
+    :space-evenly false
+    (v_separator :visible true)
+    (header :title "System Monitor" :path "system_monitor.svg")
+    (v_separator)
+    (box
+      (circular_indicator
+        :label "CPU"
+        :tooltip "CPU"
+        :path "cpu.svg"
+        :value {round(EWW_CPU.avg, 2)}
+      )
+      (circular_indicator
+        :label "RAM"
+        :tooltip "RAM"
+        :path "ram.svg"
+        :value {round((EWW_RAM.used_mem * 100) / EWW_RAM.total_mem, 2)}
+      )
+      (circular_indicator
+        :label "TMP"
+        :tooltip "Temperature"
+        :path "temperature.svg"
+        :value {EWW_TEMPS.CORETEMP_PACKAGE_ID_0}
+      )
+    )
   )
 )
