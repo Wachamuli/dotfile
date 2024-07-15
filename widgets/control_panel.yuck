@@ -148,17 +148,17 @@
     (v_separator)
     
     (option
-      :onclick "./scripts/bar/power_mode.sh set saver"
+      :onclick "powerprofilesctl set power-saver"
       :selected {power_mode == "Power Saver"}
       :text "Power saver"
     )
     (option
-      :onclick "./scripts/bar/power_mode.sh set balanced"
+      :onclick "powerprofilesctl set balanced"
       :selected {power_mode == "Balanced"}
       :text "Balanced"
     )
     (option
-      :onclick "./scripts/bar/power_mode.sh set performance"
+      :onclick "powerprofilesctl set performance"
       :selected {power_mode == "Performance"}
       :text "Balanced"
       :text "Performance"
