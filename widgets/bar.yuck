@@ -33,7 +33,10 @@
         )
       )
       
-      (keyboard_layout_widget)
+      (pressable
+        :onclick "hyprctl switchxkblayout at-translated-set-2-keyboard next"
+        (keyboard_layout_widget)
+      )
       
       (separator)
       
