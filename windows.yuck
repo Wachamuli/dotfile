@@ -13,7 +13,7 @@
 (defwindow notifications_window
   :monitor 0
   :geometry (geometry
-    :x "5px"
+    :x "10px"
     :y "15px"
     :anchor "top right"
   )
@@ -26,7 +26,7 @@
   :stacking "fg"
   :geometry (
     geometry
-    :x "5px"
+    :x "10px"
     :y "15px"
     :width "370px"
     :height "60px"
@@ -40,7 +40,7 @@
   :stacking "fg"
   :geometry (
     geometry
-    :x "5px"
+    :x "10px"
     :y "15px"
     :width "470px"
     :height "60px"
