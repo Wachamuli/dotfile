@@ -4,8 +4,6 @@
     :orientation "v"
     :space-evenly false
     (box
-      :style "padding-bottom: 25px;"
-      :space-evenly true
       (box
         :halign "start"
         (image
@@ -34,8 +32,8 @@
         )
       )
     )
+    (v_separator :visible true)
     (box
-      :style "padding-top: 25px; border-top: 2px solid #ffffff"
       (power_opts)
     )
   )
@@ -71,9 +69,10 @@
       :halign "end"
       :hexpand true
       (circular_button
+        :variable true
         :onclick "shutdown now"
         :tooltip "Shutdown"
-        :path "power.svg"
+        :alt_path "power-alt.svg"
       )
     )
   )
