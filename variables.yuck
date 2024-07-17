@@ -48,6 +48,11 @@
   :interval  "0.5s"
   "./scripts/bar/bluetooth.sh"
 )
+(defpoll airplane_mode
+  :initial `false`
+  :interval  "0.5s"
+  "./scripts/bar/airplanemode.sh"
+)
 
 (deflisten notifications
   :initial "[{}]"

@@ -214,8 +214,8 @@
 ; TODO: Airplane script
 (defwidget plane_mode []
   (circular_button
-    :onclick ""
-    :variable false
+    :onclick "rfkill list all | grep -qi \"Soft blocked: yes\" && rfkill unblock all || rfkill block all"
+    :variable airplane_mode
     :alt_path "airplane-on.svg"
     :path "airplane-off.svg"
   )
