@@ -136,7 +136,7 @@
         :orientation "v"
         :space-evenly false
         :valign "center"
-        (label :style "font-weight: 600;" :halign "start" :text header)
+        (label :class "text-bold" :halign "start" :text header)
         (label :halign "start" :text subheader)
       )
     )
@@ -162,5 +162,35 @@
       )
     )
     (label :style "font-weight: bold;" :text label)
+  )
+)
+
+
+(defwidget option [text onclick ?selected]
+  (button
+    :class {(selected ?: false) ? "option-selected" : "option"}
+    :hexpand true
+    :onclick onclick
+    (box
+      :space-evenly false
+      :spacing 10
+      (icon :visible {selected ?: false} :path "check.svg" )
+      (label :halign "start" :text text)
+    )
+  )
+)
+
+(defwidget header [title path]
+  (box
+    :space-evenly false
+    (box
+      :style "margin-right: 15px"
+      (icon
+        :width 30
+        :height 30
+        :path path
+      )
+    )
+    (label :halign "start" :class "header" :text title)
   )
 )

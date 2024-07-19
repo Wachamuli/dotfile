@@ -122,35 +122,6 @@
   )
 )
 
-(defwidget option [text onclick ?selected]
-  (button
-    :class {(selected ?: false) ? "option-selected" : "option"}
-    :hexpand true
-    :onclick onclick
-    (box
-      :space-evenly false
-      :spacing 10
-      (icon :visible {selected ?: false} :path "check.svg" )
-      (label :halign "start" :text text)
-    )
-  )
-)
-
-(defwidget header [title path]
-  (box
-    :space-evenly false
-    (box
-      :style "margin-right: 15px"
-      (icon
-        :width 30
-        :height 30
-        :path path
-      )
-    )
-    (label :halign "start" :style "font-weight: bold; font-size: 20px" :text title)
-  )
-)
-
 (defwidget power_mode_options []
   (box
     :orientation "v"
@@ -193,7 +164,7 @@
       :valign "center"
       (label
         :halign "start"
-        :style "font-size: 16px; font-weight: bold;"
+        :class "text-bold"
         :text {battery.percentage + "%"}
       )
       (label
@@ -223,7 +194,6 @@
   )
 )
 
-; TODO: Airplane script
 (defwidget plane_mode []
   (circular_button
     :onclick "rfkill list all | grep -qi \"Soft blocked: yes\" && rfkill unblock all || rfkill block all"

@@ -26,6 +26,7 @@
           :icon-size 20
         )
       )
+      
       (pressable
         :onclick "${EWW_EXECUTABLE} update is_systrays_open=${!is_systrays_open}"
         (icon
@@ -36,6 +37,13 @@
       (pressable
         :onclick "hyprctl switchxkblayout at-translated-set-2-keyboard next"
         (keyboard_layout_widget)
+      )
+      
+      (pressable
+        :onclick ""
+        (icon
+          :path "window.svg"
+        )
       )
       
       (separator)
@@ -82,7 +90,7 @@
 
 (defwidget keyboard_layout_widget []
   (label
-    :style "font-weight: 600; font-size: 14px; margin-right: 5px; margin-left: 5px;"
+    :style "font-weight: 600; font-size: 14px;"
     :text {keyboard_layout.abbreviated_active_keymap}
   )
 )
@@ -118,7 +126,7 @@
 )
 
 (defwidget smalldate_widget []
-  (label :class "date" :text today)
+  (label :class "text-bold" :text today)
 )
 
 (defwidget bluetooth_icon []
