@@ -1,5 +1,6 @@
 (defwidget notifications_widget []
   (box
+    :visible {notifications != empty_array}
     :orientation "v" 
     :spacing 20
     (for notification in notifications

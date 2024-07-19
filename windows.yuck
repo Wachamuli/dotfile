@@ -18,7 +18,7 @@
     :anchor "top right"
   )
   :stacking "overlay"
-  (literal :content {notifications != empty_array ? `(notifications_widget)`: `(empty_widget)`})
+  (notifications_widget)
 )
 
 (defwindow control_panel_window
