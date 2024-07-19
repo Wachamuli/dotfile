@@ -101,7 +101,12 @@
       :reveal is_mixer_open
       :transition "slidedown"
       :duration transition_speed
-      (mixer)
+      (box
+        :orientation "v"
+        :space-evenly false
+        (mixer)
+        (v_separator :half true)
+      )
     )
     
     
@@ -128,7 +133,7 @@
     :space-evenly false
     (v_separator :draw-line true)
     (header :title "Power Mode" :path "power_mode.svg")
-    (v_separator :half true)
+    (v_separator)
     
     (option
       :onclick "powerprofilesctl set power-saver"
@@ -211,11 +216,11 @@
     :space-evenly false
     (v_separator :draw-line true)
     (header :title "Mixer" :path "mixer.svg")
-  
-    (v_separator :half true :visible {arraylength(audio_sinks) < 1})
+    
+    (v_separator :half true)
     
     (label :visible {arraylength(audio_sinks) < 1} :text "No audio sources available")
-
+    
     (for sink in audio_sinks
       (slider
         :max 100
@@ -225,8 +230,6 @@
         (label :xalign 0 :width 90 :truncate true :valign "center" :style "font-weight: bold" :text {sink.app_name})
       )
     )
-
-    (v_separator :half true)
   )
 )
 

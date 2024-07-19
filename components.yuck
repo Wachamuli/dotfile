@@ -162,7 +162,7 @@
         :path path
       )
     )
-    (label :style "font-weight: bold;" :text label)
+    (label :class "text-bold" :text label)
   )
 )
 
