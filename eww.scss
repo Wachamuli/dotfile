@@ -7,25 +7,6 @@
 @import "./styles/calendar";
 @import "./styles/notification";
 
-.option {
-  padding: 10px 10px 10px 10px;
-  font-weight: 500;
-
-  &:hover {
-    transition: $transition-time;
-    border-radius: $radius-lg;
-    background-color: $light-accent;
-  }
-}
-
-.option-selected {
-  padding: 10px 10px 10px 10px;
-  font-weight: 500;
-  transition: $transition-time;
-  border-radius: $radius-lg;
-  background-color: $light-accent;
-}
-
 .pressable {
   &:hover {
     transition: $transition-time;

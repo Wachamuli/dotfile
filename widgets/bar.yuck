@@ -82,7 +82,7 @@
 
 (defwidget keyboard_layout_widget []
   (label
-    :style "font-weight: bold; font-size: 14px; margin-right: 5px; margin-left: 5px;"
+    :style "font-weight: 600; font-size: 14px; margin-right: 5px; margin-left: 5px;"
     :text {keyboard_layout.abbreviated_active_keymap}
   )
 )

@@ -136,7 +136,7 @@
         :orientation "v"
         :space-evenly false
         :valign "center"
-        (label :style "font-weight: bold;" :halign "start" :text header)
+        (label :style "font-weight: 600;" :halign "start" :text header)
         (label :halign "start" :text subheader)
       )
     )
