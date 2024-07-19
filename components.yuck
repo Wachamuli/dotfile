@@ -48,9 +48,10 @@
   )
 )
 
-(defwidget v_separator [?visible]
+(defwidget v_separator [?visible ?half]
   (box
     :class {(visible ?: false) ? "v-separator-visible": "v-separator"}
+    :style {(half ?: false) ? "margin-top: 12.5px;" : ""}
   )
 )
 
