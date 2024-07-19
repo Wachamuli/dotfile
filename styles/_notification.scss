@@ -3,7 +3,7 @@
 .notification-container {
     background-color: $primary;
     border-radius: $radius-sm;
-    border: 2px solid $secondary;
+    border: $outline-width solid $secondary;
     padding: 2rem;
 
     .app-name {

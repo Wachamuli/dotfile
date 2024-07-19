@@ -2,7 +2,7 @@
 
 .power-menu-container {
   background-color: $primary;
-  border: 2px solid $secondary;
+  border: $outline-width solid $secondary;
   border-radius: $radius-lg;
   padding: 2rem;
 }
