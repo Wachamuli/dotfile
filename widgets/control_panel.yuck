@@ -17,6 +17,8 @@
     (v_separator)
     (box
       :orientation "v"
+      :space-evenly false
+      :spacing 10
       (slider
         :max 101
         :min 0
@@ -25,7 +27,6 @@
         (sound_icon :width 25 :height 25)
       )
       (box
-        :style "margin-top: 10px;"
         (slider
           :max 100
           :min 1
@@ -81,9 +82,12 @@
         )
         (box
           :spacing 10
-          (squared_button
+          (new_squared_button
+            :variable is_mixer_open
+            :onclick "${EWW_EXECUTABLE} update is_mixer_open=${!is_mixer_open}"
             :tooltip "Mixer"
             :path "mixer.svg"
+            :alt_path "mixer-alt.svg"
           )
           (squared_button
             :tooltip "Screenshot"
@@ -94,17 +98,25 @@
     )
     
     (revealer
-      :reveal is_system_monitor_open
+      :reveal is_mixer_open
       :transition "slidedown"
       :duration transition_speed
-      (system_monitor)
+      (mixer)
     )
+    
     
     (revealer
       :reveal is_power_mode_open
       :transition "slidedown"
       :duration transition_speed
       (power_mode_options)
+    )
+    
+    (revealer
+      :reveal is_system_monitor_open
+      :transition "slidedown"
+      :duration transition_speed
+      (system_monitor)
     )
     
   )
@@ -145,7 +157,7 @@
     :space-evenly false
     (v_separator :visible true)
     (header :title "Power Mode" :path "power_mode.svg")
-    (v_separator)
+    (v_separator :half true)
     
     (option
       :onclick "powerprofilesctl set power-saver"
@@ -218,6 +230,31 @@
     :variable airplane_mode
     :alt_path "airplane-on.svg"
     :path "airplane-off.svg"
+  )
+)
+
+; It's a little buggy beacause the mixer script is called every 2s. But it's ok.
+(defwidget mixer []
+  (box
+    :orientation "v"
+    :spacing 10
+    :space-evenly false
+    (v_separator :visible true)
+    (header :title "Mixer" :path "mixer.svg")
+    
+    (label :visible {arraylength(audio_sinks) < 1} :text "No audio sources available")
+
+    (for sink in audio_sinks
+      (slider
+        :max 100
+        :min 0
+        :value {(( sink.volume_left ?: 1 ) * 100) / 64880}
+        :onchange "pactl set-sink-input-volume ${sink.sink_id} {}%"
+        (label :xalign 0 :width 90 :truncate true :valign "center" :style "font-weight: bold" :text {sink.app_name})
+      )
+    )
+
+    (v_separator :half true)
   )
 )
 

@@ -1,3 +1,4 @@
+(defvar is_mixer_open false)
 (defvar is_systrays_open false)
 (defvar is_calendar_open false)
 (defvar is_power_open false)
@@ -52,6 +53,11 @@
   :initial `false`
   :interval  "0.5s"
   "./scripts/bar/airplanemode.sh"
+)
+(defpoll audio_sinks 
+  :initial "[{}]"
+  :interval "2s"
+  "./scripts/bar/mixer.sh"
 )
 
 (deflisten notifications
