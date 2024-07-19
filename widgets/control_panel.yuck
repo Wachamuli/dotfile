@@ -126,7 +126,7 @@
   (box
     :orientation "v"
     :space-evenly false
-    (v_separator :visible true)
+    (v_separator :draw-line true)
     (header :title "Power Mode" :path "power_mode.svg")
     (v_separator :half true)
     
@@ -209,8 +209,10 @@
     :orientation "v"
     :spacing 10
     :space-evenly false
-    (v_separator :visible true)
+    (v_separator :draw-line true)
     (header :title "Mixer" :path "mixer.svg")
+  
+    (v_separator :half true :visible {arraylength(audio_sinks) < 1})
     
     (label :visible {arraylength(audio_sinks) < 1} :text "No audio sources available")
 
@@ -232,7 +234,7 @@
   (box
     :orientation "v"
     :space-evenly false
-    (v_separator :visible true)
+    (v_separator :draw-line true)
     (header :title "System Monitor" :path "system_monitor.svg")
     (v_separator)
     (box
