@@ -17,13 +17,16 @@
       )
     )
     (bar_section :position "end"
+
       (revealer
         :reveal is_systrays_open
         :transition "slideleft"
         :duration "200ms"
         (systray
-          :spacing 10
-          :icon-size 20
+          :style "margin-right: 10px"
+          :spacing 20
+          :icon-size 22
+          ; :icon-size 20
         )
       )
       
@@ -66,25 +69,6 @@
     :halign position
     :space-evenly false
     (children)
-  )
-)
-
-(defwidget more_opts []
-  (box
-    (revealer
-      :reveal is_systrays_open
-      :transition "slideleft"
-      (systray
-        :space-evenly true
-        :icon-size 20
-      )
-    )
-    (pressable
-      :onclick "${EWW_EXECUTABLE} update is_systrays_open=${!is_systrays_open}"
-      (icon
-        :path {is_systrays_open ? "chevron-left.svg" :  "chevron-down.svg" }
-      )
-    )
   )
 )
 
