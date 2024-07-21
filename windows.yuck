@@ -38,6 +38,62 @@
   (control_panel_widget)
 )
 
+(defvar password_output "Type a password")
+
+(defwindow password_window [ssid rate signal security]
+  :namespace "eww"
+  :monitor 0
+  :focusable true
+  :stacking "overlay"
+  :geometry (
+    geometry
+    :y "15px"
+    :width "520px"
+    :height "60px"
+    :anchor "center"
+  )
+  (box
+    :orientation "v"
+    :class "controls-menu"
+    (header :title "WI-FI" :path "wififull.svg")
+    
+    (v_separator)
+    
+    (box
+      (label :class "text-bold" :halign "start" :text "SSID: ")
+      (label :halign "end" :text "${ssid}")
+    )
+    (box
+      (label :class "text-bold" :halign "start" :text "Rate:")
+      (label :halign "end" :text "${rate}")
+    )
+    (box
+      (label :class "text-bold" :halign "start" :text "Signal: ")
+      (label :halign "end" :text "${signal}%")
+    )
+    (box
+      (label :class "text-bold" :halign "start" :text "Security: ")
+      (label :halign "end" :text "${security}")
+    )
+    
+    (v_separator)
+    
+    (input
+      :password true
+      :onaccept "./scripts/bar/wifi_set_connection.sh ${ssid} {}"
+    )
+
+    (label :text password_output)
+    
+    (v_separator)
+    
+    (pressable
+      :onclick "eww close password_window" 
+      (label :class "text-underline" :halign "center" :text "Back")
+    )
+  )
+)
+
 (defwindow power_menu_window
   :namespace "eww"
   :monitor 0

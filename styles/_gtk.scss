@@ -1,5 +1,12 @@
 @import "theme";
 
+entry {
+    background-color: $secondary;
+    color: $primary;
+    border-radius: $radius-sm;
+    padding: 2px;
+}
+
 menu {
   border-radius: $radius-sm;
   background-color: $primary;
@@ -63,9 +70,9 @@ scale slider {
   min-height: 20px;
 }
 
-.slider-container {
-  // margin-bottom: 15px;
-}
+// .slider-container {
+   // margin-bottom: 15px;
+// }
 
 .slider trough highlight {
   background-color: $secondary;

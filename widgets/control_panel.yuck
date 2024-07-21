@@ -184,7 +184,7 @@
     (for network in wifi_scan
       (option
         :selected {network.ssid == wifi.name}
-        :onclick ""
+        :onclick "eww open password_window --arg ssid='${network.ssid}' --arg rate='${network.rate}' --arg signal='${network.signal}' --arg security='${network.security}' && eww update password_output='Type a password'"
         :text {network.ssid}
         (box
           :halign "end"
@@ -192,11 +192,11 @@
           (icon
             :width 25
             :height 25
-            :tooltip {"Signal ${network.signal}%"}
+            :tooltip {"Signal ${network.signal ?: 0}%"}
             :path {
-            network.signal > 68
+            (network.signal ?: 0) > 68
             ? "signal-full.svg"
-            : network.signal > 34
+            : (network.signal ?: 0) > 34
             ? "signal-mid.svg"
             : "signal-low.svg"
             }
