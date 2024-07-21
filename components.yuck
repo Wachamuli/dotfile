@@ -60,12 +60,13 @@
   (label :style "opacity: 0" :text "This is not visible" )
 )
 
-(defwidget custom_button [class width height variable ?onclick ?tooltip ?path ?alt_path ?alt_class]
+(defwidget custom_button [class width height variable ?onclick ?onrightclick ?tooltip ?path ?alt_path ?alt_class]
   (button
     :class { (variable ?: false) ? alt_class : class}
     :width width
     :height height
     :onclick onclick
+    :onrightclick onrightclick
     (icon
       :tooltip tooltip
       :width 25
@@ -90,7 +91,7 @@
   )
 )
 
-(defwidget circular_button [?variable ?onclick ?path ?alt_path ?tooltip]
+(defwidget circular_button [?variable ?onclick ?path ?alt_path ?tooltip ?onrightclick]
   (custom_button
     :class "circular-button"
     :alt_class "circular-button-alt"
@@ -98,6 +99,7 @@
     :height 60
     :variable variable
     :onclick onclick
+    :onrightclick onrightclick
     :tooltip tooltip
     :path path
     :alt_path alt_path
@@ -177,6 +179,7 @@
       :spacing 10
       (icon :visible {selected ?: false} :path "check.svg" )
       (label :halign "start" :text text)
+      (children)
     )
   )
 )

@@ -1,3 +1,4 @@
+(defvar is_wifi_networks_open false)
 (defvar is_mixer_open false)
 (defvar is_systrays_open false)
 (defvar is_calendar_open false)
@@ -38,6 +39,11 @@
   :initial `{"state": "no", "name": "", "signal": 0}`
   :interval "1s"
   "./scripts/bar/wifi.sh"
+)
+(defpoll wifi_scan
+  :initial "[{}]"
+  :interval "5s"
+  "./scripts/bar/wifi_scan.sh"
 )
 (defpoll location
   :initial `{"state": "inactive"}`

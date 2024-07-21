@@ -6,4 +6,14 @@ state=$(echo "$wifi_info" | awk -F':' '{print $1}')
 name=$(echo "$wifi_info" | awk -F':' '{print $2}')
 signal=$(echo "$wifi_info" | awk -F':' '{print $3}')
 
-echo "{\"state\": \"${state}\", \"name\": \"${name}\", \"signal\": \"${signal}\"}"
+
+output=$(cat << EOM
+{
+    "state": "${state}", 
+    "name": "${name}", 
+    "signal": "${signal}"
+}
+EOM
+)
+
+echo $output

@@ -149,9 +149,9 @@
     :tooltip "Connected to ${wifi.name}"
     :path {
     wifi.state == "yes" ?
-    wifi.signal > 77
+    wifi.signal > 68
     ? "wififull.svg"
-    : wifi.signal > 44 ? "wifihalf.svg"
+    : wifi.signal > 34 ? "wifihalf.svg"
     : "wifimin.svg"
     : "wifidisconnected.svg"
     }

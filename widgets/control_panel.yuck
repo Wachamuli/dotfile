@@ -98,6 +98,25 @@
     )
     
     (revealer
+      :reveal is_wifi_networks_open
+      :transition "slidedown"
+      :duration transition_speed
+      (box
+        :orientation "v"
+        :space-evenly false
+        (wifi_networks)
+        (v_separator :half true)
+        (box
+          :halign "end"
+          (pressable
+            :onclick ""
+            (label :text "All Networks")
+          )
+        )
+      )
+    )
+    
+    (revealer
       :reveal is_mixer_open
       :transition "slidedown"
       :duration transition_speed
@@ -154,6 +173,40 @@
   )
 )
 
+(defwidget wifi_networks []
+  (box
+    :space-evenly false
+    :orientation "v"
+    (v_separator :draw-line true)
+    (header :path "wififull.svg" :title "WI-FI")
+    (v_separator)
+    
+    (for network in wifi_scan
+      (option
+        :selected {network.ssid == wifi.name}
+        :onclick ""
+        :text {network.ssid}
+        (box
+          :halign "end"
+          :hexpand true
+          (icon
+            :width 25
+            :height 25
+            :tooltip {"Signal ${network.signal}%"}
+            :path {
+            network.signal > 68
+            ? "signal-full.svg"
+            : network.signal > 34
+            ? "signal-mid.svg"
+            : "signal-low.svg"
+            }
+          )
+        )
+      )
+    )
+  )
+)
+
 (defwidget battery_info []
   (box
     :space-evenly false
@@ -194,6 +247,7 @@
   (circular_button
     :variable {wifi.state == "yes"}
     :onclick "if [ \"$(nmcli radio wifi)\" = \"enabled\" ]; then nmcli radio wifi off; else nmcli radio wifi on; fi"
+    :onrightclick "${EWW_EXECUTABLE} update is_wifi_networks_open=${!is_wifi_networks_open}"
     :path "wifidisconnected.svg"
     :alt_path "wififull-alt.svg"
   )
