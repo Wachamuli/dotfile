@@ -11,19 +11,19 @@
 (defvar empty_array "[{}]")
 (defvar images_folder "/home/wachamuli/.config/eww/images/")
 
-; %b %I:%M %p
 (defpoll today
   :interval "1s"
-`date +"%b %I:%M %p"`)
-(defpoll workspaces
-  :initial `{ "focused": 1, "actives": "[1]"}`
-  :interval "0.2s"
-  "./scripts/bar/workspaces.sh"
+  `date +"%a %d %I:%M %p"`
 )
 (defpoll time
   :initial `{"day":"1", "month":"1", "year": "1"}`
   :interval  "1h"
-  `date +'{"day":"%d", "month":"%M", "year": "%Y"}'`
+  `date +'{"day":"%d", "month":"%m", "year":"%Y", "full_day_name":"%A", "full_month_name":"%B"}'`
+)
+(defpoll workspaces
+  :initial `{ "focused": 1, "actives": "[1]"}`
+  :interval "0.2s"
+  "./scripts/bar/workspaces.sh"
 )
 (defpoll keyboard_layout
   :initial `{ "keymaps": "[]", "active_keymap": "", "abbreviated_active_keymap": ""}`
@@ -60,7 +60,7 @@
   :interval  "0.5s"
   "./scripts/bar/airplanemode.sh"
 )
-(defpoll audio_sinks 
+(defpoll audio_sinks
   :initial "[{}]"
   :interval "2s"
   "./scripts/bar/mixer.sh"

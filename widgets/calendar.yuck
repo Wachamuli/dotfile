@@ -1,9 +1,18 @@
 (defwidget calendar_widget []
-  (calendar
-    :halign "center"
-    :valign "center"
-    :day   {time.day}
-    :month {time.month}
-    :year  {time.year}
+  (box
+    :class "calendar-container"
+    :orientation "v"
+    :space-evenly false
+
+    (label :class "day-name-number" :halign "start" :text "${time.full_day_name} 21")
+    (label :class "month-year" :halign "start" :text "${time.full_month_name} 2024")
+
+    (v_separator)
+
+    (calendar
+      :day   {time.day}
+      :month {time.month}
+      :year  {time.year}
+    )
   )
 )

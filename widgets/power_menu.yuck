@@ -32,7 +32,7 @@
         )
       )
     )
-    (v_separator :visible true)
+    (v_separator :draw-line true)
     (box
       (power_opts)
     )
