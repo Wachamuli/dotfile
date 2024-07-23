@@ -47,7 +47,7 @@
 )
 (defpoll location
   :initial `{"state": "inactive"}`
-  :interval  "0.5s"
+  :interval  "5s"
   "./scripts/bar/location.sh"
 )
 (defpoll bluetooth

@@ -102,7 +102,8 @@
     geometry
     :x "10px"
     :y "15px"
-    :width "470px"
+    ; :width "470px"
+    :width "370px"
     :height "60px"
     :anchor "top right"
   )
@@ -116,10 +117,11 @@
   :stacking "fg"
   :geometry (
     geometry
+    :x "10px"
     :y "15px"
     :width "270px"
     :height "60px"
-    :anchor "top center"
+    :anchor "top right"
   )
   (calendar_widget)
 )
