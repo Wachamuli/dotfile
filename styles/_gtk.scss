@@ -1,10 +1,13 @@
 @import "theme";
 
 entry {
-    background-color: $secondary;
-    color: $primary;
-    border-radius: $radius-sm;
-    padding: 2px;
+  background-color: $secondary;
+  color: $primary;
+  border-radius: $radius-sm;
+
+  &:focus {
+    caret-color: $primary;
+  }
 }
 
 menu {
@@ -71,7 +74,7 @@ scale slider {
 }
 
 // .slider-container {
-   // margin-bottom: 15px;
+// margin-bottom: 15px;
 // }
 
 .slider trough highlight {
