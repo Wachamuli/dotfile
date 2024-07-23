@@ -11,14 +11,20 @@
   padding: 3px 0px 3px 0px;
 }
 
-.separator {
+.h-separator {
   padding-bottom: 10px;
   padding-top: 10px;
   margin-right: 5px;
   margin-left: 5px;
+}
 
+.h-separator-visible {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
   .inner-separator {
-    border-left: $border-width solid $secondary;
+    border-left: $outline-width solid $secondary;
   }
 }
 
