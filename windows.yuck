@@ -82,13 +82,13 @@
       :password true
       :onaccept "./scripts/bar/wifi_set_connection.sh ${ssid} {}"
     )
-
+    
     (label :text password_output)
     
     (v_separator)
     
     (pressable
-      :onclick "eww close password_window" 
+      :onclick "eww close password_window"
       (label :class "text-underline" :halign "center" :text "Back")
     )
   )
@@ -107,7 +107,8 @@
     :height "60px"
     :anchor "top right"
   )
-  (power_menu_widget)
+  ; (power_menu_widget)
+  (notification_center)
 )
 
 

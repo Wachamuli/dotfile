@@ -1,0 +1,75 @@
+(defwidget notification_center []
+  (box
+    :orientation "v"
+    :space-evenly false
+    ; :style "background-color: rgba(0, 0, 0, 0.5); box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.6); margin: 1rem"
+    (box
+      :orientation "h"
+      :space-evenly true
+      (header :title "Notifications (7)" :path "bell.svg")
+      (label :halign "end" :hexpand true :class "text-bold text-underline" :text "Clear All")
+    )
+    
+    (v_separator)
+    
+    (v_separator :half true)
+    (scroll
+      :vscroll true
+      :height 850
+      :width 500
+      (box
+        :orientation "v"
+        :spacing 20
+        :space-evenly false
+        (notification
+          :icon {images_folder + "bluetooth-on.svg"}
+          :name "System"
+          :summary "Incoming Message"
+          :body "This is a test"
+        )
+        (notification
+          :icon {images_folder + "battery-0.svg"}
+          :name "System"
+          :summary "Incoming Message"
+          :body "This is a test"
+        )
+        (notification
+          :icon {images_folder + "wififull.svg"}
+          :name "System"
+          :summary "Incoming Message"
+          :body "This is a test"
+        )
+        (notification
+          :icon {images_folder + "bluetooth-on.svg"}
+          :name "System"
+          :summary "Incoming Message"
+          :body "This is a test"
+        )
+        (notification
+          :name "System"
+          :summary "Incoming Message"
+          :body "This is a test"
+        )
+        (notification
+          :name "System"
+          :summary "Incoming Message"
+          :body "This is a test"
+        )
+        (notification
+          :name "System"
+          :summary "Incoming Message"
+          :body "This is a test"
+        )
+      )
+    )
+    
+    (v_separator)
+    
+    (icon
+      :width 25
+      :height 25
+      :path "chevron-down.svg"
+    )
+  )
+  
+)
