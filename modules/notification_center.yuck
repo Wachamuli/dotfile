@@ -2,20 +2,43 @@
   (box
     :orientation "v"
     :space-evenly false
-    ; :style "background-color: rgba(0, 0, 0, 0.5); box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.6); margin: 1rem"
+    
     (box
-      :orientation "h"
-      :space-evenly true
-      (header :title "Notifications (7)" :path "bell.svg")
-      (label :halign "end" :hexpand true :class "text-bold text-underline" :text "Clear All")
+      :class "notification-header"
+      (box
+        :orientation "h"
+        :space-evenly true
+        :halign "start"
+        (header :title "Notifications (7)" :path "bell.svg")
+      )
+      
+      (box
+        :spacing 10
+        :space-evenly false
+        :halign "end"
+        (button
+          :onclick ""
+          (box
+            :style "background-color: #ffffff; border-radius: 30px; padding: 10px;"
+            (icon :tooltip "Do not disturb" :path "do_not_disturb.svg")
+          )
+        )
+        
+        (button
+          :onclick ""
+          (box
+            :style "background-color: #ffffff; border-radius: 30px; padding: 10px;"
+            (icon :tooltip "Clear all" :path "trash_can.svg")
+          )
+        )
+      )
     )
     
     (v_separator)
     
-    (v_separator :half true)
     (scroll
       :vscroll true
-      :height 850
+      :height 750
       :width 500
       (box
         :orientation "v"
@@ -40,36 +63,27 @@
           :body "This is a test"
         )
         (notification
-          :icon {images_folder + "bluetooth-on.svg"}
-          :name "System"
-          :summary "Incoming Message"
-          :body "This is a test"
+            :icon {images_folder + "bluetooth-on.svg"}
+            :name "System"
+            :summary "Incoming Message"
+            :body "This is a test"
         )
         (notification
-          :name "System"
-          :summary "Incoming Message"
-          :body "This is a test"
+            :name "System"
+            :summary "Incoming Message"
+            :body "This is a test"
         )
         (notification
-          :name "System"
-          :summary "Incoming Message"
-          :body "This is a test"
+            :name "System"
+            :summary "Incoming Message"
+            :body "This is a test"
         )
         (notification
-          :name "System"
-          :summary "Incoming Message"
-          :body "This is a test"
+            :name "System"
+            :summary "Incoming Message"
+            :body "This is a test"
         )
       )
     )
-    
-    (v_separator)
-    
-    (icon
-      :width 25
-      :height 25
-      :path "chevron-down.svg"
-    )
   )
-  
 )

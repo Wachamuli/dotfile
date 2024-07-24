@@ -193,7 +193,7 @@
 
 (defwidget bell_icon []
   (icon
-    :tooltip "Shutdown"
+    :tooltip "Notifications"
     :path "bell.svg"
   )
 )

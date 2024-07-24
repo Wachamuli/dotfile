@@ -11,7 +11,7 @@
 (include "./components/header.yuck")
 (include "./components/notification.yuck")
 
-; Widgets
+; Modules
 (include "./modules/bar.yuck")
 (include "./modules/control_panel.yuck")
 (include "./modules/power_menu.yuck")

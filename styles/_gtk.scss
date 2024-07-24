@@ -1,5 +1,12 @@
 @import "theme";
 
+scrollbar slider {
+  background-color: $secondary;
+  border-radius: 5px;
+  min-width: 5px;
+  min-height: 10px;
+}
+
 entry {
   background-color: $secondary;
   color: $primary;

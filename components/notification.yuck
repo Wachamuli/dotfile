@@ -5,8 +5,8 @@
     :spacing 20
     :space-evenly false
     (image
-      :image-width 70
-      :image-height 70
+      :image-width 60
+      :image-height 60
       :path {icon ?: images_folder + "bell.svg"}
     )
     (box
