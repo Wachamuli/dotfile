@@ -1,0 +1,16 @@
+(defwidget h_separator [?draw-line]
+  (box
+    :class {(draw-line ?: false) ? "h-separator-visible" : "h-separator"}
+    (box
+      :class "inner-separator"
+    )
+  )
+)
+
+(defwidget v_separator [?draw-line ?half ?visible]
+  (box
+    :visible {visible ?: true}
+    :class {(draw-line ?: false) ? "v-separator-visible": "v-separator"}
+    :style {(half ?: false) ? "margin-top: 12.5px;" : ""}
+  )
+)

@@ -1,0 +1,9 @@
+(defwidget icon [path ?tooltip ?visible ?width ?height]
+  (image
+    :tooltip tooltip
+    :image-width {width ?: 20}
+    :image-height {height ?: 20}
+    :visible {visible ?: true}
+    :path { images_folder + path}
+  )
+)

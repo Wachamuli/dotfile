@@ -1,0 +1,17 @@
+(defwidget slider [max min value onchange]
+  (box
+    :class "slider-container"
+    :space-evenly false
+    :spacing 5
+    (children)
+    (scale
+      :class "slider"
+      :width 50
+      :hexpand true
+      :max max
+      :min min
+      :value value
+      :onchange onchange
+    )
+  )
+)

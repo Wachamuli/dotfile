@@ -1,0 +1,14 @@
+(defwidget option [text onclick ?selected]
+  (button
+    :class {(selected ?: false) ? "option-selected" : "option"}
+    :hexpand true
+    :onclick onclick
+    (box
+      :space-evenly false
+      :spacing 10
+      (icon :visible {selected ?: false} :path "check.svg" )
+      (label :halign "start" :text text)
+      (children)
+    )
+  )
+)

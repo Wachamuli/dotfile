@@ -1,0 +1,14 @@
+(defwidget header [title path]
+  (box
+    :space-evenly false
+    (box
+      :style "margin-right: 15px"
+      (icon
+        :width 30
+        :height 30
+        :path path
+      )
+    )
+    (label :halign "start" :class "header" :text title)
+  )
+)

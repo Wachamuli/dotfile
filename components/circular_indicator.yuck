@@ -1,0 +1,21 @@
+(defwidget circular_indicator [?label value path tooltip]
+  (box
+    :orientation "v"
+    :space-evenly false
+    :spacing 10
+    (circular-progress
+      :value value
+      :start-at 75
+      :thickness 20
+      :width 100
+      :height 100
+      (icon
+        :tooltip {tooltip + " " + value + "%"}
+        :width 25
+        :height 25
+        :path path
+      )
+    )
+    (label :class "text-bold" :text label)
+  )
+)

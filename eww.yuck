@@ -1,6 +1,14 @@
-; Basis
+; Variables
 (include "./variables.yuck")
-(include "./components.yuck")
+
+; Components
+(include "./components/buttons.yuck")
+(include "./components/icon.yuck")
+(include "./components/circular_indicator.yuck")
+(include "./components/option.yuck")
+(include "./components/separators.yuck")
+(include "./components/slider.yuck")
+(include "./components/header.yuck")
 
 ; Widgets
 (include "./widgets/bar.yuck")
