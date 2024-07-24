@@ -1,6 +1,9 @@
-from dataclasses import dataclass, asdict
-import collections
 import json
+import collections
+from dataclasses import dataclass, asdict
+from uuid import uuid4
+from datetime import datetime
+
 import dbus
 import dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
@@ -14,10 +17,38 @@ def main():
     NotificationServer()
     mainloop = GLib.MainLoop()
     mainloop.run()
+    # dbus_thread = threading.Thread(target=start_dbus_server)
+    # dbus_thread.start()
+
+    # user_input_thread()
+
+
+def start_dbus_server():
+    DBusGMainLoop(set_as_default=True)
+    NotificationServer()
+    mainloop = GLib.MainLoop()
+    mainloop.run()
+
+
+# def user_input_thread():
+#     while True:
+#         command = input("Enter command (dismiss/dimiss_all/do_not_disturb): ").strip().lower()
+
+#         match command:
+#             case "dismiss":
+#                 raise NotImplementedError
+#             case "dismiss_all":
+#                 raise NotImplementedError
+#             case "do_not_disturb":
+#                 raise NotImplementedError
+#             case _:
+#                 raise NotImplementedError
 
 
 @dataclass()
 class Notification:
+    id: str
+    timestamp: str
     app_name: str
     summary: str
     body: str
@@ -32,27 +63,36 @@ class NotificationsManager:
         self.notifications: collections.deque[Notification] = collections.deque([], maxlen=max_notifications)
         self.dismiss_time = dimiss_time
 
-    def show_notifications(self):
+    def show(self):
         print(list(self.notifications), flush=True)
 
-    def add_notification(self, notification: Notification):
+    def push(self, notification: Notification):
         self.notifications.appendleft(notification)
-        self.show_notifications()
+        self.show()
 
         if self.dismiss_time:
-            timer_thread = threading.Thread(target=self.remove_notification)
+            timer_thread = threading.Thread(target=self.dismiss)
             timer_thread.start()
 
-    def remove_notification(self):
+    def dismiss(self):
         if self.dismiss_time:
             time.sleep(self.dismiss_time)
 
         self.notifications.pop()
-        self.show_notifications()
+        self.show()
 
 
-# notification_control = NotificationsManager(10)
-notification_queue = NotificationsManager(5, 10)
+# static_notification_manager = NotificationsManager(20)
+temporal_notification_manager = NotificationsManager(5, 10)
+
+# def foo():
+#     print("{ 'static': %s, 'temporal': %s }" % (list(static_notification_manager.notifications), list(temporal_notification_manager.notifications)))
+
+#     timer_thread = threading.Thread(target=temporal_notification_manager.dismiss)
+#     timer_thread.start()
+#     time.sleep(10)
+
+#     print("{ 'static': %s, 'temporal': %s }" % (list(static_notification_manager.notifications), list(temporal_notification_manager.notifications)))
 
 
 class NotificationServer(dbus.service.Object):
@@ -66,9 +106,14 @@ class NotificationServer(dbus.service.Object):
 
     @dbus.service.method("org.freedesktop.Notifications", in_signature="susssasa{ss}i", out_signature="u")
     def Notify(self, app_name, replaces_id, app_icon, summary, body, actions, hints, timeout):
-        notification = Notification(app_name, summary, body, app_icon)
-        # notification_control.add_notification(notification)
-        notification_queue.add_notification(notification)
+        id = str(uuid4())
+        raw_timestamp = datetime.now()
+        timestamp = raw_timestamp.strftime("%I:%M %p")
+
+        notification = Notification(id, timestamp, app_name, summary, body, app_icon)
+        temporal_notification_manager.push(notification)
+        # static_notification_manager.push(notification)
+
         return 0
 
 

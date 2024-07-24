@@ -1,4 +1,4 @@
-(defwidget notification [?icon ?name ?summary ?body]
+(defwidget notification [timestamp ?icon ?name ?summary ?body]
   (box
     :class "notification-container"
     :width 500
@@ -14,10 +14,9 @@
       :space-evenly false
       :valign "center"
       :hexpand true
-      ; TODO: Add timestamp
       (box
         (label :halign "start" :class "app-name" :limit-width 100 :text {name ?: "System"})
-        (label :halign "end" :text "10:37 PM")
+        (label :halign "end" :text {timestamp})
       )
       (label :halign "start" :class "summary" :limit-width 100 :text {summary ?: "Incoming Message"})
       (label :halign "start" :limit-width 100 :text {body ?: ""})

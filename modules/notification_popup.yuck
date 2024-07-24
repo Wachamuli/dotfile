@@ -5,6 +5,7 @@
     :spacing 20
     (for notification in notifications
       (notification
+        :timestamp {notification.timestamp}
         :icon {notification.app_icon}
         :name {notification.app_name}
         :summary {notification.summary}
