@@ -70,7 +70,7 @@
 
 (deflisten notifications
   :initial "[{}]"
-  "python3 ./scripts/notifications.py"
+  "python3 ./scripts/notifications.py temporal"
 )
 (deflisten sound
   :initial `{ "volume": 100, "muted": "no"}`

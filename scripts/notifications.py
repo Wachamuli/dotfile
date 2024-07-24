@@ -10,16 +10,23 @@ from dbus.mainloop.glib import DBusGMainLoop
 from gi.repository import GLib
 import threading
 import time
+import sys
 
 
 def main():
-    DBusGMainLoop(set_as_default=True)
-    NotificationServer()
-    mainloop = GLib.MainLoop()
-    mainloop.run()
-    # dbus_thread = threading.Thread(target=start_dbus_server)
-    # dbus_thread.start()
+    dbus_thread = threading.Thread(target=start_dbus_server)
+    dbus_thread.start()
 
+    listen_to = sys.argv[1]
+
+    match listen_to:
+        case "static":
+            static_notification_manager.listen()
+        case "temporal":
+            temporal_notification_manager.listen()
+        case _:
+            raise ValueError("Invalid option - use `static` or `temporal` instead.")
+    
     # user_input_thread()
 
 
@@ -32,17 +39,17 @@ def start_dbus_server():
 
 # def user_input_thread():
 #     while True:
-#         command = input("Enter command (dismiss/dimiss_all/do_not_disturb): ").strip().lower()
+#         command = input().strip().lower()
 
 #         match command:
 #             case "dismiss":
-#                 raise NotImplementedError
+#                 static_notification_manager.dismiss()
 #             case "dismiss_all":
-#                 raise NotImplementedError
+#                 static_notification_manager.dismiss_all()
 #             case "do_not_disturb":
 #                 raise NotImplementedError
 #             case _:
-#                 raise NotImplementedError
+#                 raise ValueError("Invalid option - use `static`, `temporal`, `` instead.")
 
 
 @dataclass()
@@ -62,13 +69,18 @@ class NotificationsManager:
     def __init__(self, max_notifications: int, dimiss_time: float = 0.0):
         self.notifications: collections.deque[Notification] = collections.deque([], maxlen=max_notifications)
         self.dismiss_time = dimiss_time
+        self.listen_called = False
+
+    def listen(self):
+        self.listen_called = True
 
     def show(self):
         print(list(self.notifications), flush=True)
 
     def push(self, notification: Notification):
         self.notifications.appendleft(notification)
-        self.show()
+        if self.listen_called:
+            self.show()
 
         if self.dismiss_time:
             timer_thread = threading.Thread(target=self.dismiss)
@@ -79,20 +91,19 @@ class NotificationsManager:
             time.sleep(self.dismiss_time)
 
         self.notifications.pop()
-        self.show()
+
+        if self.listen_called:
+            self.show()
+
+    def dismiss_all(self):
+        self.notifications.clear()
+
+        if self.listen_called:
+            self.show()
 
 
-# static_notification_manager = NotificationsManager(20)
+static_notification_manager = NotificationsManager(20)
 temporal_notification_manager = NotificationsManager(5, 10)
-
-# def foo():
-#     print("{ 'static': %s, 'temporal': %s }" % (list(static_notification_manager.notifications), list(temporal_notification_manager.notifications)))
-
-#     timer_thread = threading.Thread(target=temporal_notification_manager.dismiss)
-#     timer_thread.start()
-#     time.sleep(10)
-
-#     print("{ 'static': %s, 'temporal': %s }" % (list(static_notification_manager.notifications), list(temporal_notification_manager.notifications)))
 
 
 class NotificationServer(dbus.service.Object):
@@ -111,8 +122,8 @@ class NotificationServer(dbus.service.Object):
         timestamp = raw_timestamp.strftime("%I:%M %p")
 
         notification = Notification(id, timestamp, app_name, summary, body, app_icon)
+        static_notification_manager.push(notification)
         temporal_notification_manager.push(notification)
-        # static_notification_manager.push(notification)
 
         return 0
 
