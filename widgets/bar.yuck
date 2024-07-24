@@ -5,19 +5,20 @@
     :space-evenly true
     (bar_section :position "start"
       (pressable
-        ; TODO: Implement Hyprexpo
-        :onclick ""
-        (workspaces_widget)
+          ; :onclick "${EWW_EXECUTABLE} open --toggle calendar_window && ${EWW_EXECUTABLE} update is_calendar_open=${!is_calendar_open}"
+          :onclick ""
+          (icon :path "fedora.svg")
       )
     )
     (bar_section :position "center"
       (pressable
-        :onclick "${EWW_EXECUTABLE} open --toggle calendar_window && ${EWW_EXECUTABLE} update is_calendar_open=${!is_calendar_open}"
-        (smalldate_widget)
+          ; TODO: Implement Hyprexpo
+          :onclick ""
+          (workspaces_widget)
       )
     )
     (bar_section :position "end"
-
+      
       (revealer
         :reveal is_systrays_open
         :transition "slideleft"
@@ -49,15 +50,22 @@
         )
       )
       
-      (separator)
+      (h_separator)
       
       (indicators)
       
-      (separator)
+      (h_separator)
+      
+      (pressable
+        :onclick "${EWW_EXECUTABLE} open --toggle calendar_window && ${EWW_EXECUTABLE} update is_calendar_open=${!is_calendar_open}"
+        (smalldate_widget)
+      )
+      
+      (h_separator)
       
       (pressable
         :onclick "${EWW_EXECUTABLE} open --toggle power_menu_window"
-        (power_icon)
+        (bell_icon)
       )
     )
   )
@@ -84,6 +92,7 @@
     :onclick "${EWW_EXECUTABLE} open --toggle control_panel_window"
     (box
       :spacing 5
+      (location_icon)
       (bluetooth_icon)
       (wifi_icon)
       (sound_icon)
@@ -174,10 +183,10 @@
 )
 
 
-(defwidget power_icon []
+(defwidget bell_icon []
   (icon
     :tooltip "Shutdown"
-    :path "power.svg"
+    :path "bell.svg"
   )
 )
 
