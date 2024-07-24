@@ -46,7 +46,7 @@
         :spacing 10
         (rectangular_button
           :variable is_power_mode_open
-          :onclick "${EWW_EXECUTABLE} update is_power_mode_open=${!is_power_mode_open}"
+          :onclick {assign_var + "is_power_mode_open=${!is_power_mode_open}"}
           :header "Power Mode"
           :subheader power_mode
           :path "power_mode.svg"
@@ -70,7 +70,7 @@
           :spacing 10
           (new_squared_button
             :variable is_system_monitor_open
-            :onclick "${EWW_EXECUTABLE} update is_system_monitor_open=${!is_system_monitor_open}"
+            :onclick {assign_var + "is_system_monitor_open=${!is_system_monitor_open}"}
             :tooltip "System Monitor"
             :path "system_monitor.svg"
             :alt_path "system_monitor_alt.svg"
@@ -84,7 +84,7 @@
           :spacing 10
           (new_squared_button
             :variable is_mixer_open
-            :onclick "${EWW_EXECUTABLE} update is_mixer_open=${!is_mixer_open}"
+            :onclick {assign_var + "is_mixer_open=${!is_mixer_open}"}
             :tooltip "Mixer"
             :path "mixer.svg"
             :alt_path "mixer-alt.svg"
@@ -192,7 +192,11 @@
     (for network in wifi_scan
       (option
         :selected {network.ssid == wifi.name}
-        :onclick "eww open password_window --arg ssid='${network.ssid}' --arg rate='${network.rate}' --arg signal='${network.signal}' --arg security='${network.security}' && eww update password_output='Type a password'"
+        :onclick {
+        toggle_win + "password_window --arg ssid='${network.ssid}' --arg rate='${network.rate}' --arg signal='${network.signal}' --arg security='${network.security}'"
+        + " && "
+        + assign_var + "password_output='Type a password'"
+        }
         :text {network.ssid}
         (box
           :halign "end"
@@ -202,11 +206,11 @@
             :height 25
             :tooltip {"Signal ${network.signal}%"}
             :path {
-              network.signal > 68
-              ? "signal-full.svg"
-              : (network.signal ?: 0) > 34
-              ? "signal-mid.svg"
-              : "signal-low.svg"
+            network.signal > 68
+            ? "signal-full.svg"
+            : (network.signal ?: 0) > 34
+            ? "signal-mid.svg"
+            : "signal-low.svg"
             }
           )
         )
