@@ -9,7 +9,7 @@
 
 (defvar transition_speed "200ms")
 (defvar empty_array "[{}]")
-(defvar images_folder "/home/wachamuli/.config/eww/images/")
+(defvar images_folder "/home/wachamuli/.config/eww/icons/")
 
 (defpoll today
   :interval "1s"

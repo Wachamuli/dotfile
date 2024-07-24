@@ -9,14 +9,15 @@
 (include "./components/separators.yuck")
 (include "./components/slider.yuck")
 (include "./components/header.yuck")
+(include "./components/notification.yuck")
 
 ; Widgets
-(include "./widgets/bar.yuck")
-(include "./widgets/control_panel.yuck")
-(include "./widgets/power_menu.yuck")
-(include "./widgets/notification.yuck")
-(include "./widgets/notification_center.yuck")
-(include "./widgets/calendar.yuck")
+(include "./modules/bar.yuck")
+(include "./modules/control_panel.yuck")
+(include "./modules/power_menu.yuck")
+(include "./modules/notification_popup.yuck")
+(include "./modules/notification_center.yuck")
+(include "./modules/calendar.yuck")
 
 ; Windows
 (include "./windows.yuck")
