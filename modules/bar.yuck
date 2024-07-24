@@ -5,16 +5,30 @@
     :space-evenly true
     (bar_section :position "start"
       (pressable
-          ; :onclick "${EWW_EXECUTABLE} open --toggle calendar_window && ${EWW_EXECUTABLE} update is_calendar_open=${!is_calendar_open}"
-          :onclick ""
-          (icon :path "fedora.svg")
+        :onclick {toggle_win + "power_menu_window"}
+        (icon :path "fedora.svg")
+      )
+      
+      (h_separator :draw-line true)
+      
+      (pressable
+        :onclick ""
+        (icon :path "firefox.svg")
+      )
+      (pressable
+        :onclick ""
+        (icon :path "vscode.svg")
+      )
+      (pressable
+        :onclick ""
+        (icon :path "folder.svg")
       )
     )
     (bar_section :position "center"
       (pressable
-          ; TODO: Implement Hyprexpo
-          :onclick ""
-          (workspaces_widget)
+        ; TODO: Implement Hyprexpo
+        :onclick ""
+        (workspaces_widget)
       )
     )
     (bar_section :position "end"
@@ -32,7 +46,7 @@
       )
       
       (pressable
-        :onclick "${EWW_EXECUTABLE} update is_systrays_open=${!is_systrays_open}"
+        :onclick {assign_var + "is_systrays_open=${!is_systrays_open}"}
         (icon
           :path {is_systrays_open ? "chevron-left.svg" :  "chevron-down.svg" }
         )
@@ -52,19 +66,27 @@
       
       (h_separator)
       
-      (indicators)
+      (pressable
+        :spacing 5
+        :onclick {toggle_win + "control_panel_window"}
+        (location_icon)
+        (bluetooth_icon)
+        (wifi_icon)
+        (sound_icon)
+        (battery_icon)
+      )
       
       (h_separator)
       
       (pressable
-        :onclick "${EWW_EXECUTABLE} open --toggle calendar_window && ${EWW_EXECUTABLE} update is_calendar_open=${!is_calendar_open}"
+        :onclick {toggle_win + "calendar_window"}
         (smalldate_widget)
       )
       
       (h_separator)
       
       (pressable
-        :onclick "${EWW_EXECUTABLE} open --toggle power_menu_window"
+        :onclick {toggle_win + "notification_center_window"}
         (bell_icon)
       )
     )
@@ -87,19 +109,6 @@
   )
 )
 
-(defwidget indicators []
-  (pressable
-    :onclick "${EWW_EXECUTABLE} open --toggle control_panel_window"
-    (box
-      :spacing 5
-      (location_icon)
-      (bluetooth_icon)
-      (wifi_icon)
-      (sound_icon)
-      (battery_icon)
-    )
-  )
-)
 
 (defwidget workspaces_widget []
   (box
@@ -152,7 +161,6 @@
   )
 )
 
-; FIXME: You get errors when the wifi is disabled
 (defwidget wifi_icon []
   (icon
     :tooltip "Connected to ${wifi.name}"

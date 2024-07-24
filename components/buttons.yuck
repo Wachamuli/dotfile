@@ -1,4 +1,4 @@
-(defwidget pressable [?onclick ?onhover ?onhoverlost]
+(defwidget pressable [?onclick ?onhover ?onhoverlost ?spacing]
   (eventbox
     :class "pressable"
     :onclick onclick
@@ -6,6 +6,7 @@
     :onhoverlost onhoverlost
     (box
       :class "inner-pressable"
+      :spacing {spacing ?: 0}
       (children)
     )
   )

@@ -94,6 +94,21 @@
   )
 )
 
+(defwindow notification_center_window
+  :namespace "eww"
+  :monitor 0
+  :stacking "fg"
+  :geometry (
+    geometry
+    :x "10px"
+    :y "15px"
+    :width "370px"
+    :height "60px"
+    :anchor "top right"
+  )
+  (notification_center)
+)
+
 (defwindow power_menu_window
   :namespace "eww"
   :monitor 0
@@ -102,15 +117,12 @@
     geometry
     :x "10px"
     :y "15px"
-    ; :width "470px"
     :width "370px"
     :height "60px"
-    :anchor "top right"
+    :anchor "top left"
   )
-  ; (power_menu_widget)
-  (notification_center)
+  (power_menu_widget)
 )
-
 
 (defwindow calendar_window []
   :namespace "eww"

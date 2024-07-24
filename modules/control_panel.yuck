@@ -146,6 +146,14 @@
   )
 )
 
+(defwidget brightness_icon [?width ?height]
+  (icon
+    :width width
+    :height height
+    :path "brightness.svg"
+  )
+)
+
 (defwidget power_mode_options []
   (box
     :orientation "v"
@@ -192,13 +200,13 @@
           (icon
             :width 25
             :height 25
-            :tooltip {"Signal ${network.signal ?: 0}%"}
+            :tooltip {"Signal ${network.signal}%"}
             :path {
-            (network.signal ?: 0) > 68
-            ? "signal-full.svg"
-            : (network.signal ?: 0) > 34
-            ? "signal-mid.svg"
-            : "signal-low.svg"
+              network.signal > 68
+              ? "signal-full.svg"
+              : (network.signal ?: 0) > 34
+              ? "signal-mid.svg"
+              : "signal-low.svg"
             }
           )
         )
@@ -227,7 +235,6 @@
       )
       (label
         :halign "start"
-        :style "font-size: 16px"
         :text {battery.state == "charging" ? battery.time_to_full : battery.time_to_empty}
       )
     )
