@@ -21,13 +21,13 @@ low_battery_notified=$(cat "$NOTIFIED_STATE_FILE")
 
 if [ "$percentage" -lt 15 ] && [ "$low_battery_notified" = "false" ]; then
     notify-send -u critical --icon=$HOME/.config/eww/images/battery-0.svg --app-name=System "Low Battery" "Plug in the device."
-    powerprofilesctl set power-saver
+    # powerprofilesctl set power-saver
 
     echo "true" > "$NOTIFIED_STATE_FILE"
 elif [ "$percentage" -ge 15 ]; then
     echo "false" > "$NOTIFIED_STATE_FILE"
 
-    powerprofilesctl set balanced
+    # powerprofilesctl set balanced
 fi
 
 output=$(cat << EOM

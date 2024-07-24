@@ -23,63 +23,63 @@
 (defpoll workspaces
   :initial `{ "focused": 1, "actives": "[1]"}`
   :interval "0.2s"
-  "./scripts/bar/workspaces.sh"
+  "./scripts/workspaces.sh"
 )
 (defpoll keyboard_layout
   :initial `{ "keymaps": "[]", "active_keymap": "", "abbreviated_active_keymap": ""}`
   :interval "1s"
-  "./scripts/bar/keyboard_layout.sh"
+  "./scripts/keyboard_layout.sh"
 )
 (defpoll battery
   :initial `{"state": "", "percentage": 0, "percentage_base10": 0, "time_to_full": 0, "time_to_empty": 0}`
   :interval "1s"
-  "./scripts/bar/battery.sh"
+  "./scripts/battery.sh"
 )
 (defpoll wifi
   :initial `{"state": "no", "name": "", "signal": 0}`
   :interval "1s"
-  "./scripts/bar/wifi.sh"
+  "./scripts/wifi.sh"
 )
 (defpoll wifi_scan
   :initial "[{}]"
   :interval "5s"
-  "./scripts/bar/wifi_scan.sh"
+  "./scripts/wifi_scan.sh"
 )
 (defpoll location
   :initial `{"state": "inactive"}`
   :interval  "5s"
-  "./scripts/bar/location.sh"
+  "./scripts/location.sh"
 )
 (defpoll bluetooth
   :initial `{"state": "yes"}`
   :interval  "0.5s"
-  "./scripts/bar/bluetooth.sh"
+  "./scripts/bluetooth.sh"
 )
 (defpoll airplane_mode
   :initial `false`
   :interval  "0.5s"
-  "./scripts/bar/airplanemode.sh"
+  "./scripts/airplanemode.sh"
 )
 (defpoll audio_sinks
   :initial "[{}]"
   :interval "2s"
-  "./scripts/bar/mixer.sh"
+  "./scripts/mixer.sh"
 )
 
 (deflisten notifications
   :initial "[{}]"
-  "python3 ./scripts/bar/notifications.py"
+  "python3 ./scripts/notifications.py"
 )
 (deflisten sound
   :initial `{ "volume": 100, "muted": "no"}`
-  "./scripts/bar/sound.sh "
+  "./scripts/sound.sh "
 )
 (deflisten brightness
   :initial 100
-  "./scripts/bar/brightness.sh "
+  "./scripts/brightness.sh "
 )
 (defpoll power_mode
   :interval "0.2s"
   :initial "Balanced"
-  "./scripts/bar/power_mode.sh get"
+  "./scripts/power_mode.sh get"
 )
