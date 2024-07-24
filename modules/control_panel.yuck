@@ -238,7 +238,7 @@
   (circular_button
     :variable {bluetooth.state == "no"}
     :onclick "if [ \"$(rfkill list bluetooth | grep -i 'soft blocked: yes')\" ]; then rfkill unblock bluetooth; else rfkill block bluetooth; fi"
-    :path "bluetooth-off.svg"
+    :path "bluetooth-on.svg"
     :alt_path "bluetooth-on-alt.svg"
   )
 )
@@ -248,7 +248,7 @@
     :variable {wifi.state == "yes"}
     :onclick "if [ \"$(nmcli radio wifi)\" = \"enabled\" ]; then nmcli radio wifi off; else nmcli radio wifi on; fi"
     :onrightclick "${EWW_EXECUTABLE} update is_wifi_networks_open=${!is_wifi_networks_open}"
-    :path "wifidisconnected.svg"
+    :path "wififull.svg"
     :alt_path "wififull-alt.svg"
   )
 )
@@ -258,7 +258,7 @@
     :onclick "rfkill list all | grep -qi \"Soft blocked: yes\" && rfkill unblock all || rfkill block all"
     :variable airplane_mode
     :alt_path "airplane-on.svg"
-    :path "airplane-off.svg"
+    :path "airplane-on-alt.svg"
   )
 )
 
