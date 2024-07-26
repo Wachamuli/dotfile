@@ -67,10 +67,14 @@
   :interval "2s"
   "./scripts/mixer.sh"
 )
+(defpoll static_notifications
+  :interval "1s"
+  `cat notifications.json`
+)
 
 (deflisten notifications
   :initial "[{}]"
-  "python3 ./scripts/notifications.py temporal"
+  "python3 ./scripts/notifications.py"
 )
 (deflisten sound
   :initial `{ "volume": 100, "muted": "no"}`

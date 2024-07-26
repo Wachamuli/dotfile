@@ -44,51 +44,14 @@
         :orientation "v"
         :spacing 20
         :space-evenly false
-        (notification
-          :timestamp "00:00 PM"
-          :icon {images_folder + "bluetooth-on.svg"}
-          :name "System"
-          :summary "Incoming Message"
-          :body "This is a test"
-        )
-        (notification
-          :timestamp "00:00 PM"
-          :icon {images_folder + "battery-0.svg"}
-          :name "System"
-          :summary "Incoming Message"
-          :body "This is a test"
-        )
-        (notification
-          :timestamp "00:00 PM"
-          :icon {images_folder + "wififull.svg"}
-          :name "System"
-          :summary "Incoming Message"
-          :body "This is a test"
-        )
-        (notification
-          :timestamp "00:00 PM"
-          :icon {images_folder + "bluetooth-on.svg"}
-          :name "System"
-          :summary "Incoming Message"
-          :body "This is a test"
-        )
-        (notification
-          :timestamp "00:00 PM"
-          :name "System"
-          :summary "Incoming Message"
-          :body "This is a test"
-        )
-        (notification
-          :timestamp "00:00 PM"
-          :name "System"
-          :summary "Incoming Message"
-          :body "This is a test"
-        )
-        (notification
-          :timestamp "00:00 PM"
-          :name "System"
-          :summary "Incoming Message"
-          :body "This is a test"
+        (for notification in static_notifications
+          (notification
+            :timestamp {notification.timestamp}
+            :icon {notification.app_icon}
+            :name {notification.app_name}
+            :summary {notification.summary}
+            :body {notification.body}
+          )
         )
       )
     )

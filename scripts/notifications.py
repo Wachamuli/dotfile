@@ -1,55 +1,23 @@
+import os
+import time
+import threading
 import json
 import collections
-from dataclasses import dataclass, asdict
 from uuid import uuid4
 from datetime import datetime
+from dataclasses import dataclass, asdict
 
 import dbus
 import dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
 from gi.repository import GLib
-import threading
-import time
-import sys
 
 
 def main():
-    dbus_thread = threading.Thread(target=start_dbus_server)
-    dbus_thread.start()
-
-    listen_to = sys.argv[1]
-
-    match listen_to:
-        case "static":
-            static_notification_manager.listen()
-        case "temporal":
-            temporal_notification_manager.listen()
-        case _:
-            raise ValueError("Invalid option - use `static` or `temporal` instead.")
-    
-    # user_input_thread()
-
-
-def start_dbus_server():
     DBusGMainLoop(set_as_default=True)
     NotificationServer()
     mainloop = GLib.MainLoop()
     mainloop.run()
-
-
-# def user_input_thread():
-#     while True:
-#         command = input().strip().lower()
-
-#         match command:
-#             case "dismiss":
-#                 static_notification_manager.dismiss()
-#             case "dismiss_all":
-#                 static_notification_manager.dismiss_all()
-#             case "do_not_disturb":
-#                 raise NotImplementedError
-#             case _:
-#                 raise ValueError("Invalid option - use `static`, `temporal`, `` instead.")
 
 
 @dataclass()
@@ -66,44 +34,49 @@ class Notification:
 
 
 class NotificationsManager:
-    def __init__(self, max_notifications: int, dimiss_time: float = 0.0):
-        self.notifications: collections.deque[Notification] = collections.deque([], maxlen=max_notifications)
-        self.dismiss_time = dimiss_time
-        self.listen_called = False
+    def __init__(self, max: int, timeout: float = 0.0):
+        self.notifications: collections.deque[Notification] = collections.deque([], maxlen=max)
+        self.timeout = timeout
 
-    def listen(self):
-        self.listen_called = True
-
-    def show(self):
+    def echo(self):
         print(list(self.notifications), flush=True)
 
     def push(self, notification: Notification):
         self.notifications.appendleft(notification)
-        if self.listen_called:
-            self.show()
+        self.echo()
 
-        if self.dismiss_time:
+        if self.timeout:
             timer_thread = threading.Thread(target=self.dismiss)
             timer_thread.start()
 
     def dismiss(self):
-        if self.dismiss_time:
-            time.sleep(self.dismiss_time)
+        if self.timeout:
+            time.sleep(self.timeout)
 
         self.notifications.pop()
-
-        if self.listen_called:
-            self.show()
+        self.echo()
 
     def dismiss_all(self):
         self.notifications.clear()
-
-        if self.listen_called:
-            self.show()
+        self.echo()
 
 
-static_notification_manager = NotificationsManager(20)
-temporal_notification_manager = NotificationsManager(5, 10)
+notification_manager = NotificationsManager(max=5, timeout=10)
+
+
+def initialize_json_file():
+    if not os.path.exists("notifications.json"):
+        with open("notifications.json", 'w') as f:
+            json.dump([], f)
+
+def write_to_json(notification: Notification):
+    with open("notifications.json", 'r') as f:
+        notifications = json.load(f)
+    
+    notifications.append(asdict(notification))
+    
+    with open("notifications.json", 'w') as f:
+        json.dump(notifications, f, indent=4)
 
 
 class NotificationServer(dbus.service.Object):
@@ -122,8 +95,8 @@ class NotificationServer(dbus.service.Object):
         timestamp = raw_timestamp.strftime("%I:%M %p")
 
         notification = Notification(id, timestamp, app_name, summary, body, app_icon)
-        static_notification_manager.push(notification)
-        temporal_notification_manager.push(notification)
+        write_to_json(notification)
+        notification_manager.push(notification)
 
         return 0
 
