@@ -9,7 +9,7 @@
 (defvar transition_speed "200ms")
 (defvar empty_array "[{}]")
 
-(defvar images_folder "./icons/")
+(defvar images_folder "./assets/icons/")
 (defvar assign_var "~/.local/bin/eww --config ~/.config/eww update ")
 (defvar toggle_win "~/.local/bin/eww --config ~/.config/eww open --toggle ")
 

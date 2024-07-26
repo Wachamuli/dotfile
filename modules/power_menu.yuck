@@ -9,7 +9,7 @@
         (image
           :image-width 80
           :image-height 80
-          :path { images_folder + "avatar.png" }
+          :path "./assets/avatar.png"
         )
         (box
           :halign "start"
