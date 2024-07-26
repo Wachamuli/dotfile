@@ -9,10 +9,10 @@
         (icon :path "fedora.svg")
       )
       
-      (h_separator :draw-line true)
+      (h_separator)
       
       (pressable
-        :onclick ""
+        :onclick "firefox"
         (icon :path "firefox.svg")
       )
       (pressable
@@ -21,7 +21,7 @@
       )
       (pressable
         :onclick ""
-        (icon :path "folder.svg")
+        (icon :path "obsidian.svg")
       )
     )
     (bar_section :position "center"
