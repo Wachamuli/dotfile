@@ -50,7 +50,7 @@
         :path "moon.svg"
       )
       (circular_button
-        :onclick ""
+        :onclick "systemctl reboot"
         :tooltip "Restart"
         :path "restart.svg"
       )
