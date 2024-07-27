@@ -16,11 +16,11 @@
         (icon :path "firefox.svg")
       )
       (pressable
-        :onclick ""
+        :onclick "code"
         (icon :path "vscode.svg")
       )
       (pressable
-        :onclick ""
+        :onclick "/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=obsidian.sh --file-forwarding md.obsidian.Obsidian @@u %U @@"
         (icon :path "obsidian.svg")
       )
     )
