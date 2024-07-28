@@ -1,6 +1,6 @@
-(defwidget pressable [?onclick ?onhover ?onhoverlost ?spacing]
+(defwidget pressable [?onclick ?onhover ?onhoverlost ?spacing ?keep_active]
   (eventbox
-    :class "pressable"
+    :class {"pressable" + " " + ((keep_active ?: false) ? "pressable-background" : "")}
     :onclick onclick
     :onhover onhover
     :onhoverlost onhoverlost
@@ -97,5 +97,3 @@
     )
   )
 )
-
-

@@ -8,9 +8,9 @@
         :onclick {toggle_win + "power_menu_window"}
         (icon :path "fedora.svg")
       )
-      
+
       (h_separator)
-      
+
       (pressable
         :onclick "firefox"
         (icon :path "firefox.svg")
@@ -32,7 +32,7 @@
       )
     )
     (bar_section :position "end"
-      
+
       (revealer
         :reveal is_systrays_open
         :transition "slideleft"
@@ -44,49 +44,52 @@
           ; :icon-size 20
         )
       )
-      
+
       (pressable
         :onclick {assign_var + "is_systrays_open=${!is_systrays_open}"}
         (icon
           :path {is_systrays_open ? "chevron-left.svg" :  "chevron-down.svg" }
         )
       )
-      
+
       (pressable
         :onclick "hyprctl switchxkblayout at-translated-set-2-keyboard next"
         (keyboard_layout_widget)
       )
-      
+
       (pressable
         :onclick ""
         (icon
           :path "window.svg"
         )
       )
-      
+
       (h_separator)
-      
+
       (pressable
         :spacing 5
-        :onclick {toggle_win + "control_panel_window"}
+        :onclick {toggle_win + "control_panel_window" + " && " + assign_var + "is_control_center_open=${!is_control_center_open}"}
+        :keep_active is_control_center_open
         (location_icon)
         (bluetooth_icon)
         (wifi_icon)
         (sound_icon)
         (battery_icon)
       )
-      
+
       (h_separator)
-      
+
       (pressable
-        :onclick {toggle_win + "calendar_window"}
+        :onclick {toggle_win + "calendar_window" + " && " + assign_var + "is_calendar_open=${!is_calendar_open}"}
+        :keep_active is_calendar_open
         (smalldate_widget)
       )
-      
+
       (h_separator)
-      
+
       (pressable
-        :onclick {toggle_win + "notification_center_window"}
+        :onclick {toggle_win + "notification_center_window" + " && " + assign_var + "is_notifications_center_open=${!is_notifications_center_open}"}
+        :keep_active is_notifications_center_open
         (bell_icon)
       )
     )
@@ -136,7 +139,7 @@
     :visible {bluetooth.state == "no"}
     :path "bluetooth-on.svg"
   )
-  
+
 )
 
 (defwidget location_icon []

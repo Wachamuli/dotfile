@@ -8,74 +8,78 @@
 @import "./styles/notification";
 
 .header {
-  font-weight: $font-bold;
-  font-size: 20px;
+    font-weight: $font-bold;
+    font-size: 20px;
 }
 
 .text-underline {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .text-bold {
-  font-weight: $font-bold;
+    font-weight: $font-bold;
 }
 
 .pressable {
-  &:hover {
-    transition: $transition-time;
+    &:hover {
+        transition: $transition-time;
+        border-radius: $radius-lg;
+        background-color: $light-accent;
+    }
+    .inner-pressable {
+        padding: 0px 10px 0px 10px;
+    }
+}
+.pressable-background {
     border-radius: $radius-lg;
     background-color: $light-accent;
-  }
-  .inner-pressable {
-    padding: 0px 10px 0px 10px;
-  }
 }
 
 .circular-button,
 .squared-button,
 .rectangular-button {
-  background-color: $primary;
-  border: 2px solid $secondary;
+    background-color: $primary;
+    border: 2px solid $secondary;
 
-  &:hover {
-    background-color: $light-accent;
-    transition: $transition-time;
-  }
+    &:hover {
+        background-color: $light-accent;
+        transition: $transition-time;
+    }
 }
 
 .circular-button {
-  border-radius: 30px;
+    border-radius: 30px;
 }
 
 .squared-button,
 .rectangular-button {
-  border-radius: $radius-sm;
+    border-radius: $radius-sm;
 }
 
 .circular-button-alt,
 .squared-button-alt,
 .rectangular-button-alt {
-  background-color: $secondary;
-  // border-radius: 30px;
-  border: 2px solid $secondary;
+    background-color: $secondary;
+    // border-radius: 30px;
+    border: 2px solid $secondary;
 
-  &:hover {
-    background-color: $dark-accent;
-    border-color: $dark-accent;
-    transition: $transition-time;
-  }
+    &:hover {
+        background-color: $dark-accent;
+        border-color: $dark-accent;
+        transition: $transition-time;
+    }
 }
 
 .circular-button-alt {
-  border-radius: 30px;
+    border-radius: 30px;
 }
 .squared-button-alt,
 .rectangular-button-alt {
-  border-radius: $radius-sm;
+    border-radius: $radius-sm;
 }
 
 .rectangular-button-alt {
-  label {
-    color: $primary;
-  }
+    label {
+        color: $primary;
+    }
 }
