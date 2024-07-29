@@ -1,4 +1,5 @@
 ; Bar
+(defvar is_power_menu_open false)
 (defvar is_calendar_open false)
 (defvar is_control_center_open false)
 (defvar is_notifications_center_open false)
@@ -11,6 +12,7 @@
 (defvar is_power_open false)
 (defvar is_system_monitor_open false)
 (defvar is_power_mode_open false)
+(defvar is_timer_open false)
 
 (defvar empty_array "[{}]")
 (defvar transition_speed "200ms")

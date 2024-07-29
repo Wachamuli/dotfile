@@ -5,7 +5,8 @@
     :space-evenly true
     (bar_section :position "start"
       (pressable
-        :onclick {toggle_win + "power_menu_window"}
+        :keep_active is_power_menu_open
+        :onclick {toggle_win + "power_menu_window" + " & " + assign_var + "is_power_menu_open=${!is_power_menu_open}"}
         (icon :path "fedora.svg")
       )
 
@@ -32,6 +33,8 @@
       )
     )
     (bar_section :position "end"
+
+    (h_separator)
 
       (revealer
         :reveal is_systrays_open
@@ -68,7 +71,7 @@
 
       (pressable
         :spacing 5
-        :onclick {toggle_win + "control_panel_window" + " && " + assign_var + "is_control_center_open=${!is_control_center_open}"}
+        :onclick {toggle_win + "control_panel_window" + " & " + assign_var + "is_control_center_open=${!is_control_center_open}"}
         :keep_active is_control_center_open
         (location_icon)
         (bluetooth_icon)
@@ -80,7 +83,7 @@
       (h_separator)
 
       (pressable
-        :onclick {toggle_win + "calendar_window" + " && " + assign_var + "is_calendar_open=${!is_calendar_open}"}
+        :onclick {toggle_win + "calendar_window" + " & " + assign_var + "is_calendar_open=${!is_calendar_open}"}
         :keep_active is_calendar_open
         (smalldate_widget)
       )
@@ -88,7 +91,7 @@
       (h_separator)
 
       (pressable
-        :onclick {toggle_win + "notification_center_window" + " && " + assign_var + "is_notifications_center_open=${!is_notifications_center_open}"}
+        :onclick {toggle_win + "notification_center_window" + " & " + assign_var + "is_notifications_center_open=${!is_notifications_center_open}"}
         :keep_active is_notifications_center_open
         (bell_icon)
       )
