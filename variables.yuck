@@ -74,7 +74,7 @@
 )
 (defpoll static_notifications
   :interval "1s"
-  `cat notifications.json`
+  `cat /tmp/notifications.json`
 )
 
 (deflisten notifications

@@ -3,7 +3,6 @@ import time
 import threading
 import json
 import collections
-from uuid import uuid4
 from datetime import datetime
 from dataclasses import dataclass, asdict
 
@@ -14,6 +13,7 @@ from gi.repository import GLib
 
 
 def main():
+    initialize_json_file()
     DBusGMainLoop(set_as_default=True)
     NotificationServer()
     mainloop = GLib.MainLoop()
@@ -33,13 +33,32 @@ class Notification:
         return json.dumps(asdict(self))
 
 
+filename = "/tmp/notifications.json"
+
+def initialize_json_file():
+    if not os.path.exists(filename):
+        with open(filename, "w") as f:
+            json.dump([], f)
+
+def write_to_json(notification: Notification):
+    with open(filename, "r") as f:
+        notifications = json.load(f)
+
+    notifications.append(asdict(notification))
+
+    with open(filename, "w") as f:
+        json.dump(notifications, f, indent=4)
+
+
 class NotificationsManager:
-    def __init__(self, max: int, timeout: float = 0.0):
+    def __init__(self, max: int | None = None, timeout: float = 0.0, echo = False):
         self.notifications: collections.deque[Notification] = collections.deque([], maxlen=max)
         self.timeout = timeout
+        self.echo_enabled = echo
 
     def echo(self):
-        print(list(self.notifications), flush=True)
+        if (self.echo_enabled):
+            print(list(self.notifications), flush=True)
 
     def push(self, notification: Notification):
         self.notifications.appendleft(notification)
@@ -61,22 +80,7 @@ class NotificationsManager:
         self.echo()
 
 
-notification_manager = NotificationsManager(max=5, timeout=10)
-
-
-def initialize_json_file():
-    if not os.path.exists("notifications.json"):
-        with open("notifications.json", 'w') as f:
-            json.dump([], f)
-
-def write_to_json(notification: Notification):
-    with open("notifications.json", 'r') as f:
-        notifications = json.load(f)
-    
-    notifications.append(asdict(notification))
-    
-    with open("notifications.json", 'w') as f:
-        json.dump(notifications, f, indent=4)
+notification_manager = NotificationsManager(max=5, timeout=10, echo=True)
 
 
 class NotificationServer(dbus.service.Object):
@@ -90,13 +94,13 @@ class NotificationServer(dbus.service.Object):
 
     @dbus.service.method("org.freedesktop.Notifications", in_signature="susssasa{ss}i", out_signature="u")
     def Notify(self, app_name, replaces_id, app_icon, summary, body, actions, hints, timeout):
-        id = str(uuid4())
         raw_timestamp = datetime.now()
         timestamp = raw_timestamp.strftime("%I:%M %p")
+        id = f"id{app_name}T{raw_timestamp}"
 
         notification = Notification(id, timestamp, app_name, summary, body, app_icon)
-        write_to_json(notification)
         notification_manager.push(notification)
+        write_to_json(notification)
 
         return 0
 

@@ -61,7 +61,7 @@
           :alt_path "fan-alt.svg"
         )
       )
-      
+
       (box
         :spacing 10
         :orientation "v"
@@ -96,7 +96,7 @@
         )
       )
     )
-    
+
     (revealer
       :reveal is_wifi_networks_open
       :transition "slidedown"
@@ -115,7 +115,7 @@
         )
       )
     )
-    
+
     (revealer
       :reveal is_mixer_open
       :transition "slidedown"
@@ -127,22 +127,21 @@
         (v_separator :half true)
       )
     )
-    
-    
+
     (revealer
       :reveal is_power_mode_open
       :transition "slidedown"
       :duration transition_speed
       (power_mode_options)
     )
-    
+
     (revealer
       :reveal is_system_monitor_open
       :transition "slidedown"
       :duration transition_speed
       (system_monitor)
     )
-    
+
   )
 )
 
@@ -161,7 +160,7 @@
     (v_separator :draw-line true)
     (header :title "Power Mode" :path "power_mode.svg")
     (v_separator)
-    
+
     (option
       :onclick "powerprofilesctl set power-saver"
       :selected {power_mode == "Power Saver"}
@@ -188,7 +187,7 @@
     (v_separator :draw-line true)
     (header :path "wififull.svg" :title "WI-FI")
     (v_separator)
-    
+
     (for network in wifi_scan
       (option
         :selected {network.ssid == wifi.name}
@@ -281,11 +280,11 @@
     :space-evenly false
     (v_separator :draw-line true)
     (header :title "Mixer" :path "mixer.svg")
-    
+
     (v_separator :half true)
-    
+
     (label :visible {arraylength(audio_sinks) < 1} :text "No audio sources available")
-    
+
     (for sink in audio_sinks
       (slider
         :max 100

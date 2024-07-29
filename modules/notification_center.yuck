@@ -2,16 +2,15 @@
   (box
     :orientation "v"
     :space-evenly false
-    
     (box
       :class "notification-header"
       (box
         :orientation "h"
         :space-evenly true
         :halign "start"
-        (header :title "Notifications (7)" :path "bell.svg")
+        (header :title "Notifications ${arraylength(static_notifications) > 0 ? "(${arraylength(static_notifications)})" : ""}" :path "bell.svg")
       )
-      
+
       (box
         :spacing 10
         :space-evenly false
@@ -23,7 +22,7 @@
             (icon :tooltip "Do not disturb" :path "do_not_disturb.svg")
           )
         )
-        
+
         (button
           :onclick ""
           (box
@@ -33,9 +32,9 @@
         )
       )
     )
-    
+
     (v_separator)
-    
+
     (scroll
       :vscroll true
       :height 750
