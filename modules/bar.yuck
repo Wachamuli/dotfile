@@ -6,7 +6,7 @@
     (bar_section :position "start"
       (pressable
         :keep_active is_power_menu_open
-        :onclick {toggle_win + "power_menu_window" + " & " + assign_var + "is_power_menu_open=${!is_power_menu_open}"}
+        :onclick {toggle_win + "power_menu_window" + " && " + assign_var + "is_power_menu_open=${!is_power_menu_open}"}
         (icon :path "fedora.svg")
       )
 
@@ -35,6 +35,8 @@
     (bar_section :position "end"
 
     (h_separator)
+
+      (timer_display)
 
       (revealer
         :reveal is_systrays_open
@@ -71,7 +73,7 @@
 
       (pressable
         :spacing 5
-        :onclick {toggle_win + "control_panel_window" + " & " + assign_var + "is_control_center_open=${!is_control_center_open}"}
+        :onclick {toggle_win + "control_panel_window" + " && " + assign_var + "is_control_center_open=${!is_control_center_open}"}
         :keep_active is_control_center_open
         (location_icon)
         (bluetooth_icon)
@@ -83,7 +85,7 @@
       (h_separator)
 
       (pressable
-        :onclick {toggle_win + "calendar_window" + " & " + assign_var + "is_calendar_open=${!is_calendar_open}"}
+        :onclick {toggle_win + "calendar_window" + " && " + assign_var + "is_calendar_open=${!is_calendar_open}"}
         :keep_active is_calendar_open
         (smalldate_widget)
       )
@@ -91,7 +93,7 @@
       (h_separator)
 
       (pressable
-        :onclick {toggle_win + "notification_center_window" + " & " + assign_var + "is_notifications_center_open=${!is_notifications_center_open}"}
+        :onclick {toggle_win + "notification_center_window" + " && " + assign_var + "is_notifications_center_open=${!is_notifications_center_open}"}
         :keep_active is_notifications_center_open
         (bell_icon)
       )
@@ -113,6 +115,25 @@
     :style "font-weight: 600; font-size: 14px;"
     :text {keyboard_layout.abbreviated_active_keymap}
   )
+)
+
+(defwidget timer_display []
+    (box
+        :visible {(timer.second > 0 || timer.minute > 0) && (!is_control_center_open || !is_timer_open)}
+        :space-evenly false
+        (box
+            :space-evenly false
+            :style "background-color: white; border-radius: 30px; padding: 0px 10px 0px 10px;"
+            :spacing 5
+            (icon :path "clock.svg")
+            (box
+                :space-evenly false
+                (label :class "text-bold" :style "color: black" :text {timer.minute + ":"})
+                (label :class "text-bold" :style "color: black" :text {timer.second})
+            )
+        )
+        (h_separator)
+    )
 )
 
 

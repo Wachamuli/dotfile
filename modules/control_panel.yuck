@@ -75,9 +75,12 @@
             :path "system_monitor.svg"
             :alt_path "system_monitor_alt.svg"
           )
-          (squared_button
-            :tooltip "Power Mode"
-            :path "mic-off.svg"
+          (new_squared_button
+            :variable is_timer_open
+            :onclick {assign_var + "is_timer_open=${!is_timer_open}"}
+            :tooltip "Timer"
+            :path "clock-alt.svg"
+            :alt_path "clock.svg"
           )
         )
         (box
@@ -126,6 +129,13 @@
         (mixer)
         (v_separator :half true)
       )
+    )
+
+    (revealer
+      :reveal is_timer_open
+      :transition "slidedown"
+      :duration transition_speed
+      (timer)
     )
 
     (revealer
@@ -178,6 +188,74 @@
       :text "Performance"
     )
   )
+)
+
+(defwidget timer []
+    (box
+        :orientation "v"
+        :space-evenly false
+        (v_separator :draw-line true)
+        (header :path "clock-alt.svg" :title "Timer")
+        (v_separator :half true)
+
+        (box
+            :space-evenly false
+            :spacing 60
+            :halign "center"
+            (pressable :onclick "./scripts/set-counter.sh -H 0 -M 25 -S 0"  "Focus")
+            (pressable :onclick "./scripts/set-counter.sh -H 0 -M 5 -S 0"  "Break")
+            ;(pressable :onclick "./scripts/set-counter.sh -H 0 -M 5 -S 0"  "Rest")
+            (box
+                :class "text-bold"
+                :style "background-color: white; color: black; border-radius: 30px; padding: 5px 20px 5px 20px"
+                "Rest"
+            )
+        )
+
+        (v_separator :half true)
+
+        (box
+            :space-evenly false
+            :halign "center"
+            ;(label :class "text-bold" :text "${timer.hour} : " :style "font-size: 56px")
+            (label :class "text-bold" :text "${timer.minute} : " :style "font-size: 56px")
+            (label :class "text-bold" :text {timer.second} :style "font-size: 56px")
+        )
+
+        (v_separator)
+
+        (box
+            :space-evenly false
+            :halign "center"
+            (pressable
+                :onclick "./scripts/set-counter.sh -T clear"
+                (icon
+                    :width 25
+                    :height 25
+                    :path "restart.svg"
+                )
+
+            )
+            (pressable
+                :onclick "./scripts/set-counter.sh -T stop"
+                (icon
+                    :width 25
+                    :height 25
+                    :path "stop.svg"
+                )
+            )
+            (pressable
+                :onclick "./scripts/set-counter.sh -T start"
+                (icon
+                    :width 25
+                    :height 25
+                    :path "play.svg"
+                )
+            )
+        )
+
+        (v_separator :half true)
+    )
 )
 
 (defwidget wifi_networks []

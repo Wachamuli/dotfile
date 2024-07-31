@@ -14,12 +14,14 @@
 (defvar is_power_mode_open false)
 (defvar is_timer_open false)
 
+; Others
 (defvar empty_array "[{}]")
 (defvar transition_speed "200ms")
 (defvar images_folder "./assets/icons/")
 (defvar assign_var "~/.local/bin/eww --config ~/.config/eww update ")
 (defvar toggle_win "~/.local/bin/eww --config ~/.config/eww open --toggle ")
 
+; Poll variables
 (defpoll today
   :interval "1s"
   `date +"%a %d %I:%M %p"`
@@ -74,11 +76,17 @@
   :interval "2s"
   "./scripts/mixer.sh"
 )
+(defpoll power_mode
+  :interval "0.2s"
+  :initial "Balanced"
+  "./scripts/power_mode.sh get"
+)
 (defpoll static_notifications
   :interval "1s"
   `cat /tmp/notifications.json`
 )
 
+; Listen variables
 (deflisten notifications
   :initial "[{}]"
   "python3 ./scripts/notifications.py"
@@ -91,8 +99,7 @@
   :initial 100
   "./scripts/brightness.sh "
 )
-(defpoll power_mode
-  :interval "0.2s"
-  :initial "Balanced"
-  "./scripts/power_mode.sh get"
+(deflisten timer
+  :initial `{ "hour": "00", "minute": "00", "second": "00"}`
+  "./scripts/get-counter.sh"
 )
