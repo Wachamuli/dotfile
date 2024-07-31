@@ -13,7 +13,7 @@ from gi.repository import GLib
 
 
 def main():
-    initialize_json_file()
+    init_notifications_file()
     DBusGMainLoop(set_as_default=True)
     NotificationServer()
     mainloop = GLib.MainLoop()
@@ -35,16 +35,16 @@ class Notification:
 
 filename = "/tmp/notifications.json"
 
-def initialize_json_file():
+def init_notifications_file():
     if not os.path.exists(filename):
         with open(filename, "w") as f:
             json.dump([], f)
 
-def write_to_json(notification: Notification):
+def push_notification_to_file(notification: Notification):
     with open(filename, "r") as f:
         notifications = json.load(f)
 
-    notifications.append(asdict(notification))
+    notifications.insert(0, asdict(notification))
 
     with open(filename, "w") as f:
         json.dump(notifications, f, indent=4)
@@ -100,8 +100,7 @@ class NotificationServer(dbus.service.Object):
 
         notification = Notification(id, timestamp, app_name, summary, body, app_icon)
         notification_manager.push(notification)
-        write_to_json(notification)
-
+        push_notification_to_file(notification)
         return 0
 
 
