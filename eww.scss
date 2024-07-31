@@ -7,6 +7,14 @@
 @import "./styles/calendar";
 @import "./styles/notification";
 
+.selected {
+    font-weight: $font-bold;
+    background-color: $secondary;
+    color: $primary;
+    border-radius: $radius-lg;
+    padding: 5px 20px 5px 20px
+}
+
 .header {
     font-weight: $font-bold;
     font-size: 20px;
