@@ -38,6 +38,8 @@
 
       (timer_display)
 
+      (h_separator :visible is_systrays_open)
+
       (revealer
         :reveal is_systrays_open
         :transition "slideleft"
@@ -46,7 +48,6 @@
           :style "margin-right: 10px"
           :spacing 20
           :icon-size 22
-          ; :icon-size 20
         )
       )
 
@@ -132,6 +133,7 @@
                 (label :class "text-bold" :style "color: black" :text {timer.second})
             )
         )
+
         (h_separator)
     )
 )

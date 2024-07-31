@@ -1,5 +1,6 @@
-(defwidget h_separator [?draw-line]
+(defwidget h_separator [?draw-line ?visible]
   (box
+    :visible {visible ?: true}
     :class {(draw-line ?: false) ? "h-separator-visible" : "h-separator"}
     (box
       :class "inner-separator"
