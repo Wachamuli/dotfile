@@ -78,6 +78,7 @@
         :keep_active is_control_center_open
         (location_icon)
         (bluetooth_icon)
+        (mic_icon)
         (wifi_icon)
         (sound_icon)
         (battery_icon)
@@ -165,7 +166,6 @@
     :visible {bluetooth.state == "no"}
     :path "bluetooth-on.svg"
   )
-
 )
 
 (defwidget location_icon []
@@ -202,6 +202,13 @@
     : "wifidisconnected.svg"
     }
   )
+)
+
+(defwidget mic_icon []
+    (icon
+        :visible {microphone.state == "on"}
+        :path "mic-on.svg"
+    )
 )
 
 (defwidget sound_icon [?width ?height]

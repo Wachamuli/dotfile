@@ -46,6 +46,11 @@
   :interval "1s"
   "./scripts/battery.sh"
 )
+(defpoll microphone
+  :initial `{"state": "off"}`
+  :interval "1s"
+  "./scripts/microphone.sh"
+)
 (defpoll wifi
   :initial `{"state": "no", "name": "", "signal": 0}`
   :interval "1s"
