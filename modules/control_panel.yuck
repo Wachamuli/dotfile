@@ -276,32 +276,36 @@
     (header :path "wififull.svg" :title "WI-FI")
     (v_separator)
 
-    (for network in wifi_scan
-      (option
-        :selected {network.ssid == wifi.name}
-        :onclick {
-        toggle_win + "password_window --arg ssid='${network.ssid}' --arg rate='${network.rate}' --arg signal='${network.signal}' --arg security='${network.security}'"
-        + " && "
-        + assign_var + "password_output='Type a password'"
-        }
-        :text {network.ssid}
-        (box
-          :halign "end"
-          :hexpand true
-          (icon
-            :width 25
-            :height 25
-            :tooltip {"Signal ${network.signal}%"}
-            :path {
-            network.signal > 68
-            ? "signal-full.svg"
-            : (network.signal ?: 0) > 34
-            ? "signal-mid.svg"
-            : "signal-low.svg"
-            }
-          )
+    (scroll
+        :height 500
+        :space-evenly false
+        (for network in wifi_scan
+            (option
+                :selected {network.ssid == wifi.name}
+                :onclick {
+                toggle_win + "password_window --arg ssid='${network.ssid}' --arg rate='${network.rate}' --arg signal='${network.signal}' --arg security='${network.security}'"
+                + " && "
+                + assign_var + "password_output='Type a password'"
+                }
+                :text {network.ssid}
+                (box
+                :halign "end"
+                :hexpand true
+                (icon
+                    :width 25
+                    :height 25
+                    :tooltip {"Signal ${network.signal}%"}
+                    :path {
+                    network.signal > 68
+                    ? "signal-full.svg"
+                    : (network.signal ?: 0) > 34
+                    ? "signal-mid.svg"
+                    : "signal-low.svg"
+                    }
+                )
+                )
+            )
         )
-      )
     )
   )
 )
